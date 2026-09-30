@@ -1,0 +1,11 @@
+theme,theme_label,amex_sample_rows,amex_monetary_relief_pct,peers_sample_rows,peers_monetary_relief_pct,label_source
+annual_fee,Annual fee,65,18.33,33,29.18,keyword_fallback
+statement_credit_benefit,Statement credit or benefit redemption,20,27.03,15,8.93,keyword_fallback
+rewards_points,Rewards and points,135,7.11,212,19.55,keyword_fallback
+lounge_travel_benefit,Lounge or travel benefit,2,0.0,3,22.08,keyword_fallback
+insurance_protection_claim,Insurance or protection claim,10,31.76,18,29.27,keyword_fallback
+dispute_fraud,Dispute or fraud,394,22.84,1115,28.86,keyword_fallback
+customer_service,Customer service,182,25.94,494,21.93,keyword_fallback
+credit_limit_account_closure,Credit limit or account closure,74,8.17,287,7.73,keyword_fallback
+billing,Billing,220,13.06,834,18.44,keyword_fallback
+other,Other,98,18.85,225,8.17,keyword_fallback

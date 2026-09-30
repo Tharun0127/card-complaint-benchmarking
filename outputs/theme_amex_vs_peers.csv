@@ -1,0 +1,11 @@
+theme,theme_label,membership_value_theme,amex_share_pct,amex_ci_low_pct,amex_ci_high_pct,peers_share_pct,diff_pts,index_vs_peers,amex_sample_rows,peers_sample_rows,label_source
+rewards_points,Rewards and points,True,11.47,9.77,13.52,6.22,5.25,1.84,135,212,keyword_fallback
+annual_fee,Annual fee,True,5.11,3.98,6.58,0.96,4.15,5.32,65,33,keyword_fallback
+other,Other,False,8.43,6.96,10.23,6.78,1.65,1.24,98,225,keyword_fallback
+statement_credit_benefit,Statement credit or benefit redemption,True,1.35,0.82,2.21,0.47,0.88,2.87,20,15,keyword_fallback
+insurance_protection_claim,Insurance or protection claim,True,0.95,0.55,1.76,0.34,0.61,2.81,10,18,keyword_fallback
+dispute_fraud,Dispute or fraud,False,32.96,30.21,35.73,32.6,0.36,1.01,394,1115,keyword_fallback
+lounge_travel_benefit,Lounge or travel benefit,True,0.17,0.05,0.65,0.05,0.12,3.37,2,3,keyword_fallback
+customer_service,Customer service,False,14.97,12.95,17.14,16.19,-1.22,0.92,182,494,keyword_fallback
+credit_limit_account_closure,Credit limit or account closure,False,6.09,4.85,7.68,9.03,-2.94,0.67,74,287,keyword_fallback
+billing,Billing,False,18.49,16.35,20.92,27.36,-8.87,0.68,220,834,keyword_fallback

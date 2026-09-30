@@ -1,0 +1,186 @@
+{
+  "label_source": "keyword_fallback",
+  "label_source_description": "FALLBACK: keyword-seeded TF-IDF + logistic regression. Not LLM classification and not validated against human labels",
+  "quotes": {
+    "annual_fee": [
+      {
+        "complaint_id": 6427861,
+        "issuer": "American Express",
+        "quarter": "2023-Q1",
+        "text": "Then when I asked if I could receive a refund for the annual fee I was told I could not even though the only reason I kept the card was due to the retention offer they presented."
+      },
+      {
+        "complaint_id": 7169050,
+        "issuer": "Chase",
+        "quarter": "2023-Q2",
+        "text": "Chase closed my credit card before and will not refund the annual fee I paid."
+      },
+      {
+        "complaint_id": 9610114,
+        "issuer": "Capital One",
+        "quarter": "2024-Q3",
+        "text": "They charged Annual fee but they didnt inform me about this payment and late fees."
+      }
+    ],
+    "statement_credit_benefit": [
+      {
+        "complaint_id": 17880842,
+        "issuer": "American Express",
+        "quarter": "2025-Q4",
+        "text": "I am filing a complaint against American Express for misleading advertising and for failing to apply my full Amex Platinum Hotel Collection statement credit for a two-night stay I booked through Amex Travel."
+      },
+      {
+        "complaint_id": 21624407,
+        "issuer": "Chase",
+        "quarter": "2026-Q2",
+        "text": "I waited several weeks for the statement credit and after not receiving one I contacted Chase multiple times to request that it issue the credit."
+      },
+      {
+        "complaint_id": 19012180,
+        "issuer": "American Express",
+        "quarter": "2026-Q1",
+        "text": "Purchases by both the enrolled Basic Card Member and Additional Card Members on the Card Account are eligible for statement credits."
+      }
+    ],
+    "rewards_points": [
+      {
+        "complaint_id": 6411242,
+        "issuer": "American Express",
+        "quarter": "2023-Q1",
+        "text": "However, I have been unable to access these rewards points to make a hotel reservation."
+      },
+      {
+        "complaint_id": 6400199,
+        "issuer": "Chase",
+        "quarter": "2023-Q1",
+        "text": "I have attached an email that I received from my previous research variety account with chase showing my business is compatible with their rewards program and their is no conflict of interest."
+      },
+      {
+        "complaint_id": 7831820,
+        "issuer": "Capital One",
+        "quarter": "2023-Q4",
+        "text": "I try to \" Convert Rewards '' over CapitalOne 's website, they try to do a verification with my phone number."
+      }
+    ],
+    "lounge_travel_benefit": [
+      {
+        "complaint_id": 8124463,
+        "issuer": "Chase",
+        "quarter": "2024-Q1",
+        "text": "I booked a flight for my family- myself, my husband, and our son- through Chase travel portal."
+      },
+      {
+        "complaint_id": 24026496,
+        "issuer": "Capital One",
+        "quarter": "2026-Q3",
+        "text": "I have been a Capital One customer for five years and have had positive experiences with both my Venture X card and the Capital One Travel portal."
+      },
+      {
+        "complaint_id": 8677723,
+        "issuer": "Chase",
+        "quarter": "2024-Q2",
+        "text": "After that, they can access airport lounges with up to 2 guests for no additional fee."
+      }
+    ],
+    "insurance_protection_claim": [
+      {
+        "complaint_id": 11894366,
+        "issuer": "American Express",
+        "quarter": "2025-Q1",
+        "text": "Unfortunately, the representatives were unable to tell me if I was covered for trip interruption expenses."
+      },
+      {
+        "complaint_id": 7109294,
+        "issuer": "Chase",
+        "quarter": "2023-Q2",
+        "text": "chase sapphire reserve trip delay coverage contracted through eclaims is a scam."
+      },
+      {
+        "complaint_id": 12454991,
+        "issuer": "American Express",
+        "quarter": "2025-Q1",
+        "text": "Before purchasing a replacement ticket, I sought explicit confirmation from an American Express representative online that my situation qualified as a trip interruption under my cards travel insurance coverage."
+      }
+    ],
+    "dispute_fraud": [
+      {
+        "complaint_id": 6420633,
+        "issuer": "American Express",
+        "quarter": "2023-Q1",
+        "text": "They never did and now its showing on my credit file as fraud."
+      },
+      {
+        "complaint_id": 6425358,
+        "issuer": "Chase",
+        "quarter": "2023-Q1",
+        "text": "As nobody at the car rental company felt responsible for the issue, I disputed the charge with Chase."
+      },
+      {
+        "complaint_id": 6390452,
+        "issuer": "Capital One",
+        "quarter": "2023-Q1",
+        "text": "the capital one on mt credit is fraudulent it was not me I need this looked at as soon as possible"
+      }
+    ],
+    "customer_service": [
+      {
+        "complaint_id": 6406088,
+        "issuer": "American Express",
+        "quarter": "2023-Q1",
+        "text": "I have contacted customer service on more than ten occasions."
+      },
+      {
+        "complaint_id": 6434643,
+        "issuer": "Chase",
+        "quarter": "2023-Q1",
+        "text": "A representative stated that it was invalid, but she could override it and enter the change."
+      },
+      {
+        "complaint_id": 6464241,
+        "issuer": "Capital One",
+        "quarter": "2023-Q1",
+        "text": "Ultimately, they did not following their own rules and are not honoring the promises made on their website nor verbally by the multiple customer service reps I've spoken to."
+      }
+    ],
+    "credit_limit_account_closure": [
+      {
+        "complaint_id": 6422946,
+        "issuer": "American Express",
+        "quarter": "2023-Q1",
+        "text": "So now I'm basically in a situation where I may not have an american express card for some time as one account is closed and the other is still being processed."
+      },
+      {
+        "complaint_id": 6468767,
+        "issuer": "Chase",
+        "quarter": "2023-Q1",
+        "text": "I opened a checking and savings account in 2019 with Chase Bank, but both accounts were closed without any explanation to why my account was closed."
+      },
+      {
+        "complaint_id": 6545124,
+        "issuer": "Capital One",
+        "quarter": "2023-Q1",
+        "text": "Today I go to my accout on my capital one app and I see that my credit limit has been decreased."
+      }
+    ],
+    "billing": [
+      {
+        "complaint_id": 6397006,
+        "issuer": "American Express",
+        "quarter": "2023-Q1",
+        "text": "Amex told me they were open and too bad so sad on the penalty APR."
+      },
+      {
+        "complaint_id": 6431792,
+        "issuer": "Chase",
+        "quarter": "2023-Q1",
+        "text": "Now I have a hard pull on my credit report and didnt even get the credit card."
+      },
+      {
+        "complaint_id": 6418258,
+        "issuer": "Capital One",
+        "quarter": "2023-Q1",
+        "text": "CAPITAL ONE REPORTING FALSE ALLEGATIONS TO 3RD PARTIES ( CREDIT BUREAUS ) IS ALSO A VIOLATION OF MY FEDERAL RIGHTS."
+      }
+    ]
+  }
+}

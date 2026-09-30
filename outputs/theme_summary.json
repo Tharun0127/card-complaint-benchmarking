@@ -1,0 +1,15 @@
+{
+  "label_source": "keyword_fallback",
+  "label_source_description": "FALLBACK: keyword-seeded TF-IDF + logistic regression. Not LLM classification and not validated against human labels",
+  "sample_rows": 4436,
+  "sample_rows_by_issuer": {
+    "American Express": 1200,
+    "Chase": 900,
+    "Capital One": 480,
+    "Bank of America": 480,
+    "Synchrony": 480,
+    "Citi": 480,
+    "Discover": 416
+  },
+  "narratives_represented": 68835
+}
