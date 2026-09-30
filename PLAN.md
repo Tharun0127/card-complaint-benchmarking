@@ -17,7 +17,7 @@ Written before any analysis was run. Changes made along the way are listed at th
 |---|---|
 | CFPB narratives archive page | 21 zip exports, Dec 2011 to 14 Aug 2026. Files 4 to 21 cover Nov 2022 onward, about 955 MB zipped. |
 | Live complaint database API | Responds with HTTP 200 and structured fields (product, issue, sub-issue, company, response, timely). No narrative field in the response I tested. |
-| Anthropic API key | Not set in this environment. The LLM step is blocked until it is. |
+| LLM API key | Not set when the plan was written. The LLM step waited for it. |
 | Python | 3.11 available through the `py` launcher. |
 
 ## Data decisions
@@ -109,3 +109,6 @@ plain writing, no invented numbers.
   identity disputes and template letters.
 - **Headline numbers are generated.** `src/findings.py` computes each number once and `src/report.py` writes
   the memo and README from it.
+- **Gemini instead of Anthropic for the run.** The key that became available was a Google Gemini key, so the
+  classifier gained a second provider path. Gemini calls are ordinary requests, not batch, sent four at a time
+  with retries. The Anthropic batch path stays in the code and is covered by the same tests.

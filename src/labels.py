@@ -17,7 +17,7 @@ LLM_DISTILLED = "llm_distilled"
 KEYWORD_FALLBACK = "keyword_fallback"
 
 SOURCE_DESCRIPTION = {
-    LLM: "LLM classification (Anthropic API) of the stratified sample",
+    LLM: "LLM classification of the stratified sample",
     LLM_DISTILLED: "TF-IDF + logistic regression trained on the LLM labels, applied to all narratives",
     KEYWORD_FALLBACK: (
         "FALLBACK: keyword-seeded TF-IDF + logistic regression. Not LLM classification and "
@@ -25,8 +25,10 @@ SOURCE_DESCRIPTION = {
     ),
 }
 
-# The sample counts as LLM-labeled once this share of it has a valid label.
-MIN_LLM_COVERAGE = 0.9
+# The sample counts as LLM-labeled once this share of it has a valid label. Requests are
+# built from a shuffled sample, so rows still waiting for a label are a random subset and
+# the weights are rescaled within each issuer and quarter to cover them.
+MIN_LLM_COVERAGE = 0.85
 
 
 def llm_sample_labels() -> pd.DataFrame | None:

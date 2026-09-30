@@ -1,0 +1,31 @@
+group,name,mentions,label_source
+American Express,Platinum Card,55,llm
+American Express,Gold Card,35,llm
+American Express,Blue Cash Preferred,6,llm
+American Express,American Express Card,3,llm
+American Express,Business Gold Card,3,llm
+American Express,Business Platinum Card,3,llm
+American Express,Delta Skymiles credit card,3,llm
+American Express,Blue Card,2,llm
+American Express,Blue Cash Preferred Card,2,llm
+American Express,Delta SkyMiles Gold American Express Card,2,llm
+American Express,Green Card,2,llm
+American Express,Hilton Honors American Express Card,2,llm
+American Express,XXXX,2,llm
+American Express,AE Brilliant Card,1,llm
+American Express,Amex Card,1,llm
+Other six issuers,Sapphire Reserve,27,llm
+Other six issuers,Sapphire,22,llm
+Other six issuers,Sapphire Preferred,20,llm
+Other six issuers,Freedom,12,llm
+Other six issuers,Quicksilver,8,llm
+Other six issuers,CareCredit,7,llm
+Other six issuers,Venture X,7,llm
+Other six issuers,Costco Anywhere Visa,5,llm
+Other six issuers,Freedom Unlimited,5,llm
+Other six issuers,Home Depot Credit Card,5,llm
+Other six issuers,Best Buy credit card,4,llm
+Other six issuers,Chase Freedom,4,llm
+Other six issuers,PayPal MasterCard,4,llm
+Other six issuers,Venture,4,llm
+Other six issuers,Amazon Store Card,3,llm

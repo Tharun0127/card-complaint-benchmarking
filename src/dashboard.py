@@ -158,7 +158,7 @@ def text_blocks(f: dict) -> dict:
     else:
         banner = (
             "Section 2 and the quote grouping currently use a FALLBACK theme model (keyword-seeded TF-IDF + logistic "
-            "regression), because no Anthropic API key was available when this page was built. It is not LLM "
+            "regression), because no LLM API key was available when this page was built. It is not LLM "
             "classification and has not been validated against human labels. Sections 1 and 3 use CFPB fields and "
             "keyword counts and do not depend on it, except the measure marked 'theme model'.")
         theme_sub = (

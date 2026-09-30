@@ -1,0 +1,26 @@
+primary_theme,sentiment,share_pct,theme_label,label_source
+annual_fee,negative,58.95,Annual fee,llm
+annual_fee,very_negative,41.05,Annual fee,llm
+billing,negative,52.82,Billing,llm
+billing,neutral_or_mixed,3.53,Billing,llm
+billing,very_negative,43.65,Billing,llm
+credit_limit_account_closure,negative,27.66,Credit limit or account closure,llm
+credit_limit_account_closure,neutral_or_mixed,6.22,Credit limit or account closure,llm
+credit_limit_account_closure,very_negative,66.12,Credit limit or account closure,llm
+customer_service,negative,50.54,Customer service,llm
+customer_service,very_negative,49.46,Customer service,llm
+dispute_fraud,negative,42.53,Dispute or fraud,llm
+dispute_fraud,neutral_or_mixed,1.13,Dispute or fraud,llm
+dispute_fraud,very_negative,56.34,Dispute or fraud,llm
+insurance_protection_claim,negative,78.0,Insurance or protection claim,llm
+insurance_protection_claim,very_negative,22.0,Insurance or protection claim,llm
+lounge_travel_benefit,negative,34.65,Lounge or travel benefit,llm
+lounge_travel_benefit,very_negative,65.35,Lounge or travel benefit,llm
+other,negative,27.4,Other,llm
+other,neutral_or_mixed,38.62,Other,llm
+other,very_negative,33.98,Other,llm
+rewards_points,negative,38.44,Rewards and points,llm
+rewards_points,very_negative,61.56,Rewards and points,llm
+statement_credit_benefit,negative,56.8,Statement credit or benefit redemption,llm
+statement_credit_benefit,neutral_or_mixed,6.88,Statement credit or benefit redemption,llm
+statement_credit_benefit,very_negative,36.32,Statement credit or benefit redemption,llm

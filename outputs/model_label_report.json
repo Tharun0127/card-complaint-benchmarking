@@ -1,30 +1,32 @@
 {
   "narratives_labeled": 68835,
-  "training_rows": 18832,
-  "seed_rows_by_theme": {
-    "dispute_fraud": 6000,
-    "billing": 6000,
-    "customer_service": 2809,
-    "credit_limit_account_closure": 2044,
-    "rewards_points": 1413,
-    "annual_fee": 239,
-    "insurance_protection_claim": 160,
-    "statement_credit_benefit": 121,
-    "lounge_travel_benefit": 46
+  "training_rows": 3990,
+  "cv_agreement_with_llm": 0.826,
+  "cv_macro_f1_vs_llm": 0.691,
+  "cv_f1_by_theme": {
+    "annual_fee": 0.778,
+    "billing": 0.838,
+    "credit_limit_account_closure": 0.779,
+    "customer_service": 0.412,
+    "dispute_fraud": 0.888,
+    "insurance_protection_claim": 0.667,
+    "lounge_travel_benefit": 0.701,
+    "other": 0.349,
+    "rewards_points": 0.88,
+    "statement_credit_benefit": 0.618
   },
-  "narratives_matching_no_rule": 8789,
-  "note": "Keyword-seeded fallback. Not LLM classification. Not validated against human labels.",
-  "mode": "keyword_fallback",
+  "note": "Agreement is with LLM labels, not with human labels.",
+  "mode": "llm_distilled",
   "theme_share_pct": {
-    "dispute_fraud": 33.2,
-    "billing": 25.6,
-    "customer_service": 15.9,
-    "credit_limit_account_closure": 9.3,
-    "other": 6.8,
-    "rewards_points": 6.2,
-    "annual_fee": 1.6,
-    "statement_credit_benefit": 0.6,
-    "insurance_protection_claim": 0.5,
-    "lounge_travel_benefit": 0.1
+    "dispute_fraud": 37.0,
+    "billing": 30.8,
+    "credit_limit_account_closure": 19.9,
+    "rewards_points": 5.8,
+    "customer_service": 1.7,
+    "annual_fee": 1.3,
+    "lounge_travel_benefit": 1.1,
+    "statement_credit_benefit": 0.9,
+    "insurance_protection_claim": 0.7,
+    "other": 0.6
   }
 }

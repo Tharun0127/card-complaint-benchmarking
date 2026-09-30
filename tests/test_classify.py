@@ -99,10 +99,56 @@ def test_estimate_scales_with_rows_and_orders_scenarios():
     assert classify.scenario_cost(MODEL, 0, tokens, "high") == 0.0
 
 
-def test_missing_key_stops_before_any_api_call(monkeypatch, capsys):
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+@pytest.mark.parametrize("model, variable", [(MODEL, "ANTHROPIC_API_KEY"), ("gemini-3.8-flash", "GEMINI_API_KEY")])
+def test_missing_key_stops_before_any_api_call(monkeypatch, capsys, model, variable):
+    for name in ("ANTHROPIC_API_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY"):
+        monkeypatch.delenv(name, raising=False)
     monkeypatch.setattr(classify, "load_dotenv", lambda *a, **k: False)
     with pytest.raises(SystemExit) as exc:
-        classify.require_client()
+        classify.require_client(model)
     assert exc.value.code == classify.EXIT_NO_KEY
-    assert "ANTHROPIC_API_KEY is not set" in capsys.readouterr().out
+    assert f"{variable} is not set" in capsys.readouterr().out
+
+
+def test_send_pack_with_retry_records_api_errors_without_billing(monkeypatch):
+    def boom(*args, **kwargs):
+        raise RuntimeError("rate limited")
+
+    monkeypatch.setattr(classify, "send_pack", boom)
+    monkeypatch.setattr(classify.time, "sleep", lambda s: None)
+    pack = pd.DataFrame({"complaint_id": [5, 6], "narrative": ["a", "b"]})
+    records = classify.send_pack_with_retry(None, "gemini-3.8-flash", pack)
+    assert [r["status"] for r in records] == ["api_error", "api_error"]
+    assert all(r["input_tokens"] == 0 and r["output_tokens"] == 0 for r in records)
+    assert "rate limited" in records[0]["error"]
+
+
+def test_gemini_is_priced_at_list_price_with_no_cache_write_fee():
+    from costing import project_cost, usage_cost
+
+    assert not classify.PRICES["gemini-3.8-flash"].batch
+    # 1M input + 1M output at list price
+    assert usage_cost("gemini-3.8-flash", 1_000_000, 1_000_000, batch=False) == pytest.approx(4.50)
+    # a cache miss costs the same as plain input, so zero hits equals no caching at all
+    no_hits = project_cost("gemini-3.8-flash", 100, 2000, 3000, 500, cache_hit_rate=0.0)
+    assert no_hits == pytest.approx(100 * (5000 * 0.75 + 500 * 3.75) / 1e6)
+
+
+def test_daily_quota_error_stops_further_requests(monkeypatch):
+    calls = []
+
+    def quota(*args, **kwargs):
+        calls.append(1)
+        raise RuntimeError("429 quotaId: GenerateRequestsPerDayPerProjectPerModel-FreeTier")
+
+    monkeypatch.setattr(classify, "send_pack", quota)
+    monkeypatch.setattr(classify.time, "sleep", lambda s: None)
+    classify.DAILY_QUOTA_HIT.clear()
+    pack = pd.DataFrame({"complaint_id": [1], "narrative": ["a"]})
+    try:
+        first = classify.send_pack_with_retry(None, "gemini-3.6-flash", pack)
+        second = classify.send_pack_with_retry(None, "gemini-3.6-flash", pack)
+    finally:
+        classify.DAILY_QUOTA_HIT.clear()
+    assert len(calls) == 1  # no retry after a daily quota error, and no call at all afterwards
+    assert first[0]["status"] == second[0]["status"] == "api_error"

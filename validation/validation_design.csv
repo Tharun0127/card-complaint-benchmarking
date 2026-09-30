@@ -1,0 +1,11 @@
+theme,population_share,validation_rows
+annual_fee,0.011925432614605533,15
+billing,0.3011155264740507,15
+credit_limit_account_closure,0.1908826894131523,15
+customer_service,0.026173737356601095,15
+dispute_fraud,0.3562215526801673,15
+insurance_protection_claim,0.01077140602804459,15
+lounge_travel_benefit,0.012050219866522037,15
+other,0.014980881170736097,15
+rewards_points,0.06236075106376732,15
+statement_credit_benefit,0.013517803332353013,15

@@ -11,7 +11,7 @@ import sys
 import pandas as pd
 
 from config import OUTPUT_DIR, VALIDATION_DIR
-from costing import DEFAULT_BUDGET_USD
+from costing import DEFAULT_BUDGET_USD, PRICES
 from labels import KEYWORD_FALLBACK, LLM, SOURCE_DESCRIPTION, llm_sample_labels
 from run_sql import connect
 
@@ -121,9 +121,21 @@ def llm_facts() -> dict:
     estimate = _json("cost_estimate.json")
     validation = _json("validation_metrics.json")
     to_label = VALIDATION_DIR / "to_label.csv"
+    model = None if llm is None else str(llm["model"].iloc[0])
+    used = cache[(cache["model"] == model) & (cache["status"] != "api_error")] if model else cache.iloc[0:0]
+    prompt_tokens = float(used["input_tokens"].sum() + used["cache_read_tokens"].sum()) if len(used) else 0.0
     return {
         "labels_available": llm is not None,
-        "model": None if llm is None else str(llm["model"].iloc[0]),
+        "model": model,
+        "provider": None if model is None else PRICES[model].provider,
+        "batch_priced": None if model is None else PRICES[model].batch,
+        "sample_rows": int(len(pd.read_csv(OUTPUT_DIR / "sample_ids.csv"))),
+        "requests_sent": int(used["pack_id"].nunique()) if len(used) else 0,
+        "rows_without_valid_label": int((used["status"] != "ok").sum()) if len(used) else 0,
+        "avg_output_tokens_per_row": round(float(used["output_tokens"].mean()), 1) if len(used) else None,
+        "cache_read_share_of_input_pct": round(100 * float(used["cache_read_tokens"].sum()) / prompt_tokens, 1)
+        if prompt_tokens else None,
+        "narratives_cut_for_length": int(used["narrative_truncated"].fillna(False).sum()) if len(used) else 0,
         "rows_labeled": 0 if llm is None else len(llm),
         "rows_by_status": {} if cache.empty else cache["status"].value_counts().to_dict(),
         "api_spend_usd": round(spend_so_far(cache), 4) if not cache.empty else 0.0,
@@ -143,6 +155,14 @@ def build_fixes(f: dict) -> list[dict]:
     credit_mention = amex_ev["mention:statement_credit"]["12"]
     def z(x: float) -> str:  # avoid printing "-0.0"
         return f"{0.0 if abs(x) < 0.05 else x:.1f}"
+
+    def llm_line(theme: str) -> str:
+        """One sentence of LLM theme evidence, or nothing when the themes are not from the LLM."""
+        if not f["themes_are_llm"]:
+            return ""
+        t = next(r for r in f["themes"]["amex_vs_peers"] if r["theme"] == theme)
+        return (f" In the LLM theme labels, {t['theme_label'].lower()} is {t['amex_share_pct']:.1f}% of Amex "
+                f"narratives against {t['peers_share_pct']:.1f}% at peers.")
 
     return [
         {
@@ -170,6 +190,7 @@ def build_fixes(f: dict) -> list[dict]:
                 f"{rewards['keywords']['welcome_offer']['amex_pct']:.0f}% of the Amex narratives are about a welcome or "
                 f"bonus offer and {rewards['keywords']['points_lost']['amex_pct']:.0f}% about points being forfeited or "
                 f"taken back. Monetary relief: Amex {rewards['amex_relief_pct']:.1f}%, peers {rewards['peers_relief_pct']:.1f}%."
+                + llm_line("rewards_points")
             ),
         },
         {
@@ -185,6 +206,7 @@ def build_fixes(f: dict) -> list[dict]:
                 f"{fee_mention['treated_post_pct']:.0f}% of all Amex narratives mention the annual fee against "
                 f"{fee_mention['control_post_pct']:.0f}% at comparison issuers. The rate did not rise after the Platinum "
                 "refresh, so this is a standing issue, and existing members only began renewing at the new fee in January 2026."
+                + llm_line("annual_fee")
             ),
         },
         {
@@ -198,7 +220,7 @@ def build_fixes(f: dict) -> list[dict]:
                 f"{credit_mention['control_post_pct']:.1f}% (difference in differences "
                 f"{credit_mention['did_pts']:+.1f} pts, 95% interval {z(credit_mention['did_ci_low_pts'])} to "
                 f"{credit_mention['did_ci_high_pts']:.1f}). An early signal on small numbers, worth watching as the "
-                "refreshed card adds more credits."
+                "refreshed card adds more credits." + llm_line("statement_credit_benefit")
             ),
         },
         {

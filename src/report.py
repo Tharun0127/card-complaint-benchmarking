@@ -70,14 +70,21 @@ def llm_status(f: dict) -> dict:
                       "`src/validation.py` is written and tested and will build the 150-row file after the LLM run.")
     if f["themes_are_llm"]:
         distill = llm.get("distill_report") or {}
-        state = (f"{llm['rows_labeled']:,} narratives were classified with `{llm['model']}`. "
-                 f"API spend: USD {llm['api_spend_usd']:.2f} against a USD {llm['budget_usd']:.0f} budget.")
+        pending = llm["sample_rows"] - llm["rows_labeled"]
+        state = (f"{llm['rows_labeled']:,} of {llm['sample_rows']:,} sampled narratives were classified with "
+                 f"`{llm['model']}` in {llm['requests_sent']:,} requests. API usage at list price: "
+                 f"USD {llm['api_spend_usd']:.2f} against a USD {llm['budget_usd']:.0f} budget (the key is on the "
+                 "provider's free tier, so the amount billed may be lower).")
+        if pending:
+            state += (f" The other {pending:,} rows have no label yet because the free tier's daily request limit "
+                      "was reached. They are a random subset, the weights are rescaled to cover them, and rerunning "
+                      "the classifier continues from the cache.")
         if distill.get("cv_agreement_with_llm") is not None:
             state += (f" A TF-IDF + logistic regression model trained on those labels agrees with the LLM on "
                       f"{100 * distill['cv_agreement_with_llm']:.0f}% of held-out rows and is used only to label every "
                       "narrative for the monthly event study series.")
     else:
-        state = ("The LLM run has not been executed yet, because no Anthropic API key was available in the build "
+        state = ("The LLM run has not been executed yet, because no LLM API key was available in the build "
                  "environment. API spend so far: USD 0.00. The classifier, cache, budget guard and tests are in place. "
                  "Theme results shown today come from the fallback model (keyword-seeded TF-IDF + logistic "
                  "regression) and are labeled as such everywhere they appear.")
@@ -89,7 +96,20 @@ def llm_status(f: dict) -> dict:
     else:
         short = ("The LLM theme classification has not been run yet (no API key), so nothing in this memo depends "
                  "on it. The findings above use CFPB fields and keyword counts.")
-    return {"state": state, "validation": validation, "short": short, "estimate_table": "\n".join(est_lines),
+    if llm.get("provider") == "gemini":
+        how = ("Requests use schema-constrained JSON output, eight complaints per request matched back by id, low "
+               "thinking effort, and ordinary (non-batch) calls sent four at a time with retries.")
+        levers = ("Cost levers: eight complaints per request so the shared instructions are paid once per eight, "
+                  "low thinking effort, and a small fast model. Provider-side caching did not apply: "
+                  f"{llm['cache_read_share_of_input_pct']:.0f}% of input tokens were billed at the cached rate. "
+                  "Explicit prompt caching and half-price batch requests are implemented on the Anthropic path.")
+    else:
+        how = ("Requests use structured JSON output, the Message Batches API, prompt caching, and eight complaints "
+               "per request matched back by id.")
+        levers = ("Cost levers: Message Batches API (half price), prompt caching on the shared instructions, and "
+                  "eight complaints per request so the instructions are paid once per eight.")
+    return {"state": state, "validation": validation, "short": short, "how": how, "levers": levers,
+            "estimate_table": "\n".join(est_lines),
             "estimate_method": est.get("token_method", ""), "sample_rows": est.get("sample_rows"),
             "requests": est.get("requests"), "pack": est.get("complaints_per_request")}
 
@@ -170,6 +190,10 @@ def readme(f: dict, tests: str) -> str:
     status = llm_status(f)
     theme_heading = ("Theme mix from LLM classification" if f["themes_are_llm"]
                      else "Theme mix (provisional, fallback model)")
+    theme_image = ("![Theme mix: American Express against the other six issuers](docs/img/dashboard_themes.png)
+
+"
+                   if f["themes_are_llm"] else "")
     theme_note = (
         f"Weighted shares from {f['themes']['sample_rows']:,} classified narratives." if f["themes_are_llm"] else
         f"These shares come from the fallback model on {f['themes']['sample_rows']:,} sampled narratives, not from the "
@@ -254,7 +278,7 @@ flowchart LR
 
 1. **Data.** The CFPB stopped publishing narratives on 14 August 2026 and keeps an archive. The 18 archive files covering 2023 onward were downloaded and filtered to credit card products and the seven issuers using exact strings read from the data. The live API still serves structured fields and was used only as a cross-check.
 2. **Benchmark.** Issuers are compared on complaint mix (shares), not raw counts. Purchase volume from 10-K filings is shown as a scale check only, because the definitions differ (consumer only or with small business, general purpose or private label). On that rough basis Amex had {vol['amex_per_usd_bn']:.1f} complaints per USD 1 billion in {vol['year']}, second lowest of seven.
-3. **LLM classification.** A stratified sample of {f['themes']['sample_rows']:,} narratives (by issuer and quarter, larger cells for Amex and Chase) is classified into ten membership themes with sentiment, named benefits and named card product. The model sees only the narrative text. Requests use structured JSON output, the Message Batches API, prompt caching, and eight complaints per request matched back by id.
+3. **LLM classification.** A stratified sample of {f['themes']['sample_rows']:,} narratives (by issuer and quarter, larger cells for Amex and Chase) is classified into ten membership themes with sentiment, named benefits and named card product. The model sees only the narrative text. {status['how']}
 4. **Validation.** 150 rows, spread across predicted themes, are pre-labeled and written to `validation/to_label.csv` for hand review. `src/validation.py score` reports agreement, Cohen's kappa, and precision and recall per theme. Unreviewed rows never count as agreement.
 5. **Event study.** Difference in differences on shares, Chase and Amex each against five issuers with no refresh, over 6 and 12 month windows, with a placebo range from treating each comparison issuer as if it had the event. Three lenses: CFPB sub-issues, keyword mentions, and the theme model.
 
@@ -264,7 +288,7 @@ flowchart LR
 
 **Validation.** {status['validation']}
 
-**Projected cost** for {status['sample_rows']:,} narratives in {status['requests']:,} requests ({status['pack']} per request), in USD at batch prices. Token counts: {status['estimate_method']}.
+**Estimate made before the run** for {status['sample_rows']:,} narratives in {status['requests']:,} requests ({status['pack']} per request), in USD. Claude models are priced through the batch API, Gemini models at list price. Token counts: {status['estimate_method']}.
 
 {status['estimate_table']}
 
@@ -274,7 +298,7 @@ The classifier refuses to send anything that could take total spend past USD 10.
 
 {theme_note}
 
-{theme_rows(f)}
+{theme_image}{theme_rows(f)}
 
 ## Limitations
 
@@ -292,7 +316,7 @@ The classifier refuses to send anything that could take total spend past USD 10.
 py -3.11 -m venv .venv
 .venv\\Scripts\\python -m pip install -r requirements.txt
 .venv\\Scripts\\python run_all.py              # no API calls: uses cached labels, or the fallback model
-.venv\\Scripts\\python run_all.py --classify   # needs ANTHROPIC_API_KEY, stops at the USD 10 budget
+.venv\\Scripts\\python run_all.py --classify   # needs GEMINI_API_KEY in .env, stops at the USD 10 budget
 .venv\\Scripts\\python -m pytest
 ```
 
@@ -365,10 +389,11 @@ gives a ranked list of fixes, led by welcome offer eligibility clarity.
 
 - Sample, not census: {f['themes']['sample_rows']:,} of {d['narratives']:,} narratives, stratified by issuer and quarter,
   with larger cells for Amex and Chase because the decisions are about them. Weights restore issuer-level shares.
-- Three cost levers: Message Batches API (half price), prompt caching on the shared instructions, and eight
-  complaints per request so the instructions are paid once per eight. Labels are matched back by id, never by position.
-- Projected cost by model: Opus 5.5 {rng('claude-opus-5-5')}, Sonnet 5.5 {rng('claude-sonnet-5-5')},
-  Haiku 4.5 {rng('claude-haiku-4-5')}. Budget USD {f['llm']['budget_usd']:.0f}.
+- {status['levers']} Labels are matched back by id, never by position.
+- The classifier has two provider paths, Gemini and Anthropic, behind one function. The first Gemini model I
+  picked was returning 503 errors, so I switched to the same-priced model one version back and added retries.
+- Estimated cost before the run: Gemini 3.6 Flash {rng('gemini-3.6-flash')}, Claude Sonnet 5.5
+  {rng('claude-sonnet-5-5')}, Claude Opus 5.5 {rng('claude-opus-5-5')}. Budget USD {f['llm']['budget_usd']:.0f}.
 - Budget guard: the run is chunked, real token use is measured after the first chunk, and it stops before the
   projection crosses the budget. Spend to date: USD {f['llm']['api_spend_usd']:.2f}.
 - Cache: labels are stored by complaint id, model and prompt version. Reruns cost nothing.
@@ -458,7 +483,7 @@ def resume(f: dict) -> str:
     elif f["themes_are_llm"]:
         bullets.append(
             f"Classified {llm['rows_labeled']:,} complaint narratives into 10 membership themes with an LLM for "
-            f"USD {llm['api_spend_usd']:.2f} using batching, caching and a budget guard.")
+            f"USD {llm['api_spend_usd']:.2f} at list price, using schema-checked output and a hard budget guard.")
     else:
         bullets.append(
             f"Built a difference-in-differences event study of two 2025 premium card refreshes; Chase fee and "

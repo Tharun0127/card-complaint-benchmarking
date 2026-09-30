@@ -16,7 +16,7 @@ so far. The Chase Sapphire Reserve refresh did raise Chase's.
 and 2.8% of peer complaints (2.5x). Rewards problems are
 6.3% against 3.2% (2.0x).
 Amex is under-indexed on unauthorized charges and payment processing. Amex closes 14.9%
-of complaints with monetary relief, which ranks 4 of 7. 
+of complaints with monetary relief, which ranks 4 of 7. In the LLM theme labels, Amex is furthest above peers on rewards and points (+5.4 points) and statement credit or benefit redemption (+3.7 points).
 
 **2. After the refreshes.** In the 12 months after the Sapphire Reserve refresh, fee, rewards and promotional
 terms complaints went from 16.6% to 20.0% of Chase complaints
@@ -41,7 +41,7 @@ not causal, and existing Platinum members only started renewing at USD 895 in Ja
 - Complaints are self-selected. They show what goes wrong badly enough to escalate, not how often it goes wrong.
 - Shares are compared instead of rates, because issuers' purchase volumes are not defined the same way.
 - The CFPB does not record the card product, so product-level claims rest on keyword mentions in narratives.
-- The LLM theme classification has not been run yet (no API key), so nothing in this memo depends on it. The findings above use CFPB fields and keyword counts.
+- LLM theme labels are in place but have not been checked by hand yet.
 
 ## Next step
 

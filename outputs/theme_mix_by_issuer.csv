@@ -1,71 +1,71 @@
 issuer,theme,theme_label,sample_rows,issuer_sample_rows,share_pct,ci_low_pct,ci_high_pct,label_source
-American Express,annual_fee,Annual fee,65,1200,5.11,3.98,6.58,keyword_fallback
-American Express,statement_credit_benefit,Statement credit or benefit redemption,20,1200,1.35,0.82,2.21,keyword_fallback
-American Express,rewards_points,Rewards and points,135,1200,11.47,9.77,13.52,keyword_fallback
-American Express,lounge_travel_benefit,Lounge or travel benefit,2,1200,0.17,0.05,0.65,keyword_fallback
-American Express,insurance_protection_claim,Insurance or protection claim,10,1200,0.95,0.55,1.76,keyword_fallback
-American Express,dispute_fraud,Dispute or fraud,394,1200,32.96,30.21,35.73,keyword_fallback
-American Express,customer_service,Customer service,182,1200,14.97,12.95,17.14,keyword_fallback
-American Express,credit_limit_account_closure,Credit limit or account closure,74,1200,6.09,4.85,7.68,keyword_fallback
-American Express,billing,Billing,220,1200,18.49,16.35,20.92,keyword_fallback
-American Express,other,Other,98,1200,8.43,6.96,10.23,keyword_fallback
-Bank of America,annual_fee,Annual fee,1,480,0.24,0.04,1.25,keyword_fallback
-Bank of America,statement_credit_benefit,Statement credit or benefit redemption,1,480,0.2,0.04,1.25,keyword_fallback
-Bank of America,rewards_points,Rewards and points,31,480,6.52,4.51,9.08,keyword_fallback
-Bank of America,lounge_travel_benefit,Lounge or travel benefit,0,480,0.0,0.0,0.84,keyword_fallback
-Bank of America,insurance_protection_claim,Insurance or protection claim,1,480,0.29,0.04,1.25,keyword_fallback
-Bank of America,dispute_fraud,Dispute or fraud,206,480,44.01,39.39,48.52,keyword_fallback
-Bank of America,customer_service,Customer service,78,480,16.0,12.87,19.63,keyword_fallback
-Bank of America,credit_limit_account_closure,Credit limit or account closure,30,480,5.84,3.96,8.31,keyword_fallback
-Bank of America,billing,Billing,105,480,21.4,17.76,25.3,keyword_fallback
-Bank of America,other,Other,27,480,5.52,3.78,8.05,keyword_fallback
-Capital One,annual_fee,Annual fee,4,480,0.71,0.23,1.99,keyword_fallback
-Capital One,statement_credit_benefit,Statement credit or benefit redemption,4,480,1.02,0.35,2.32,keyword_fallback
-Capital One,rewards_points,Rewards and points,39,480,7.93,5.79,10.89,keyword_fallback
-Capital One,lounge_travel_benefit,Lounge or travel benefit,1,480,0.05,0.0,0.87,keyword_fallback
-Capital One,insurance_protection_claim,Insurance or protection claim,1,480,0.18,0.04,1.28,keyword_fallback
-Capital One,dispute_fraud,Dispute or fraud,141,480,29.26,25.32,33.81,keyword_fallback
-Capital One,customer_service,Customer service,73,480,16.01,12.82,19.66,keyword_fallback
-Capital One,credit_limit_account_closure,Credit limit or account closure,34,480,7.15,5.02,9.85,keyword_fallback
-Capital One,billing,Billing,144,480,29.99,25.97,34.52,keyword_fallback
-Capital One,other,Other,39,480,7.71,5.59,10.63,keyword_fallback
-Chase,annual_fee,Annual fee,20,900,2.25,1.45,3.51,keyword_fallback
-Chase,statement_credit_benefit,Statement credit or benefit redemption,10,900,1.19,0.65,2.18,keyword_fallback
-Chase,rewards_points,Rewards and points,101,900,11.17,9.24,13.52,keyword_fallback
-Chase,lounge_travel_benefit,Lounge or travel benefit,2,900,0.24,0.07,0.86,keyword_fallback
-Chase,insurance_protection_claim,Insurance or protection claim,16,900,1.62,1.0,2.78,keyword_fallback
-Chase,dispute_fraud,Dispute or fraud,318,900,35.27,32.12,38.57,keyword_fallback
-Chase,customer_service,Customer service,133,900,14.48,12.32,17.09,keyword_fallback
-Chase,credit_limit_account_closure,Credit limit or account closure,65,900,7.09,5.6,9.1,keyword_fallback
-Chase,billing,Billing,176,900,19.97,17.46,22.87,keyword_fallback
-Chase,other,Other,59,900,6.72,5.18,8.57,keyword_fallback
-Citi,annual_fee,Annual fee,8,480,1.76,0.92,3.51,keyword_fallback
-Citi,statement_credit_benefit,Statement credit or benefit redemption,0,480,0.0,0.0,0.86,keyword_fallback
-Citi,rewards_points,Rewards and points,21,480,4.24,2.76,6.59,keyword_fallback
-Citi,lounge_travel_benefit,Lounge or travel benefit,0,480,0.0,0.0,0.86,keyword_fallback
-Citi,insurance_protection_claim,Insurance or protection claim,0,480,0.0,0.0,0.86,keyword_fallback
-Citi,dispute_fraud,Dispute or fraud,166,480,34.26,29.97,38.77,keyword_fallback
-Citi,customer_service,Customer service,94,480,20.45,17.0,24.5,keyword_fallback
-Citi,credit_limit_account_closure,Credit limit or account closure,47,480,9.53,7.07,12.54,keyword_fallback
-Citi,billing,Billing,116,480,23.95,20.14,28.05,keyword_fallback
-Citi,other,Other,28,480,5.82,4.03,8.44,keyword_fallback
-Discover,annual_fee,Annual fee,0,416,0.0,0.0,0.93,keyword_fallback
-Discover,statement_credit_benefit,Statement credit or benefit redemption,0,416,0.0,0.0,0.93,keyword_fallback
-Discover,rewards_points,Rewards and points,1,416,0.23,0.04,1.37,keyword_fallback
-Discover,lounge_travel_benefit,Lounge or travel benefit,0,416,0.0,0.0,0.93,keyword_fallback
-Discover,insurance_protection_claim,Insurance or protection claim,0,416,0.0,0.0,0.93,keyword_fallback
-Discover,dispute_fraud,Dispute or fraud,181,416,43.55,38.8,48.36,keyword_fallback
-Discover,customer_service,Customer service,38,416,8.92,6.43,11.95,keyword_fallback
-Discover,credit_limit_account_closure,Credit limit or account closure,43,416,10.0,7.48,13.32,keyword_fallback
-Discover,billing,Billing,112,416,27.24,23.06,31.65,keyword_fallback
-Discover,other,Other,41,416,10.07,7.48,13.32,keyword_fallback
-Synchrony,annual_fee,Annual fee,0,480,0.0,0.0,0.87,keyword_fallback
-Synchrony,statement_credit_benefit,Statement credit or benefit redemption,0,480,0.0,0.0,0.87,keyword_fallback
-Synchrony,rewards_points,Rewards and points,19,480,3.88,2.43,6.1,keyword_fallback
-Synchrony,lounge_travel_benefit,Lounge or travel benefit,0,480,0.0,0.0,0.87,keyword_fallback
-Synchrony,insurance_protection_claim,Insurance or protection claim,0,480,0.0,0.0,0.87,keyword_fallback
-Synchrony,dispute_fraud,Dispute or fraud,103,480,22.13,18.42,26.15,keyword_fallback
-Synchrony,customer_service,Customer service,78,480,15.5,12.38,19.13,keyword_fallback
-Synchrony,credit_limit_account_closure,Credit limit or account closure,68,480,14.22,11.35,17.9,keyword_fallback
-Synchrony,billing,Billing,181,480,37.91,33.54,42.57,keyword_fallback
-Synchrony,other,Other,31,480,6.35,4.44,9.04,keyword_fallback
+American Express,annual_fee,Annual fee,50,1078,4.27,3.19,5.71,llm
+American Express,statement_credit_benefit,Statement credit or benefit redemption,51,1078,4.6,3.45,6.05,llm
+American Express,rewards_points,Rewards and points,120,1078,11.01,9.25,13.13,llm
+American Express,lounge_travel_benefit,Lounge or travel benefit,25,1078,2.31,1.53,3.41,llm
+American Express,insurance_protection_claim,Insurance or protection claim,17,1078,1.86,1.21,2.93,llm
+American Express,dispute_fraud,Dispute or fraud,315,1078,29.85,27.1,32.75,llm
+American Express,customer_service,Customer service,22,1078,1.98,1.29,3.05,llm
+American Express,credit_limit_account_closure,Credit limit or account closure,206,1078,18.8,16.51,21.34,llm
+American Express,billing,Billing,250,1078,23.3,20.78,26.0,llm
+American Express,other,Other,22,1078,2.01,1.29,3.05,llm
+Bank of America,annual_fee,Annual fee,0,415,0.0,0.0,0.98,llm
+Bank of America,statement_credit_benefit,Statement credit or benefit redemption,1,415,0.2,0.05,1.45,llm
+Bank of America,rewards_points,Rewards and points,19,415,4.42,2.76,6.92,llm
+Bank of America,lounge_travel_benefit,Lounge or travel benefit,0,415,0.0,0.0,0.98,llm
+Bank of America,insurance_protection_claim,Insurance or protection claim,6,415,1.61,0.71,3.34,llm
+Bank of America,dispute_fraud,Dispute or fraud,191,415,48.59,43.64,53.55,llm
+Bank of America,customer_service,Customer service,12,415,2.38,1.23,4.36,llm
+Bank of America,credit_limit_account_closure,Credit limit or account closure,67,415,16.15,12.94,20.29,llm
+Bank of America,billing,Billing,117,415,26.2,21.97,30.69,llm
+Bank of America,other,Other,2,415,0.45,0.14,1.86,llm
+Capital One,annual_fee,Annual fee,4,429,0.69,0.26,2.24,llm
+Capital One,statement_credit_benefit,Statement credit or benefit redemption,2,429,0.48,0.14,1.86,llm
+Capital One,rewards_points,Rewards and points,33,429,7.76,5.46,10.8,llm
+Capital One,lounge_travel_benefit,Lounge or travel benefit,5,429,1.38,0.55,2.97,llm
+Capital One,insurance_protection_claim,Insurance or protection claim,3,429,0.53,0.14,1.86,llm
+Capital One,dispute_fraud,Dispute or fraud,136,429,31.14,26.71,35.87,llm
+Capital One,customer_service,Customer service,10,429,2.64,1.4,4.67,llm
+Capital One,credit_limit_account_closure,Credit limit or account closure,95,429,21.62,17.79,25.95,llm
+Capital One,billing,Billing,131,429,31.17,26.71,35.87,llm
+Capital One,other,Other,10,429,2.58,1.4,4.67,llm
+Chase,annual_fee,Annual fee,13,817,1.73,1.07,2.98,llm
+Chase,statement_credit_benefit,Statement credit or benefit redemption,22,817,2.84,1.87,4.22,llm
+Chase,rewards_points,Rewards and points,72,817,9.03,7.26,11.3,llm
+Chase,lounge_travel_benefit,Lounge or travel benefit,22,817,2.49,1.56,3.76,llm
+Chase,insurance_protection_claim,Insurance or protection claim,21,817,2.35,1.46,3.61,llm
+Chase,dispute_fraud,Dispute or fraud,327,817,39.84,36.52,43.37,llm
+Chase,customer_service,Customer service,14,817,1.68,0.97,2.82,llm
+Chase,credit_limit_account_closure,Credit limit or account closure,147,817,18.45,15.85,21.28,llm
+Chase,billing,Billing,170,817,20.45,17.78,23.43,llm
+Chase,other,Other,9,817,1.12,0.61,2.17,llm
+Citi,annual_fee,Annual fee,6,433,1.36,0.53,2.89,llm
+Citi,statement_credit_benefit,Statement credit or benefit redemption,3,433,0.63,0.25,2.18,llm
+Citi,rewards_points,Rewards and points,20,433,4.57,2.86,6.98,llm
+Citi,lounge_travel_benefit,Lounge or travel benefit,6,433,1.42,0.69,3.23,llm
+Citi,insurance_protection_claim,Insurance or protection claim,1,433,0.33,0.04,1.4,llm
+Citi,dispute_fraud,Dispute or fraud,169,433,38.85,34.26,43.76,llm
+Citi,customer_service,Customer service,21,433,5.26,3.45,7.87,llm
+Citi,credit_limit_account_closure,Credit limit or account closure,76,433,17.51,14.05,21.48,llm
+Citi,billing,Billing,127,433,29.19,24.94,33.81,llm
+Citi,other,Other,4,433,0.87,0.25,2.18,llm
+Discover,annual_fee,Annual fee,1,389,0.21,0.05,1.49,llm
+Discover,statement_credit_benefit,Statement credit or benefit redemption,1,389,0.35,0.05,1.49,llm
+Discover,rewards_points,Rewards and points,4,389,1.08,0.42,2.71,llm
+Discover,lounge_travel_benefit,Lounge or travel benefit,0,389,0.0,0.0,1.01,llm
+Discover,insurance_protection_claim,Insurance or protection claim,0,389,0.0,0.0,1.01,llm
+Discover,dispute_fraud,Dispute or fraud,190,389,48.57,43.52,53.58,llm
+Discover,customer_service,Customer service,8,389,2.08,1.08,4.15,llm
+Discover,credit_limit_account_closure,Credit limit or account closure,77,389,19.42,15.78,23.78,llm
+Discover,billing,Billing,97,389,25.3,21.2,29.97,llm
+Discover,other,Other,11,389,3.0,1.65,5.18,llm
+Synchrony,annual_fee,Annual fee,1,429,0.19,0.04,1.42,llm
+Synchrony,statement_credit_benefit,Statement credit or benefit redemption,3,429,0.93,0.4,2.58,llm
+Synchrony,rewards_points,Rewards and points,14,429,3.4,1.94,5.56,llm
+Synchrony,lounge_travel_benefit,Lounge or travel benefit,0,429,0.0,0.0,0.97,llm
+Synchrony,insurance_protection_claim,Insurance or protection claim,5,429,1.11,0.4,2.58,llm
+Synchrony,dispute_fraud,Dispute or fraud,111,429,25.72,21.57,30.17,llm
+Synchrony,customer_service,Customer service,5,429,1.02,0.4,2.58,llm
+Synchrony,credit_limit_account_closure,Credit limit or account closure,89,429,19.97,16.39,24.28,llm
+Synchrony,billing,Billing,197,429,46.77,41.83,51.64,llm
+Synchrony,other,Other,4,429,0.88,0.26,2.21,llm

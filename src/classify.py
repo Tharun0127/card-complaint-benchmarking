@@ -1,4 +1,8 @@
-"""LLM classification of complaint narratives with the Anthropic API.
+"""LLM classification of complaint narratives.
+
+Two providers are supported and chosen by the model name (CLASSIFY_MODEL):
+  gemini-*   Google Gemini API, ordinary requests sent a few at a time (needs GEMINI_API_KEY)
+  claude-*   Anthropic API through Message Batches (needs ANTHROPIC_API_KEY)
 
 Commands
   estimate   Project token use and cost for the sample. Makes no billable calls.
@@ -10,9 +14,10 @@ Commands
 Cost controls
   - Results are cached in outputs/llm_labels.jsonl keyed by complaint id, model and
     prompt version. A rerun only sends rows that are not in the cache.
-  - Three levers keep the unit cost down: the Message Batches API (half price), prompt
-    caching on the shared system prompt, and packing PACK_SIZE complaints into each
-    request so the system prompt and any thinking are paid once per pack.
+  - Cost levers: PACK_SIZE complaints are packed into each request so the shared
+    instructions and any thinking are paid once per pack, the shared instructions are
+    cached by the provider, and low thinking effort is requested. Anthropic models also
+    go through the Message Batches API at half price.
   - `run` sends the sample in chunks. Before each chunk it checks two things against the
     budget (USD 10 unless --budget is raised on purpose): the worst case for that chunk,
     and the projection for everything left using token use measured so far. If either
@@ -26,6 +31,9 @@ import math
 import os
 import sys
 import time
+import threading
+from concurrent.futures import ThreadPoolExecutor
+from types import SimpleNamespace
 from pathlib import Path
 
 import pandas as pd
@@ -36,7 +44,10 @@ from costing import DEFAULT_BUDGET_USD, PRICES, project_cost, usage_cost, within
 from prompts import MAX_NARRATIVE_CHARS, PROMPT_VERSION, SYSTEM_PROMPT, build_user_message
 from taxonomy import OUTPUT_SCHEMA, TaxonomyError, parse_pack
 
-DEFAULT_MODEL = "claude-opus-5-5"
+DEFAULT_MODEL = "gemini-3.5-flash-lite"
+KEY_VARS = {"anthropic": ("ANTHROPIC_API_KEY",), "gemini": ("GEMINI_API_KEY", "GOOGLE_API_KEY")}
+SYNC_WORKERS = 4
+SYNC_RETRIES = 4
 PACK_SIZE = 8
 MAX_TOKENS = 4000  # per pack, and includes thinking tokens on models that think
 PACK_SEED = 17
@@ -61,24 +72,41 @@ SCENARIOS = {
 
 EXIT_NO_KEY = 3
 EXIT_OVER_BUDGET = 2
+EXIT_DAILY_QUOTA = 4
+# Set when the provider reports that the daily request quota is used up. Nothing more is sent after that.
+DAILY_QUOTA_HIT = threading.Event()
 
 
 def model_name() -> str:
     return os.environ.get("CLASSIFY_MODEL", DEFAULT_MODEL)
 
 
-def has_api_key() -> bool:
+def provider(model: str) -> str:
+    return PRICES[model].provider
+
+
+def api_key(model: str) -> str | None:
     load_dotenv(ROOT / ".env")
-    return bool(os.environ.get("ANTHROPIC_API_KEY"))
+    return next((os.environ[v] for v in KEY_VARS[provider(model)] if os.environ.get(v)), None)
 
 
-def require_client():
-    if not has_api_key():
+def has_api_key(model: str | None = None) -> bool:
+    return bool(api_key(model or model_name()))
+
+
+def require_client(model: str | None = None):
+    model = model or model_name()
+    key = api_key(model)
+    if not key:
         print(
-            "ANTHROPIC_API_KEY is not set. Set it in the environment or in a .env file at "
+            f"{KEY_VARS[provider(model)][0]} is not set. Set it in the environment or in a .env file at "
             "the project root, then rerun. No API call was made."
         )
         sys.exit(EXIT_NO_KEY)
+    if provider(model) == "gemini":
+        from google import genai
+
+        return genai.Client(api_key=key)
     import anthropic
 
     return anthropic.Anthropic()
@@ -183,13 +211,13 @@ def spend_so_far(cache: pd.DataFrame | None = None) -> float:
 
 
 def measured_cost_per_row(model: str, cache: pd.DataFrame | None = None) -> float | None:
-    """Average batch-price cost per complaint from real usage, once 40 or more rows exist."""
+    """Average cost per complaint from real usage, once 40 or more rows exist."""
     cache = load_cache() if cache is None else cache
     billed = current(cache, model)
     billed = billed[billed["status"] != "api_error"]
     if len(billed) < 40:
         return None
-    return usage_cost(model, *(billed[c].sum() for c in USAGE_COLS), batch=True) / len(billed)
+    return usage_cost(model, *(billed[c].sum() for c in USAGE_COLS), batch=PRICES[model].batch) / len(billed)
 
 
 # --- estimate ---------------------------------------------------------------------------
@@ -220,7 +248,7 @@ def token_inputs(sample: pd.DataFrame, client=None, model: str | None = None) ->
     return {
         "system_tokens": int(len(SYSTEM_PROMPT) / CHARS_PER_TOKEN),
         "avg_user_tokens": avg_chars / CHARS_PER_TOKEN + PACK_OVERHEAD_TOKENS,
-        "method": f"heuristic of {CHARS_PER_TOKEN} characters per token (no API key, so tokens were not counted)",
+        "method": f"estimated at {CHARS_PER_TOKEN} characters per token, not counted by the API",
     }
 
 
@@ -243,34 +271,35 @@ def build_estimate(sample: pd.DataFrame, n_remaining: dict[str, int], tokens: di
         "avg_user_tokens_per_request": round(tokens["avg_user_tokens"], 1),
         "narratives_cut_for_length": int((sample["narrative"].str.len() > MAX_NARRATIVE_CHARS).sum()),
         "budget_usd": DEFAULT_BUDGET_USD,
+        "selected_model": model_name(),
         "scenarios": SCENARIOS,
         "models": {},
     }
     cache = load_cache()
     for model, price in PRICES.items():
         n = n_remaining[model]
-        scenarios = {name: round(scenario_cost(model, n, tokens, name), 2) for name in SCENARIOS}
+        scenarios = {name: round(scenario_cost(model, len(sample), tokens, name), 2) for name in SCENARIOS}
         entry = {
             "rows_not_in_cache": n,
             "system_prompt_long_enough_to_cache": tokens["system_tokens"] >= price.min_cacheable_tokens,
+            "pricing": "batch, half price" if price.batch else "ordinary requests, list price",
             "batch_cost_usd": scenarios,
             "within_budget_in_every_scenario": scenarios["high"] <= DEFAULT_BUDGET_USD,
         }
         measured = measured_cost_per_row(model, cache)
         if measured is not None:
             entry["measured_cost_per_row_usd"] = round(measured, 5)
-            entry["projection_from_measured_usd"] = round(measured * n, 2)
+            entry["full_sample_cost_from_measured_usd"] = round(measured * len(sample), 2)
         out["models"][model] = entry
     return out
 
 
 def cmd_estimate(args) -> int:
     sample = load_sample()
+    # Tokens are counted with the Anthropic API when that key is present, otherwise estimated.
     client = None
-    if has_api_key():
-        import anthropic
-
-        client = anthropic.Anthropic()
+    if provider(model_name()) == "anthropic" and has_api_key():
+        client = require_client()
     tokens = token_inputs(sample, client, model_name() if client else None)
     remaining = {m: len(set(sample["complaint_id"]) - cached_ids(m)) for m in PRICES}
     est = build_estimate(sample, remaining, tokens)
@@ -281,12 +310,85 @@ def cmd_estimate(args) -> int:
 
 
 # --- pilot ------------------------------------------------------------------------------
-def classify_now(client, model: str, packs: list[pd.DataFrame], mode: str) -> None:
-    for pack in packs:
+def send_gemini(client, model: str, pack: pd.DataFrame):
+    """One Gemini request, returned in the same shape as an Anthropic message."""
+    from google.genai import types
+
+    user_text, truncated = build_user_message(list(zip(pack["complaint_id"], pack["narrative"])))
+    response = client.models.generate_content(
+        model=model,
+        contents=user_text,
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            response_mime_type="application/json",
+            response_json_schema=OUTPUT_SCHEMA,
+            max_output_tokens=MAX_TOKENS,
+            thinking_config=types.ThinkingConfig(thinking_level="low"),
+        ),
+    )
+    usage = response.usage_metadata
+    cached = usage.cached_content_token_count or 0
+    finish = response.candidates[0].finish_reason.name if response.candidates else "SAFETY"
+    stop = {"STOP": "end_turn", "MAX_TOKENS": "max_tokens"}.get(finish, "refusal")
+    message = SimpleNamespace(
+        stop_reason=stop,
+        content=[SimpleNamespace(type="text", text=response.text or "")],
+        usage=SimpleNamespace(
+            input_tokens=(usage.prompt_token_count or 0) - cached,
+            output_tokens=(usage.candidates_token_count or 0) + (usage.thoughts_token_count or 0),
+            cache_read_input_tokens=cached,
+            cache_creation_input_tokens=0,
+        ),
+    )
+    return message, truncated
+
+
+def send_pack(client, model: str, pack: pd.DataFrame, mode: str) -> list[dict]:
+    """Classify one pack now and return its cache records."""
+    ids = [str(c) for c in pack["complaint_id"]]
+    if provider(model) == "gemini":
+        message, truncated = send_gemini(client, model, pack)
+    else:
         params, truncated = request_params(model, pack)
         message = client.messages.create(**params)
-        ids = [str(c) for c in pack["complaint_id"]]
-        append_cache(pack_to_records(ids, truncated, model, message, mode, f"{mode}-{ids[0]}"))
+    return pack_to_records(ids, truncated, model, message, mode, f"{mode}-{ids[0]}")
+
+
+def send_pack_with_retry(client, model: str, pack: pd.DataFrame, mode: str = "sync") -> list[dict]:
+    """Retry transient failures (rate limits, server errors) with a growing pause."""
+    error = "skipped: daily quota already reached"
+    for attempt in range(SYNC_RETRIES):
+        if DAILY_QUOTA_HIT.is_set():
+            break
+        try:
+            return send_pack(client, model, pack, mode)
+        except Exception as exc:  # the SDK raises several error types; all are retried, then recorded
+            error = f"{type(exc).__name__}: {str(exc)[:200]}"
+            if "PerDay" in str(exc):  # a daily quota will not clear by waiting a few seconds
+                DAILY_QUOTA_HIT.set()
+                error = "daily request quota reached"
+                break
+            time.sleep(15 * (attempt + 1))
+    return [{"complaint_id": int(c), "model": model, "prompt_version": PROMPT_VERSION, "mode": mode,
+             "status": "api_error", "error": error, **{u: 0 for u in USAGE_COLS}}
+            for c in pack["complaint_id"]]
+
+
+def classify_now(client, model: str, packs: list[pd.DataFrame], mode: str) -> None:
+    for pack in packs:
+        append_cache(send_pack_with_retry(client, model, pack, mode))
+
+
+def run_sync(client, model: str, packs: list[pd.DataFrame]) -> None:
+    """Send packs a few at a time and write each result to the cache as it arrives."""
+    done = ok = 0
+    with ThreadPoolExecutor(max_workers=SYNC_WORKERS) as pool:
+        for records in pool.map(lambda p: send_pack_with_retry(client, model, p), packs):
+            append_cache(records)
+            done += 1
+            ok += sum(r["status"] == "ok" for r in records)
+            if done % 25 == 0 or done == len(packs):
+                print(f"  {done}/{len(packs)} requests, {ok} labels ok", flush=True)
 
 
 def cmd_pilot(args) -> int:
@@ -299,9 +401,10 @@ def cmd_pilot(args) -> int:
         print("Nothing left to classify.")
         return 0
     n_rows = sum(len(p) for p in packs)
-    tokens = token_inputs(todo, client, model)
-    # Ordinary requests are full price, so the batch worst case is doubled.
-    if not within_budget(spend_so_far(), 2 * scenario_cost(model, n_rows, tokens, "high"), args.budget):
+    tokens = token_inputs(todo, client if provider(model) == "anthropic" else None, model)
+    # Pilot requests are ordinary full-price calls, so a batch-priced worst case is doubled.
+    factor = 2 if PRICES[model].batch else 1
+    if not within_budget(spend_so_far(), factor * scenario_cost(model, n_rows, tokens, "high"), args.budget):
         print("The pilot could exceed the budget. Nothing was sent.")
         return EXIT_OVER_BUDGET
     classify_now(client, model, packs, "pilot")
@@ -375,7 +478,7 @@ def cmd_run(args) -> int:
     model = model_name()
     # Never submit twice: if an earlier batch has not been collected, finish that one first.
     state = pending_batch()
-    if state:
+    if state and provider(model) == "anthropic":
         print(f"resuming uncollected batch {state['batch_id']}")
         wait_and_collect(client, state)
 
@@ -394,7 +497,7 @@ def cmd_run(args) -> int:
 
         per_row = measured_cost_per_row(model)
         chunk = todo.head(FIRST_CHUNK_ROWS if per_row is None else CHUNK_ROWS)
-        tokens = token_inputs(todo, client, model)
+        tokens = token_inputs(todo, client if provider(model) == "anthropic" else None, model)
         spent = spend_so_far()
         chunk_worst = scenario_cost(model, len(chunk), tokens, "high")
         projected_all = per_row * len(todo) if per_row is not None else None
@@ -411,6 +514,14 @@ def cmd_run(args) -> int:
             return EXIT_OVER_BUDGET
 
         packs = make_packs(chunk)
+        if provider(model) == "gemini":
+            run_sync(client, model, packs)
+            if DAILY_QUOTA_HIT.is_set():
+                left = len(sample) - len(cached_ids(model) & set(sample["complaint_id"]))
+                print(f"The provider's daily request quota is used up. {left} rows are still unlabeled. "
+                      "Labels so far are cached, so rerunning later continues from here.")
+                return EXIT_DAILY_QUOTA
+            continue
         if first:
             # One ordinary request writes the system prompt to the cache before the batch starts.
             classify_now(client, model, packs[:1], "warmup")

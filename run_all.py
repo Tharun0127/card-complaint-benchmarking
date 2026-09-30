@@ -1,8 +1,9 @@
 """Run the whole pipeline in order.
 
     python run_all.py              everything; uses cached LLM labels, never calls the API
-    python run_all.py --classify   also send uncached sample rows to the Anthropic API
-                                   (needs ANTHROPIC_API_KEY, stops at the USD 10 budget)
+    python run_all.py --classify   also send uncached sample rows to the LLM API
+                                   (needs GEMINI_API_KEY for the default model, or
+                                   ANTHROPIC_API_KEY with a claude model; stops at USD 10)
     python run_all.py --skip-download   reuse files already in data/raw
 
 Without --classify the run costs nothing: LLM labels are read from
@@ -18,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
-EXIT_NO_KEY, EXIT_OVER_BUDGET, EXIT_NO_LLM_LABELS = 3, 2, 3
+EXIT_NO_KEY, EXIT_OVER_BUDGET, EXIT_NO_LLM_LABELS, EXIT_DAILY_QUOTA = 3, 2, 3, 4
 
 
 def step(title: str, script: str, *args: str, allow: tuple[int, ...] = ()) -> int:
@@ -32,7 +33,7 @@ def step(title: str, script: str, *args: str, allow: tuple[int, ...] = ()) -> in
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument("--classify", action="store_true", help="call the Anthropic API for uncached rows")
+    parser.add_argument("--classify", action="store_true", help="call the LLM API for uncached rows")
     parser.add_argument("--skip-download", action="store_true")
     args = parser.parse_args()
 
@@ -46,10 +47,12 @@ def main() -> int:
     step("7. Cost estimate (no billable calls)", "classify.py", "estimate")
 
     if args.classify:
-        code = step("8. LLM classification", "classify.py", "run", allow=(EXIT_NO_KEY, EXIT_OVER_BUDGET))
+        code = step("8. LLM classification", "classify.py", "run", allow=(EXIT_NO_KEY, EXIT_OVER_BUDGET, EXIT_DAILY_QUOTA))
         if code == EXIT_NO_KEY:
-            print("Stopped: ANTHROPIC_API_KEY is missing. Set it and rerun with --classify.")
+            print("Stopped: the API key is missing. Set it and rerun with --classify.")
             return EXIT_NO_KEY
+        if code == EXIT_DAILY_QUOTA:
+            print("The provider's daily quota ran out. Continuing with the labels collected so far.")
         if code == EXIT_OVER_BUDGET:
             print("Stopped: the budget check failed. Nothing beyond the budget was sent.")
             return EXIT_OVER_BUDGET
