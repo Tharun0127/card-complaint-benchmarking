@@ -190,9 +190,7 @@ def readme(f: dict, tests: str) -> str:
     status = llm_status(f)
     theme_heading = ("Theme mix from LLM classification" if f["themes_are_llm"]
                      else "Theme mix (provisional, fallback model)")
-    theme_image = ("![Theme mix: American Express against the other six issuers](docs/img/dashboard_themes.png)
-
-"
+    theme_image = ("![Theme mix: American Express against the other six issuers](docs/img/dashboard_themes.png)\n\n"
                    if f["themes_are_llm"] else "")
     theme_note = (
         f"Weighted shares from {f['themes']['sample_rows']:,} classified narratives." if f["themes_are_llm"] else

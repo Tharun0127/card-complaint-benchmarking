@@ -109,6 +109,8 @@ The classifier refuses to send anything that could take total spend past USD 10.
 
 Weighted shares from 3,990 classified narratives.
 
+![Theme mix: American Express against the other six issuers](docs/img/dashboard_themes.png)
+
 | Theme | Amex % | Other six issuers % | Difference (pts) |
 |---|---|---|---|
 | Dispute or fraud | 29.9 | 36.4 | -6.5 |
