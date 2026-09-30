@@ -22,3 +22,12 @@ Thumbs.db
 .vscode/
 .idea/
 .claude/
+
+# personal preparation notes, kept locally and not published
+INTERVIEW_PREP.md
+RESUME_BULLETS.md
+
+# assistant tooling and session files
+CLAUDE.md
+.claude*
+*.prompt.md

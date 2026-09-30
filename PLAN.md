@@ -1,7 +1,7 @@
 # Plan: What Card Members Complain About
 
 Issuer benchmarking of CFPB credit card complaints with LLM classification.
-Target reader: a hiring manager for an Analyst role in American Express US Consumer Services.
+Written before any analysis was run. Changes made along the way are listed at the end.
 
 ## Business question
 
@@ -17,7 +17,7 @@ Target reader: a hiring manager for an Analyst role in American Express US Consu
 |---|---|
 | CFPB narratives archive page | 21 zip exports, Dec 2011 to 14 Aug 2026. Files 4 to 21 cover Nov 2022 onward, about 955 MB zipped. |
 | Live complaint database API | Responds with HTTP 200 and structured fields (product, issue, sub-issue, company, response, timely). No narrative field in the response I tested. |
-| `ANTHROPIC_API_KEY` | Not set in this environment. The LLM step is blocked until it is. |
+| Anthropic API key | Not set in this environment. The LLM step is blocked until it is. |
 | Python | 3.11 available through the `py` launcher. |
 
 ## Data decisions
@@ -92,3 +92,20 @@ alongside the code they test.
 
 Python 3.11, pinned requirements, one commit per step, no API key or raw data in git,
 plain writing, no invented numbers.
+
+## Changes from the plan
+
+- **Eight complaints per request.** The first cost estimate, with one complaint per request, was above the
+  USD 10 budget for two of the three candidate models, because the shared instructions are longer than the
+  average complaint. Requests now carry eight complaints each and labels are matched back by id.
+- **Chunked submission.** The budget check runs before every chunk and uses measured token use after the first.
+- **Unequal sample cells.** American Express and Chase get larger cells per quarter than the other issuers,
+  because the recommendations and the event study are about them. Weights restore issuer-level shares.
+- **Discover ends in March 2026.** Its company label stops ten months after the merger closed.
+- **The archive runs to 31 August 2026 for structured fields**, but has no narratives for August 2026.
+- **Shares, not rates.** Purchase volume definitions turned out not to be comparable across the seven issuers,
+  so the benchmark compares complaint mix and shows per-volume rates only as a scale check.
+- **"Application denied" is not a fix.** It is the largest Amex over-index, but the narratives are mostly
+  identity disputes and template letters.
+- **Headline numbers are generated.** `src/findings.py` computes each number once and `src/report.py` writes
+  the memo and README from it.
