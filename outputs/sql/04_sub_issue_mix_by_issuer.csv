@@ -21,8 +21,8 @@ American Express,Incorrect information on your report,Account information incorr
 American Express,Closing your account,Can't close your account,153,0.96,1.35,-0.38,0.72
 American Express,Struggling to pay your bill,Credit card company won't work with you while you're going through financial hardship,133,0.84,1.32,-0.48,0.64
 American Express,Problem with a purchase shown on your statement,Overcharged for something you did purchase with the card,123,0.77,0.85,-0.08,0.91
-American Express,Getting a credit card,Card opened as result of identity theft or fraud,115,0.72,1.06,-0.34,0.68
 American Express,"Other features, terms, or problems",Privacy issues,114,0.72,0.74,-0.02,0.97
+American Express,Getting a credit card,Card opened as result of identity theft or fraud,115,0.72,1.06,-0.34,0.68
 American Express,Fees or interest,Unexpected increase in interest rate,110,0.69,1.28,-0.59,0.54
 American Express,Getting a credit card,Delay in processing application,91,0.57,0.53,0.04,1.07
 American Express,"Other features, terms, or problems",Add-on products and services,71,0.45,0.38,0.07,1.18
@@ -36,29 +36,29 @@ American Express,Problem with a company's investigation into an existing problem
 American Express,Incorrect information on your report,Old information reappears or never goes away,21,0.13,0.19,-0.05,0.71
 American Express,Problem with a company's investigation into an existing problem,Was not notified of investigation status or results,19,0.12,0.12,0.0,1.0
 American Express,Problem with a company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,18,0.11,0.22,-0.11,0.52
-American Express,Trouble using your card,Account sold or transferred to another company,14,0.09,0.06,0.02,1.4
-American Express,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,15,0.09,0.08,0.01,1.18
 American Express,Struggling to pay your bill,Filed for bankruptcy,14,0.09,0.05,0.04,1.8
+American Express,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,15,0.09,0.08,0.01,1.18
+American Express,Trouble using your card,Account sold or transferred to another company,14,0.09,0.06,0.02,1.4
 American Express,Improper use of your report,Credit inquiries on your report that you don't recognize,12,0.08,0.38,-0.3,0.2
 American Express,Incorrect information on your report,Personal information incorrect,11,0.07,0.07,0.0,1.04
-American Express,Struggling to pay your bill,Problem lowering your monthly payments,10,0.06,0.12,-0.05,0.54
-American Express,"Other features, terms, or problems",Problem with cash advances,9,0.06,0.11,-0.05,0.52
 American Express,Incorrect information on your report,Information is missing that should be on the report,9,0.06,0.09,-0.03,0.62
+American Express,Struggling to pay your bill,Problem lowering your monthly payments,10,0.06,0.12,-0.05,0.54
 American Express,Credit monitoring or identity theft protection services,Billing dispute for services,10,0.06,0.11,-0.05,0.55
+American Express,"Other features, terms, or problems",Problem with cash advances,9,0.06,0.11,-0.05,0.52
 American Express,Problem with fraud alerts or security freezes,(none),8,0.05,0.11,-0.06,0.46
-American Express,Problem with a credit reporting company's investigation into an existing problem,Their investigation did not fix an error on your report,7,0.04,0.08,-0.04,0.55
 American Express,Credit monitoring or identity theft protection services,Problem canceling credit monitoring or identify theft protection service,7,0.04,0.08,-0.04,0.55
-American Express,"Other features, terms, or problems",Problem with convenience check,5,0.03,0.05,-0.01,0.7
+American Express,Problem with a credit reporting company's investigation into an existing problem,Their investigation did not fix an error on your report,7,0.04,0.08,-0.04,0.55
 American Express,Unable to get your credit report or credit score,Other problem getting your report or credit score,4,0.03,0.06,-0.03,0.46
+American Express,"Other features, terms, or problems",Problem with convenience check,5,0.03,0.05,-0.01,0.7
 American Express,Incorrect information on your report,Public record information inaccurate,4,0.03,0.04,-0.02,0.58
 American Express,Problem with a credit reporting company's investigation into an existing problem,Investigation took more than 30 days,3,0.02,0.0,0.02,5.98
 American Express,Problem with a credit reporting company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,3,0.02,0.02,-0.0,0.89
-American Express,Improper use of your report,Report provided to employer without your written authorization,1,0.01,0.01,-0.01,0.47
-American Express,Credit monitoring or identity theft protection services,Received unwanted marketing or advertising,2,0.01,0.01,0.0,1.45
-American Express,Improper use of your report,Received unsolicited financial product or insurance offers after opting out,2,0.01,0.01,0.0,1.6
-American Express,Credit monitoring or identity theft protection services,Problem with product or service terms changing,2,0.01,0.03,-0.02,0.46
-American Express,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,2,0.01,0.01,-0.0,1.0
 American Express,Credit monitoring or identity theft protection services,Didn't receive services that were advertised,2,0.01,0.03,-0.02,0.46
+American Express,Credit monitoring or identity theft protection services,Problem with product or service terms changing,2,0.01,0.03,-0.02,0.46
+American Express,Improper use of your report,Received unsolicited financial product or insurance offers after opting out,2,0.01,0.01,0.0,1.6
+American Express,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,2,0.01,0.01,-0.0,1.0
+American Express,Credit monitoring or identity theft protection services,Received unwanted marketing or advertising,2,0.01,0.01,0.0,1.45
+American Express,Improper use of your report,Report provided to employer without your written authorization,1,0.01,0.01,-0.01,0.47
 Bank of America,Problem with a purchase shown on your statement,Credit card company isn't resolving a dispute about a purchase on your statement,3814,25.35,22.63,2.72,1.12
 Bank of America,Problem with a purchase shown on your statement,Card was charged for something you did not purchase with the card,1622,10.78,5.81,4.97,1.85
 Bank of America,Problem when making payments,Problem during payment process,1175,7.81,5.39,2.42,1.45
@@ -77,8 +77,8 @@ Bank of America,"Advertising and marketing, including promotional offers",Didn't
 Bank of America,"Other features, terms, or problems",Problem with balance transfer,213,1.42,0.71,0.7,1.99
 Bank of America,Struggling to pay your bill,Credit card company won't work with you while you're going through financial hardship,206,1.37,1.25,0.12,1.1
 Bank of America,Problem when making payments,You never received your bill or did not know a payment was due,196,1.3,0.68,0.63,1.92
-Bank of America,"Other features, terms, or problems",Problem with customer service,192,1.28,1.35,-0.07,0.95
 Bank of America,Incorrect information on your report,Account information incorrect,192,1.28,1.44,-0.16,0.89
+Bank of America,"Other features, terms, or problems",Problem with customer service,192,1.28,1.35,-0.07,0.95
 Bank of America,Closing your account,Can't close your account,189,1.26,1.31,-0.05,0.96
 Bank of America,Incorrect information on your report,Information belongs to someone else,176,1.17,1.17,0.0,1.0
 Bank of America,"Advertising and marketing, including promotional offers",Confusing or misleading advertising about the credit card,166,1.1,2.14,-1.04,0.52
@@ -89,36 +89,36 @@ Bank of America,Getting a credit card,Delay in processing application,92,0.61,0.
 Bank of America,"Other features, terms, or problems",Privacy issues,87,0.58,0.75,-0.18,0.77
 Bank of America,Fees or interest,Unexpected increase in interest rate,81,0.54,1.3,-0.76,0.42
 Bank of America,Problem with a company's investigation into an existing problem,Problem with personal statement of dispute,63,0.42,0.25,0.16,1.64
-Bank of America,Getting a credit card,Problem getting a working replacement card,52,0.35,0.47,-0.13,0.73
 Bank of America,Improper use of your report,Reporting company used your report improperly,53,0.35,0.63,-0.28,0.56
+Bank of America,Getting a credit card,Problem getting a working replacement card,52,0.35,0.47,-0.13,0.73
 Bank of America,Problem with a company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,43,0.29,0.2,0.09,1.44
-Bank of America,"Other features, terms, or problems",Problem with cash advances,38,0.25,0.09,0.17,2.95
 Bank of America,Improper use of your report,Credit inquiries on your report that you don't recognize,38,0.25,0.36,-0.1,0.71
+Bank of America,"Other features, terms, or problems",Problem with cash advances,38,0.25,0.09,0.17,2.95
 Bank of America,Incorrect information on your report,Old information reappears or never goes away,27,0.18,0.18,-0.0,0.99
 Bank of America,"Other features, terms, or problems",Credit card company forcing arbitration,26,0.17,0.15,0.02,1.17
 Bank of America,"Other features, terms, or problems",Add-on products and services,21,0.14,0.42,-0.28,0.34
 Bank of America,Problem with a company's investigation into an existing problem,Was not notified of investigation status or results,17,0.11,0.12,-0.01,0.94
-Bank of America,Struggling to pay your bill,Problem lowering your monthly payments,13,0.09,0.11,-0.03,0.77
 Bank of America,Credit monitoring or identity theft protection services,Problem canceling credit monitoring or identify theft protection service,14,0.09,0.07,0.02,1.26
+Bank of America,Struggling to pay your bill,Problem lowering your monthly payments,13,0.09,0.11,-0.03,0.77
 Bank of America,Problem with fraud alerts or security freezes,(none),14,0.09,0.11,-0.01,0.89
-Bank of America,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,12,0.08,0.08,-0.0,0.98
 Bank of America,Incorrect information on your report,Information is missing that should be on the report,12,0.08,0.09,-0.01,0.91
-Bank of America,"Other features, terms, or problems",Problem with convenience check,10,0.07,0.04,0.03,1.63
+Bank of America,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,12,0.08,0.08,-0.0,0.98
 Bank of America,Credit monitoring or identity theft protection services,Billing dispute for services,11,0.07,0.11,-0.04,0.65
+Bank of America,"Other features, terms, or problems",Problem with convenience check,10,0.07,0.04,0.03,1.63
 Bank of America,Problem with a credit reporting company's investigation into an existing problem,Their investigation did not fix an error on your report,9,0.06,0.08,-0.02,0.76
 Bank of America,Incorrect information on your report,Personal information incorrect,7,0.05,0.07,-0.02,0.67
 Bank of America,Unable to get your credit report or credit score,Other problem getting your report or credit score,6,0.04,0.05,-0.01,0.75
-Bank of America,Credit monitoring or identity theft protection services,Problem with product or service terms changing,4,0.03,0.03,0.0,1.03
 Bank of America,Credit monitoring or identity theft protection services,Didn't receive services that were advertised,4,0.03,0.03,0.0,1.03
+Bank of America,Credit monitoring or identity theft protection services,Problem with product or service terms changing,4,0.03,0.03,0.0,1.03
 Bank of America,Trouble using your card,Account sold or transferred to another company,5,0.03,0.07,-0.04,0.48
 Bank of America,Problem with a credit reporting company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,4,0.03,0.02,0.01,1.3
 Bank of America,Struggling to pay your bill,Filed for bankruptcy,3,0.02,0.06,-0.04,0.35
+Bank of America,Unable to get your credit report or credit score,Problem getting your free annual credit report,1,0.01,0.0,0.01,4.24
+Bank of America,Problem with a credit reporting company's investigation into an existing problem,Investigation took more than 30 days,1,0.01,0.0,0.0,1.41
+Bank of America,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,2,0.01,0.01,0.0,1.06
+Bank of America,Problem with a credit reporting company's investigation into an existing problem,Was not notified of investigation status or results,1,0.01,0.01,-0.01,0.57
 Bank of America,Improper use of your report,Received unsolicited financial product or insurance offers after opting out,1,0.01,0.01,-0.0,0.77
 Bank of America,Improper use of your report,Report provided to employer without your written authorization,2,0.01,0.01,0.0,1.06
-Bank of America,Unable to get your credit report or credit score,Problem getting your free annual credit report,1,0.01,0.0,0.01,4.24
-Bank of America,Problem with a credit reporting company's investigation into an existing problem,Was not notified of investigation status or results,1,0.01,0.01,-0.01,0.57
-Bank of America,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,2,0.01,0.01,0.0,1.06
-Bank of America,Problem with a credit reporting company's investigation into an existing problem,Investigation took more than 30 days,1,0.01,0.0,0.0,1.41
 Bank of America,Incorrect information on your report,Public record information inaccurate,2,0.01,0.04,-0.03,0.3
 Capital One,Problem with a purchase shown on your statement,Credit card company isn't resolving a dispute about a purchase on your statement,6408,19.59,23.91,-4.32,0.82
 Capital One,Getting a credit card,Card opened without my consent or knowledge,2909,8.89,5.31,3.59,1.68
@@ -157,12 +157,12 @@ Capital One,Incorrect information on your report,Old information reappears or ne
 Capital One,Problem with a company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,86,0.26,0.19,0.07,1.37
 Capital One,Credit monitoring or identity theft protection services,Billing dispute for services,59,0.18,0.09,0.09,2.09
 Capital One,Problem with fraud alerts or security freezes,(none),57,0.17,0.08,0.09,2.1
-Capital One,Problem with a company's investigation into an existing problem,Was not notified of investigation status or results,53,0.16,0.11,0.06,1.52
 Capital One,"Other features, terms, or problems",Credit card company forcing arbitration,52,0.16,0.15,0.01,1.07
+Capital One,Problem with a company's investigation into an existing problem,Was not notified of investigation status or results,53,0.16,0.11,0.06,1.52
 Capital One,"Other features, terms, or problems",Add-on products and services,49,0.15,0.46,-0.31,0.33
 Capital One,Struggling to pay your bill,Problem lowering your monthly payments,49,0.15,0.1,0.05,1.52
-Capital One,Incorrect information on your report,Information is missing that should be on the report,44,0.13,0.07,0.06,1.85
 Capital One,Credit monitoring or identity theft protection services,Problem canceling credit monitoring or identify theft protection service,44,0.13,0.06,0.08,2.31
+Capital One,Incorrect information on your report,Information is missing that should be on the report,44,0.13,0.07,0.06,1.85
 Capital One,Problem with a credit reporting company's investigation into an existing problem,Their investigation did not fix an error on your report,39,0.12,0.06,0.06,1.87
 Capital One,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,35,0.11,0.07,0.03,1.45
 Capital One,Unable to get your credit report or credit score,Other problem getting your report or credit score,32,0.1,0.04,0.06,2.56
@@ -176,11 +176,11 @@ Capital One,"Other features, terms, or problems",Problem with convenience check,
 Capital One,Problem with a credit reporting company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,13,0.04,0.02,0.02,2.57
 Capital One,Credit monitoring or identity theft protection services,Problem with product or service terms changing,9,0.03,0.03,0.0,1.08
 Capital One,Improper use of your report,Received unsolicited financial product or insurance offers after opting out,7,0.02,0.0,0.02,4.7
-Capital One,Improper use of your report,Report provided to employer without your written authorization,6,0.02,0.01,0.01,1.68
 Capital One,Problem with a credit reporting company's investigation into an existing problem,Was not notified of investigation status or results,6,0.02,0.01,0.01,2.01
 Capital One,Credit monitoring or identity theft protection services,Received unwanted marketing or advertising,5,0.02,0.01,0.01,2.1
-Capital One,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,4,0.01,0.01,-0.0,0.96
+Capital One,Improper use of your report,Report provided to employer without your written authorization,6,0.02,0.01,0.01,1.68
 Capital One,Problem with a credit reporting company's investigation into an existing problem,Investigation took more than 30 days,2,0.01,0.0,0.0,1.34
+Capital One,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,4,0.01,0.01,-0.0,0.96
 Capital One,Unable to get your credit report or credit score,Problem getting your free annual credit report,1,0.0,0.0,0.0,1.68
 Chase,Problem with a purchase shown on your statement,Credit card company isn't resolving a dispute about a purchase on your statement,4963,24.2,22.71,1.49,1.07
 Chase,Problem with a purchase shown on your statement,Card was charged for something you did not purchase with the card,1441,7.03,6.22,0.8,1.13
@@ -225,8 +225,8 @@ Chase,Struggling to pay your bill,Problem lowering your monthly payments,19,0.09
 Chase,Problem with a company's investigation into an existing problem,Was not notified of investigation status or results,17,0.08,0.13,-0.04,0.66
 Chase,Credit monitoring or identity theft protection services,Problem canceling credit monitoring or identify theft protection service,14,0.07,0.08,-0.01,0.89
 Chase,Problem with fraud alerts or security freezes,(none),15,0.07,0.11,-0.04,0.67
-Chase,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,12,0.06,0.09,-0.03,0.69
 Chase,Incorrect information on your report,Personal information incorrect,12,0.06,0.07,-0.01,0.86
+Chase,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,12,0.06,0.09,-0.03,0.69
 Chase,Incorrect information on your report,Information is missing that should be on the report,11,0.05,0.09,-0.04,0.58
 Chase,Struggling to pay your bill,Filed for bankruptcy,9,0.04,0.05,-0.01,0.8
 Chase,Unable to get your credit report or credit score,Other problem getting your report or credit score,8,0.04,0.05,-0.02,0.72
@@ -234,12 +234,12 @@ Chase,Problem with a credit reporting company's investigation into an existing p
 Chase,Incorrect information on your report,Public record information inaccurate,8,0.04,0.04,-0.0,0.93
 Chase,"Other features, terms, or problems",Problem with convenience check,6,0.03,0.05,-0.02,0.64
 Chase,Improper use of your report,Report provided to employer without your written authorization,4,0.02,0.01,0.01,1.7
-Chase,Credit monitoring or identity theft protection services,Received unwanted marketing or advertising,3,0.01,0.01,0.01,1.78
-Chase,Credit monitoring or identity theft protection services,Problem with product or service terms changing,3,0.01,0.03,-0.01,0.52
 Chase,Credit monitoring or identity theft protection services,Didn't receive services that were advertised,3,0.01,0.03,-0.01,0.52
+Chase,Credit monitoring or identity theft protection services,Problem with product or service terms changing,3,0.01,0.03,-0.01,0.52
 Chase,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,2,0.01,0.01,-0.0,0.74
-Chase,Trouble using your card,Account sold or transferred to another company,1,0.0,0.08,-0.07,0.06
+Chase,Credit monitoring or identity theft protection services,Received unwanted marketing or advertising,3,0.01,0.01,0.01,1.78
 Chase,Problem with a credit reporting company's investigation into an existing problem,Was not notified of investigation status or results,1,0.0,0.01,-0.01,0.4
+Chase,Trouble using your card,Account sold or transferred to another company,1,0.0,0.08,-0.07,0.06
 Chase,Problem with a credit reporting company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,1,0.0,0.02,-0.02,0.21
 Citi,Problem with a purchase shown on your statement,Credit card company isn't resolving a dispute about a purchase on your statement,7844,27.73,21.73,6.0,1.28
 Citi,Problem with a purchase shown on your statement,Card was charged for something you did not purchase with the card,2219,7.84,5.96,1.88,1.32
@@ -274,21 +274,21 @@ Citi,Getting a credit card,Delay in processing application,132,0.47,0.56,-0.09,0
 Citi,Improper use of your report,Reporting company used your report improperly,91,0.32,0.67,-0.35,0.48
 Citi,"Other features, terms, or problems",Add-on products and services,67,0.24,0.42,-0.19,0.56
 Citi,Improper use of your report,Credit inquiries on your report that you don't recognize,68,0.24,0.37,-0.13,0.65
-Citi,Problem with a company's investigation into an existing problem,Problem with personal statement of dispute,52,0.18,0.29,-0.11,0.62
 Citi,Problem with a company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,50,0.18,0.22,-0.04,0.82
+Citi,Problem with a company's investigation into an existing problem,Problem with personal statement of dispute,52,0.18,0.29,-0.11,0.62
 Citi,Trouble using your card,Account sold or transferred to another company,32,0.11,0.05,0.06,2.08
 Citi,Credit monitoring or identity theft protection services,Billing dispute for services,28,0.1,0.11,-0.01,0.9
 Citi,Incorrect information on your report,Old information reappears or never goes away,25,0.09,0.2,-0.11,0.44
 Citi,Incorrect information on your report,Information is missing that should be on the report,22,0.08,0.09,-0.01,0.87
+Citi,"Other features, terms, or problems",Credit card company forcing arbitration,24,0.08,0.17,-0.08,0.51
 Citi,Problem with a company's investigation into an existing problem,Was not notified of investigation status or results,22,0.08,0.13,-0.05,0.6
 Citi,Problem with a credit reporting company's investigation into an existing problem,Their investigation did not fix an error on your report,22,0.08,0.08,0.0,1.02
-Citi,"Other features, terms, or problems",Credit card company forcing arbitration,24,0.08,0.17,-0.08,0.51
 Citi,Problem with fraud alerts or security freezes,(none),24,0.08,0.11,-0.02,0.78
+Citi,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,20,0.07,0.08,-0.01,0.84
 Citi,Struggling to pay your bill,Problem lowering your monthly payments,21,0.07,0.12,-0.04,0.62
 Citi,"Other features, terms, or problems",Problem with convenience check,21,0.07,0.04,0.04,2.07
-Citi,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,20,0.07,0.08,-0.01,0.84
-Citi,"Other features, terms, or problems",Problem with cash advances,16,0.06,0.11,-0.06,0.49
 Citi,Credit monitoring or identity theft protection services,Problem canceling credit monitoring or identify theft protection service,16,0.06,0.08,-0.02,0.7
+Citi,"Other features, terms, or problems",Problem with cash advances,16,0.06,0.11,-0.06,0.49
 Citi,Incorrect information on your report,Personal information incorrect,14,0.05,0.07,-0.02,0.7
 Citi,Struggling to pay your bill,Filed for bankruptcy,11,0.04,0.06,-0.02,0.68
 Citi,Unable to get your credit report or credit score,Other problem getting your report or credit score,9,0.03,0.06,-0.03,0.56
@@ -296,11 +296,11 @@ Citi,Incorrect information on your report,Public record information inaccurate,9
 Citi,Credit monitoring or identity theft protection services,Problem with product or service terms changing,5,0.02,0.03,-0.01,0.63
 Citi,Credit monitoring or identity theft protection services,Didn't receive services that were advertised,4,0.01,0.03,-0.01,0.49
 Citi,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,3,0.01,0.01,-0.0,0.81
-Citi,Improper use of your report,Report provided to employer without your written authorization,2,0.01,0.01,-0.01,0.5
 Citi,Credit monitoring or identity theft protection services,Received unwanted marketing or advertising,2,0.01,0.01,-0.0,0.73
 Citi,Problem with a credit reporting company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,4,0.01,0.02,-0.01,0.62
-Citi,Unable to get your credit report or credit score,Problem getting your free annual credit report,1,0.0,0.0,0.0,2.02
+Citi,Improper use of your report,Report provided to employer without your written authorization,2,0.01,0.01,-0.01,0.5
 Citi,Problem with a credit reporting company's investigation into an existing problem,Investigation took more than 30 days,1,0.0,0.01,-0.0,0.67
+Citi,Unable to get your credit report or credit score,Problem getting your free annual credit report,1,0.0,0.0,0.0,2.02
 Citi,Problem with a credit reporting company's investigation into an existing problem,Was not notified of investigation status or results,1,0.0,0.01,-0.01,0.27
 Citi,Improper use of your report,Received unsolicited financial product or insurance offers after opting out,1,0.0,0.01,-0.01,0.37
 Discover,Problem with a purchase shown on your statement,Credit card company isn't resolving a dispute about a purchase on your statement,2243,27.63,22.64,5.0,1.22
@@ -319,8 +319,8 @@ Discover,Incorrect information on your report,Information belongs to someone els
 Discover,Trouble using your card,Can't use card to make purchases,166,2.05,2.85,-0.81,0.72
 Discover,Problem with a company's investigation into an existing problem,Their investigation did not fix an error on your report,145,1.79,1.2,0.59,1.49
 Discover,Getting a credit card,Card opened as result of identity theft or fraud,122,1.5,0.99,0.51,1.51
-Discover,"Other features, terms, or problems",Privacy issues,91,1.12,0.71,0.41,1.57
 Discover,"Advertising and marketing, including promotional offers",Confusing or misleading advertising about the credit card,91,1.12,2.09,-0.96,0.54
+Discover,"Other features, terms, or problems",Privacy issues,91,1.12,0.71,0.41,1.57
 Discover,Closing your account,Can't close your account,86,1.06,1.32,-0.26,0.8
 Discover,Improper use of your report,Reporting company used your report improperly,84,1.03,0.57,0.46,1.8
 Discover,"Other features, terms, or problems",Problem with balance transfer,75,0.92,0.78,0.15,1.19
@@ -330,8 +330,8 @@ Discover,"Advertising and marketing, including promotional offers",Didn't receiv
 Discover,Problem when making payments,You never received your bill or did not know a payment was due,65,0.8,0.74,0.06,1.08
 Discover,Fees or interest,Unexpected increase in interest rate,57,0.7,1.25,-0.54,0.56
 Discover,Problem with a purchase shown on your statement,Overcharged for something you did purchase with the card,56,0.69,0.85,-0.16,0.81
-Discover,Incorrect information on your report,Old information reappears or never goes away,38,0.47,0.16,0.31,2.87
 Discover,"Other features, terms, or problems",Problem with rewards from credit card,38,0.47,3.72,-3.25,0.13
+Discover,Incorrect information on your report,Old information reappears or never goes away,38,0.47,0.16,0.31,2.87
 Discover,Problem with a company's investigation into an existing problem,Problem with personal statement of dispute,34,0.42,0.26,0.16,1.59
 Discover,Getting a credit card,Delay in processing application,33,0.41,0.55,-0.14,0.74
 Discover,Improper use of your report,Credit inquiries on your report that you don't recognize,29,0.36,0.34,0.01,1.04
@@ -341,23 +341,23 @@ Discover,"Other features, terms, or problems",Credit card company forcing arbitr
 Discover,Problem with a company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,16,0.2,0.21,-0.01,0.95
 Discover,Getting a credit card,Problem getting a working replacement card,16,0.2,0.47,-0.28,0.42
 Discover,Incorrect information on your report,Information is missing that should be on the report,15,0.18,0.08,0.1,2.28
-Discover,Problem with a credit reporting company's investigation into an existing problem,Their investigation did not fix an error on your report,13,0.16,0.07,0.09,2.24
 Discover,Problem with a company's investigation into an existing problem,Was not notified of investigation status or results,13,0.16,0.12,0.04,1.37
+Discover,Problem with a credit reporting company's investigation into an existing problem,Their investigation did not fix an error on your report,13,0.16,0.07,0.09,2.24
 Discover,Incorrect information on your report,Personal information incorrect,12,0.15,0.06,0.09,2.39
-Discover,"Other features, terms, or problems",Problem with cash advances,11,0.14,0.1,0.03,1.34
 Discover,Credit monitoring or identity theft protection services,Billing dispute for services,11,0.14,0.11,0.03,1.27
+Discover,"Other features, terms, or problems",Problem with cash advances,11,0.14,0.1,0.03,1.34
 Discover,Struggling to pay your bill,Filed for bankruptcy,10,0.12,0.05,0.07,2.51
 Discover,Problem with fraud alerts or security freezes,(none),10,0.12,0.1,0.02,1.2
 Discover,"Other features, terms, or problems",Add-on products and services,9,0.11,0.4,-0.29,0.27
 Discover,Incorrect information on your report,Public record information inaccurate,8,0.1,0.04,0.06,2.6
 Discover,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,7,0.09,0.08,0.01,1.06
 Discover,Trouble using your card,Account sold or transferred to another company,6,0.07,0.07,0.01,1.13
+Discover,Credit monitoring or identity theft protection services,Problem canceling credit monitoring or identify theft protection service,5,0.06,0.08,-0.02,0.8
 Discover,Credit monitoring or identity theft protection services,Didn't receive services that were advertised,5,0.06,0.02,0.04,2.59
 Discover,Unable to get your credit report or credit score,Other problem getting your report or credit score,5,0.06,0.05,0.01,1.2
-Discover,Credit monitoring or identity theft protection services,Problem canceling credit monitoring or identify theft protection service,5,0.06,0.08,-0.02,0.8
 Discover,Credit monitoring or identity theft protection services,Problem with product or service terms changing,3,0.04,0.03,0.01,1.46
-Discover,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,3,0.04,0.01,0.03,3.31
 Discover,Problem with a credit reporting company's investigation into an existing problem,Was not notified of investigation status or results,3,0.04,0.01,0.03,3.82
+Discover,Problem with a credit reporting company's investigation into an existing problem,Problem with personal statement of dispute,3,0.04,0.01,0.03,3.31
 Discover,"Other features, terms, or problems",Problem with convenience check,2,0.02,0.04,-0.02,0.55
 Discover,Improper use of your report,Received unsolicited financial product or insurance offers after opting out,1,0.01,0.01,0.0,1.51
 Discover,Credit monitoring or identity theft protection services,Received unwanted marketing or advertising,1,0.01,0.01,0.0,1.38
@@ -396,8 +396,8 @@ Synchrony,Improper use of your report,Credit inquiries on your report that you d
 Synchrony,Getting a credit card,Problem getting a working replacement card,67,0.3,0.49,-0.18,0.63
 Synchrony,Problem with a company's investigation into an existing problem,Difficulty submitting a dispute or getting information about a dispute over the phone,56,0.25,0.2,0.06,1.28
 Synchrony,Problem with a company's investigation into an existing problem,Problem with personal statement of dispute,54,0.25,0.28,-0.03,0.89
-Synchrony,"Other features, terms, or problems",Problem with balance transfer,51,0.23,0.89,-0.66,0.26
 Synchrony,Getting a credit card,Delay in processing application,50,0.23,0.6,-0.37,0.38
+Synchrony,"Other features, terms, or problems",Problem with balance transfer,51,0.23,0.89,-0.66,0.26
 Synchrony,Problem with a company's investigation into an existing problem,Was not notified of investigation status or results,29,0.13,0.12,0.01,1.13
 Synchrony,"Other features, terms, or problems",Credit card company forcing arbitration,24,0.11,0.16,-0.05,0.69
 Synchrony,Struggling to pay your bill,Problem lowering your monthly payments,22,0.1,0.11,-0.01,0.89
@@ -405,15 +405,15 @@ Synchrony,Incorrect information on your report,Old information reappears or neve
 Synchrony,Problem with fraud alerts or security freezes,(none),20,0.09,0.11,-0.02,0.86
 Synchrony,Problem with a company's investigation into an existing problem,Investigation took more than 30 days,15,0.07,0.08,-0.02,0.81
 Synchrony,Credit monitoring or identity theft protection services,Billing dispute for services,15,0.07,0.12,-0.05,0.59
-Synchrony,Unable to get your credit report or credit score,Other problem getting your report or credit score,10,0.05,0.05,-0.01,0.86
-Synchrony,Incorrect information on your report,Information is missing that should be on the report,11,0.05,0.09,-0.04,0.53
 Synchrony,Credit monitoring or identity theft protection services,Problem with product or service terms changing,11,0.05,0.02,0.03,2.32
+Synchrony,Incorrect information on your report,Information is missing that should be on the report,11,0.05,0.09,-0.04,0.53
+Synchrony,Unable to get your credit report or credit score,Other problem getting your report or credit score,10,0.05,0.05,-0.01,0.86
 Synchrony,Problem with a credit reporting company's investigation into an existing problem,Their investigation did not fix an error on your report,10,0.05,0.08,-0.04,0.55
-Synchrony,Struggling to pay your bill,Filed for bankruptcy,9,0.04,0.06,-0.01,0.74
-Synchrony,Trouble using your card,Account sold or transferred to another company,9,0.04,0.07,-0.03,0.58
-Synchrony,"Other features, terms, or problems",Problem with cash advances,8,0.04,0.12,-0.08,0.32
 Synchrony,Incorrect information on your report,Personal information incorrect,9,0.04,0.07,-0.03,0.57
 Synchrony,Credit monitoring or identity theft protection services,Problem canceling credit monitoring or identify theft protection service,8,0.04,0.08,-0.05,0.44
+Synchrony,Struggling to pay your bill,Filed for bankruptcy,9,0.04,0.06,-0.01,0.74
+Synchrony,"Other features, terms, or problems",Problem with cash advances,8,0.04,0.12,-0.08,0.32
+Synchrony,Trouble using your card,Account sold or transferred to another company,9,0.04,0.07,-0.03,0.58
 Synchrony,Incorrect information on your report,Public record information inaccurate,9,0.04,0.04,-0.0,0.99
 Synchrony,"Other features, terms, or problems",Problem with convenience check,6,0.03,0.05,-0.02,0.59
 Synchrony,Credit monitoring or identity theft protection services,Didn't receive services that were advertised,4,0.02,0.03,-0.01,0.66

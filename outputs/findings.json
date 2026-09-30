@@ -1,0 +1,1195 @@
+{
+  "data": {
+    "complaints": 142540,
+    "narratives": 69518,
+    "first_date": "2023-01-01",
+    "last_date": "2026-08-31",
+    "last_narrative_date": "2026-07-29",
+    "all_card_complaints": 285246,
+    "amex_complaints": 15881,
+    "amex_narratives": 7749,
+    "issuers": 7
+  },
+  "sub_issues": {
+    "promo_terms": {
+      "sub_issue": "Didn't receive advertised or promotional terms",
+      "amex_complaints": 1114,
+      "amex_share_pct": 7.01,
+      "peers_share_pct": 2.78,
+      "diff_pts": 4.24,
+      "index_vs_peers": 2.52,
+      "amex_relief_pct": 9.0,
+      "peers_relief_pct": 20.5,
+      "keywords": {
+        "welcome_offer": {
+          "amex_pct": 40.5,
+          "peers_pct": 18.8
+        },
+        "eligibility_wording": {
+          "amex_pct": 21.4,
+          "peers_pct": 7.6
+        },
+        "annual_fee": {
+          "amex_pct": 14.7,
+          "peers_pct": 5.3
+        },
+        "late_fee": {
+          "amex_pct": 1.2,
+          "peers_pct": 1.2
+        },
+        "refund": {
+          "amex_pct": 5.6,
+          "peers_pct": 5.7
+        },
+        "statement_credit": {
+          "amex_pct": 15.0,
+          "peers_pct": 9.9
+        },
+        "points_lost": {
+          "amex_pct": 1.8,
+          "peers_pct": 0.8
+        }
+      },
+      "amex_narratives": 660
+    },
+    "rewards": {
+      "sub_issue": "Problem with rewards from credit card",
+      "amex_complaints": 1000,
+      "amex_share_pct": 6.3,
+      "peers_share_pct": 3.19,
+      "diff_pts": 3.11,
+      "index_vs_peers": 1.98,
+      "amex_relief_pct": 11.5,
+      "peers_relief_pct": 20.6,
+      "keywords": {
+        "welcome_offer": {
+          "amex_pct": 26.9,
+          "peers_pct": 9.4
+        },
+        "eligibility_wording": {
+          "amex_pct": 14.9,
+          "peers_pct": 5.6
+        },
+        "annual_fee": {
+          "amex_pct": 16.9,
+          "peers_pct": 5.8
+        },
+        "late_fee": {
+          "amex_pct": 1.0,
+          "peers_pct": 0.9
+        },
+        "refund": {
+          "amex_pct": 7.6,
+          "peers_pct": 10.4
+        },
+        "statement_credit": {
+          "amex_pct": 10.3,
+          "peers_pct": 7.5
+        },
+        "points_lost": {
+          "amex_pct": 10.9,
+          "peers_pct": 9.2
+        }
+      },
+      "amex_narratives": 516
+    },
+    "fees": {
+      "sub_issue": "Problem with fees",
+      "amex_complaints": 1133,
+      "amex_share_pct": 7.13,
+      "peers_share_pct": 6.27,
+      "diff_pts": 0.86,
+      "index_vs_peers": 1.14,
+      "amex_relief_pct": 24.4,
+      "peers_relief_pct": 38.7,
+      "keywords": {
+        "welcome_offer": {
+          "amex_pct": 0.2,
+          "peers_pct": 0.1
+        },
+        "eligibility_wording": {
+          "amex_pct": 4.4,
+          "peers_pct": 0.5
+        },
+        "annual_fee": {
+          "amex_pct": 34.8,
+          "peers_pct": 8.8
+        },
+        "late_fee": {
+          "amex_pct": 33.1,
+          "peers_pct": 39.3
+        },
+        "refund": {
+          "amex_pct": 29.5,
+          "peers_pct": 18.7
+        },
+        "statement_credit": {
+          "amex_pct": 1.2,
+          "peers_pct": 0.3
+        },
+        "points_lost": {
+          "amex_pct": 0.8,
+          "peers_pct": 0.6
+        }
+      },
+      "amex_narratives": 658
+    },
+    "credit_limit": {
+      "sub_issue": "Credit card company won't increase or decrease your credit limit",
+      "amex_complaints": 388,
+      "amex_share_pct": 2.44,
+      "peers_share_pct": 1.4,
+      "diff_pts": 1.04,
+      "index_vs_peers": 1.74,
+      "amex_relief_pct": 1.3,
+      "peers_relief_pct": 2.6
+    },
+    "application_denied": {
+      "sub_issue": "Application denied",
+      "amex_complaints": 1218,
+      "amex_share_pct": 7.67,
+      "peers_share_pct": 2.71,
+      "diff_pts": 4.96,
+      "index_vs_peers": 2.83,
+      "amex_relief_pct": 0.1,
+      "peers_relief_pct": 0.2
+    }
+  },
+  "responses": {
+    "amex_monetary_relief_pct": 14.9,
+    "monetary_relief_by_issuer": {
+      "Bank of America": 34.6,
+      "Citi": 28.9,
+      "Synchrony": 18.6,
+      "American Express": 14.9,
+      "Capital One": 12.5,
+      "Chase": 11.8,
+      "Discover": 8.4
+    },
+    "amex_relief_rank": 4,
+    "timely_pct_min": 94.95,
+    "timely_pct_amex_min": 98.92
+  },
+  "volume": {
+    "year": 2024,
+    "amex_per_usd_bn": 6.03,
+    "amex_rank_lowest_first": 2,
+    "lowest": {
+      "issuer": "Chase",
+      "rate": 4.19
+    },
+    "highest": {
+      "issuer": "Synchrony",
+      "rate": 29.1
+    }
+  },
+  "events": {
+    "chase_sapphire_reserve": {
+      "sub_issue:fees_rewards_promo": {
+        "6": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 17.6,
+          "treated_post_pct": 18.05,
+          "control_pre_pct": 13.5,
+          "control_post_pct": 12.53,
+          "treated_change_pts": 0.45,
+          "control_change_pts": -0.97,
+          "did_pts": 1.42,
+          "did_ci_low_pts": -0.7,
+          "did_ci_high_pts": 3.54,
+          "n_treated_pre": 2744,
+          "n_treated_post": 3002,
+          "n_control_pre": 14383.0,
+          "n_control_post": 16308.0,
+          "placebo_did_min_pts": -0.62,
+          "placebo_did_max_pts": 0.57,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 16.61,
+          "treated_post_pct": 20.01,
+          "control_pre_pct": 13.83,
+          "control_post_pct": 13.17,
+          "treated_change_pts": 3.4,
+          "control_change_pts": -0.66,
+          "did_pts": 4.05,
+          "did_ci_low_pts": 2.57,
+          "did_ci_high_pts": 5.53,
+          "n_treated_pre": 5393,
+          "n_treated_post": 6691,
+          "n_control_pre": 26745.0,
+          "n_control_post": 38158.0,
+          "placebo_did_min_pts": -2.62,
+          "placebo_did_max_pts": 0.55,
+          "outside_placebo_range": true,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "sub_issue:fees": {
+        "6": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 3.43,
+          "treated_post_pct": 3.63,
+          "control_pre_pct": 6.92,
+          "control_post_pct": 6.3,
+          "treated_change_pts": 0.21,
+          "control_change_pts": -0.61,
+          "did_pts": 0.82,
+          "did_ci_low_pts": -0.29,
+          "did_ci_high_pts": 1.92,
+          "n_treated_pre": 2744,
+          "n_treated_post": 3002,
+          "n_control_pre": 14383.0,
+          "n_control_post": 16308.0,
+          "placebo_did_min_pts": -1.85,
+          "placebo_did_max_pts": 0.94,
+          "outside_placebo_range": false,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 3.45,
+          "treated_post_pct": 3.53,
+          "control_pre_pct": 7.49,
+          "control_post_pct": 6.44,
+          "treated_change_pts": 0.08,
+          "control_change_pts": -1.05,
+          "did_pts": 1.13,
+          "did_ci_low_pts": 0.36,
+          "did_ci_high_pts": 1.9,
+          "n_treated_pre": 5393,
+          "n_treated_post": 6691,
+          "n_control_pre": 26745.0,
+          "n_control_post": 38158.0,
+          "placebo_did_min_pts": -4.22,
+          "placebo_did_max_pts": 1.83,
+          "outside_placebo_range": false,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "sub_issue:rewards": {
+        "6": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 6.6,
+          "treated_post_pct": 7.63,
+          "control_pre_pct": 2.56,
+          "control_post_pct": 2.1,
+          "treated_change_pts": 1.03,
+          "control_change_pts": -0.46,
+          "did_pts": 1.49,
+          "did_ci_low_pts": 0.12,
+          "did_ci_high_pts": 2.86,
+          "n_treated_pre": 2744,
+          "n_treated_post": 3002,
+          "n_control_pre": 14383.0,
+          "n_control_post": 16308.0,
+          "placebo_did_min_pts": -0.53,
+          "placebo_did_max_pts": 0.36,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 5.79,
+          "treated_post_pct": 8.76,
+          "control_pre_pct": 2.36,
+          "control_post_pct": 2.49,
+          "treated_change_pts": 2.97,
+          "control_change_pts": 0.13,
+          "did_pts": 2.84,
+          "did_ci_low_pts": 1.89,
+          "did_ci_high_pts": 3.79,
+          "n_treated_pre": 5393,
+          "n_treated_post": 6691,
+          "n_control_pre": 26745.0,
+          "n_control_post": 38158.0,
+          "placebo_did_min_pts": -0.79,
+          "placebo_did_max_pts": 0.78,
+          "outside_placebo_range": true,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "mention:annual_fee": {
+        "6": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 3.36,
+          "treated_post_pct": 4.54,
+          "control_pre_pct": 1.55,
+          "control_post_pct": 2.15,
+          "treated_change_pts": 1.18,
+          "control_change_pts": 0.6,
+          "did_pts": 0.58,
+          "did_ci_low_pts": -0.83,
+          "did_ci_high_pts": 1.99,
+          "n_treated_pre": 1517,
+          "n_treated_post": 1651,
+          "n_control_pre": 8117.0,
+          "n_control_post": 9157.0,
+          "placebo_did_min_pts": -0.96,
+          "placebo_did_max_pts": 2.24,
+          "outside_placebo_range": false,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 3.3,
+          "treated_post_pct": 4.43,
+          "control_pre_pct": 1.5,
+          "control_post_pct": 2.05,
+          "treated_change_pts": 1.13,
+          "control_change_pts": 0.55,
+          "did_pts": 0.58,
+          "did_ci_low_pts": -0.43,
+          "did_ci_high_pts": 1.6,
+          "n_treated_pre": 3003,
+          "n_treated_post": 3027,
+          "n_control_pre": 14987.0,
+          "n_control_post": 17783.0,
+          "placebo_did_min_pts": -0.71,
+          "placebo_did_max_pts": 1.33,
+          "outside_placebo_range": false,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "mention:statement_credit": {
+        "6": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 1.98,
+          "treated_post_pct": 1.45,
+          "control_pre_pct": 0.52,
+          "control_post_pct": 0.45,
+          "treated_change_pts": -0.52,
+          "control_change_pts": -0.07,
+          "did_pts": -0.45,
+          "did_ci_low_pts": -1.39,
+          "did_ci_high_pts": 0.48,
+          "n_treated_pre": 1517,
+          "n_treated_post": 1651,
+          "n_control_pre": 8117.0,
+          "n_control_post": 9157.0,
+          "placebo_did_min_pts": -0.48,
+          "placebo_did_max_pts": 0.3,
+          "outside_placebo_range": false,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 1.9,
+          "treated_post_pct": 2.44,
+          "control_pre_pct": 0.56,
+          "control_post_pct": 0.66,
+          "treated_change_pts": 0.55,
+          "control_change_pts": 0.1,
+          "did_pts": 0.45,
+          "did_ci_low_pts": -0.31,
+          "did_ci_high_pts": 1.2,
+          "n_treated_pre": 3003,
+          "n_treated_post": 3027,
+          "n_control_pre": 14987.0,
+          "n_control_post": 17783.0,
+          "placebo_did_min_pts": -0.45,
+          "placebo_did_max_pts": 0.2,
+          "outside_placebo_range": true,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "theme:membership_value": {
+        "6": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 15.84,
+          "treated_post_pct": 19.29,
+          "control_pre_pct": 5.8,
+          "control_post_pct": 6.07,
+          "treated_change_pts": 3.45,
+          "control_change_pts": 0.27,
+          "did_pts": 3.18,
+          "did_ci_low_pts": 0.43,
+          "did_ci_high_pts": 5.93,
+          "n_treated_pre": 1509,
+          "n_treated_post": 1638,
+          "n_control_pre": 8038.0,
+          "n_control_post": 9060.0,
+          "placebo_did_min_pts": -2.22,
+          "placebo_did_max_pts": 1.64,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 14.48,
+          "treated_post_pct": 19.33,
+          "control_pre_pct": 5.65,
+          "control_post_pct": 6.13,
+          "treated_change_pts": 4.84,
+          "control_change_pts": 0.48,
+          "did_pts": 4.37,
+          "did_ci_low_pts": 2.41,
+          "did_ci_high_pts": 6.33,
+          "n_treated_pre": 2983,
+          "n_treated_post": 3001,
+          "n_control_pre": 14824.0,
+          "n_control_post": 17636.0,
+          "placebo_did_min_pts": -1.66,
+          "placebo_did_max_pts": 1.37,
+          "outside_placebo_range": true,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "theme:annual_fee": {
+        "6": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 1.72,
+          "treated_post_pct": 2.56,
+          "control_pre_pct": 0.81,
+          "control_post_pct": 1.29,
+          "treated_change_pts": 0.84,
+          "control_change_pts": 0.48,
+          "did_pts": 0.36,
+          "did_ci_low_pts": -0.69,
+          "did_ci_high_pts": 1.41,
+          "n_treated_pre": 1509,
+          "n_treated_post": 1638,
+          "n_control_pre": 8038.0,
+          "n_control_post": 9060.0,
+          "placebo_did_min_pts": -0.77,
+          "placebo_did_max_pts": 1.8,
+          "outside_placebo_range": false,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 1.41,
+          "treated_post_pct": 2.3,
+          "control_pre_pct": 0.8,
+          "control_post_pct": 1.09,
+          "treated_change_pts": 0.89,
+          "control_change_pts": 0.29,
+          "did_pts": 0.6,
+          "did_ci_low_pts": -0.11,
+          "did_ci_high_pts": 1.31,
+          "n_treated_pre": 2983,
+          "n_treated_post": 3001,
+          "n_control_pre": 14824.0,
+          "n_control_post": 17636.0,
+          "placebo_did_min_pts": -0.41,
+          "placebo_did_max_pts": 0.81,
+          "outside_placebo_range": false,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "mention:refreshed_card_named": {
+        "6": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 2.97,
+          "treated_post_pct": 4.91,
+          "control_pre_pct": null,
+          "control_post_pct": null,
+          "treated_change_pts": 1.94,
+          "control_change_pts": null,
+          "did_pts": null,
+          "did_ci_low_pts": null,
+          "did_ci_high_pts": null,
+          "n_treated_pre": 1517,
+          "n_treated_post": 1651,
+          "n_control_pre": null,
+          "n_control_post": null,
+          "placebo_did_min_pts": null,
+          "placebo_did_max_pts": null,
+          "outside_placebo_range": null,
+          "post_months_observed": 6,
+          "k_treated_pre": 45.0,
+          "k_treated_post": 81.0
+        },
+        "12": {
+          "treated_issuer": "Chase",
+          "treated_pre_pct": 2.73,
+          "treated_post_pct": 5.68,
+          "control_pre_pct": null,
+          "control_post_pct": null,
+          "treated_change_pts": 2.95,
+          "control_change_pts": null,
+          "did_pts": null,
+          "did_ci_low_pts": null,
+          "did_ci_high_pts": null,
+          "n_treated_pre": 3003,
+          "n_treated_post": 3027,
+          "n_control_pre": null,
+          "n_control_post": null,
+          "placebo_did_min_pts": null,
+          "placebo_did_max_pts": null,
+          "outside_placebo_range": null,
+          "post_months_observed": 12,
+          "k_treated_pre": 82.0,
+          "k_treated_post": 172.0
+        }
+      }
+    },
+    "amex_platinum": {
+      "sub_issue:fees_rewards_promo": {
+        "6": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 24.57,
+          "treated_post_pct": 20.94,
+          "control_pre_pct": 12.58,
+          "control_post_pct": 13.45,
+          "treated_change_pts": -3.64,
+          "control_change_pts": 0.87,
+          "did_pts": -4.51,
+          "did_ci_low_pts": -6.98,
+          "did_ci_high_pts": -2.04,
+          "n_treated_pre": 2291,
+          "n_treated_post": 2579,
+          "n_control_pre": 15125.0,
+          "n_control_post": 19197.0,
+          "placebo_did_min_pts": -2.05,
+          "placebo_did_max_pts": 1.46,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 23.91,
+          "treated_post_pct": 22.59,
+          "control_pre_pct": 13.14,
+          "control_post_pct": 13.93,
+          "treated_change_pts": -1.32,
+          "control_change_pts": 0.79,
+          "did_pts": -2.11,
+          "did_ci_low_pts": -3.87,
+          "did_ci_high_pts": -0.36,
+          "n_treated_pre": 4283,
+          "n_treated_post": 5675,
+          "n_control_pre": 28652.0,
+          "n_control_post": 41223.0,
+          "placebo_did_min_pts": -3.01,
+          "placebo_did_max_pts": 1.04,
+          "outside_placebo_range": false,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "sub_issue:fees": {
+        "6": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 7.77,
+          "treated_post_pct": 5.85,
+          "control_pre_pct": 6.38,
+          "control_post_pct": 6.66,
+          "treated_change_pts": -1.91,
+          "control_change_pts": 0.28,
+          "did_pts": -2.19,
+          "did_ci_low_pts": -3.71,
+          "did_ci_high_pts": -0.68,
+          "n_treated_pre": 2291,
+          "n_treated_post": 2579,
+          "n_control_pre": 15125.0,
+          "n_control_post": 19197.0,
+          "placebo_did_min_pts": -2.14,
+          "placebo_did_max_pts": 0.93,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 7.75,
+          "treated_post_pct": 6.06,
+          "control_pre_pct": 6.9,
+          "control_post_pct": 6.59,
+          "treated_change_pts": -1.69,
+          "control_change_pts": -0.31,
+          "did_pts": -1.38,
+          "did_ci_low_pts": -2.46,
+          "did_ci_high_pts": -0.3,
+          "n_treated_pre": 4283,
+          "n_treated_post": 5675,
+          "n_control_pre": 28652.0,
+          "n_control_post": 41223.0,
+          "placebo_did_min_pts": -3.36,
+          "placebo_did_max_pts": 1.57,
+          "outside_placebo_range": false,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "sub_issue:rewards": {
+        "6": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 6.59,
+          "treated_post_pct": 6.67,
+          "control_pre_pct": 2.23,
+          "control_post_pct": 2.44,
+          "treated_change_pts": 0.08,
+          "control_change_pts": 0.21,
+          "did_pts": -0.13,
+          "did_ci_low_pts": -1.57,
+          "did_ci_high_pts": 1.31,
+          "n_treated_pre": 2291,
+          "n_treated_post": 2579,
+          "n_control_pre": 15125.0,
+          "n_control_post": 19197.0,
+          "placebo_did_min_pts": -0.87,
+          "placebo_did_max_pts": 0.66,
+          "outside_placebo_range": false,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 6.42,
+          "treated_post_pct": 7.22,
+          "control_pre_pct": 2.36,
+          "control_post_pct": 2.83,
+          "treated_change_pts": 0.8,
+          "control_change_pts": 0.47,
+          "did_pts": 0.33,
+          "did_ci_low_pts": -0.69,
+          "did_ci_high_pts": 1.36,
+          "n_treated_pre": 4283,
+          "n_treated_post": 5675,
+          "n_control_pre": 28652.0,
+          "n_control_post": 41223.0,
+          "placebo_did_min_pts": -0.96,
+          "placebo_did_max_pts": 0.62,
+          "outside_placebo_range": false,
+          "post_months_observed": 12,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "mention:annual_fee": {
+        "6": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 12.78,
+          "treated_post_pct": 11.39,
+          "control_pre_pct": 1.46,
+          "control_post_pct": 2.32,
+          "treated_change_pts": -1.39,
+          "control_change_pts": 0.86,
+          "did_pts": -2.25,
+          "did_ci_low_pts": -4.84,
+          "did_ci_high_pts": 0.34,
+          "n_treated_pre": 1361,
+          "n_treated_post": 1141,
+          "n_control_pre": 8680.0,
+          "n_control_post": 8646.0,
+          "placebo_did_min_pts": -1.22,
+          "placebo_did_max_pts": 2.42,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 10.59,
+          "treated_post_pct": 10.46,
+          "control_pre_pct": 1.5,
+          "control_post_pct": 2.31,
+          "treated_change_pts": -0.13,
+          "control_change_pts": 0.82,
+          "did_pts": -0.95,
+          "did_ci_low_pts": -2.76,
+          "did_ci_high_pts": 0.86,
+          "n_treated_pre": 2454,
+          "n_treated_post": 2103,
+          "n_control_pre": 16237.0,
+          "n_control_post": 15352.0,
+          "placebo_did_min_pts": -1.09,
+          "placebo_did_max_pts": 1.77,
+          "outside_placebo_range": false,
+          "post_months_observed": 11,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "mention:statement_credit": {
+        "6": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 2.72,
+          "treated_post_pct": 5.0,
+          "control_pre_pct": 0.46,
+          "control_post_pct": 0.6,
+          "treated_change_pts": 2.28,
+          "control_change_pts": 0.14,
+          "did_pts": 2.14,
+          "did_ci_low_pts": 0.59,
+          "did_ci_high_pts": 3.68,
+          "n_treated_pre": 1361,
+          "n_treated_post": 1141,
+          "n_control_pre": 8680.0,
+          "n_control_post": 8646.0,
+          "placebo_did_min_pts": -0.15,
+          "placebo_did_max_pts": 0.31,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 3.02,
+          "treated_post_pct": 4.47,
+          "control_pre_pct": 0.49,
+          "control_post_pct": 0.85,
+          "treated_change_pts": 1.45,
+          "control_change_pts": 0.35,
+          "did_pts": 1.1,
+          "did_ci_low_pts": -0.03,
+          "did_ci_high_pts": 2.23,
+          "n_treated_pre": 2454,
+          "n_treated_post": 2103,
+          "n_control_pre": 16237.0,
+          "n_control_post": 15352.0,
+          "placebo_did_min_pts": -0.4,
+          "placebo_did_max_pts": 0.43,
+          "outside_placebo_range": true,
+          "post_months_observed": 11,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "theme:membership_value": {
+        "6": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 27.57,
+          "treated_post_pct": 21.88,
+          "control_pre_pct": 5.41,
+          "control_post_pct": 6.19,
+          "treated_change_pts": -5.69,
+          "control_change_pts": 0.78,
+          "did_pts": -6.47,
+          "did_ci_low_pts": -9.92,
+          "did_ci_high_pts": -3.01,
+          "n_treated_pre": 1353,
+          "n_treated_post": 1138,
+          "n_control_pre": 8588.0,
+          "n_control_post": 8576.0,
+          "placebo_did_min_pts": -1.29,
+          "placebo_did_max_pts": 1.88,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 23.27,
+          "treated_post_pct": 23.62,
+          "control_pre_pct": 5.58,
+          "control_post_pct": 6.58,
+          "treated_change_pts": 0.35,
+          "control_change_pts": 1.0,
+          "did_pts": -0.65,
+          "did_ci_low_pts": -3.18,
+          "did_ci_high_pts": 1.88,
+          "n_treated_pre": 2441,
+          "n_treated_post": 2096,
+          "n_control_pre": 16065.0,
+          "n_control_post": 15249.0,
+          "placebo_did_min_pts": -1.99,
+          "placebo_did_max_pts": 1.23,
+          "outside_placebo_range": false,
+          "post_months_observed": 11,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "theme:annual_fee": {
+        "6": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 7.69,
+          "treated_post_pct": 5.98,
+          "control_pre_pct": 0.8,
+          "control_post_pct": 1.31,
+          "treated_change_pts": -1.71,
+          "control_change_pts": 0.5,
+          "did_pts": -2.21,
+          "did_ci_low_pts": -4.21,
+          "did_ci_high_pts": -0.21,
+          "n_treated_pre": 1353,
+          "n_treated_post": 1138,
+          "n_control_pre": 8588.0,
+          "n_control_post": 8576.0,
+          "placebo_did_min_pts": -0.77,
+          "placebo_did_max_pts": 1.8,
+          "outside_placebo_range": true,
+          "post_months_observed": 6,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        },
+        "12": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 6.31,
+          "treated_post_pct": 5.77,
+          "control_pre_pct": 0.82,
+          "control_post_pct": 1.23,
+          "treated_change_pts": -0.54,
+          "control_change_pts": 0.41,
+          "did_pts": -0.95,
+          "did_ci_low_pts": -2.35,
+          "did_ci_high_pts": 0.46,
+          "n_treated_pre": 2441,
+          "n_treated_post": 2096,
+          "n_control_pre": 16065.0,
+          "n_control_post": 15249.0,
+          "placebo_did_min_pts": -0.64,
+          "placebo_did_max_pts": 1.25,
+          "outside_placebo_range": true,
+          "post_months_observed": 11,
+          "k_treated_pre": null,
+          "k_treated_post": null
+        }
+      },
+      "mention:refreshed_card_named": {
+        "6": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 6.02,
+          "treated_post_pct": 5.78,
+          "control_pre_pct": null,
+          "control_post_pct": null,
+          "treated_change_pts": -0.24,
+          "control_change_pts": null,
+          "did_pts": null,
+          "did_ci_low_pts": null,
+          "did_ci_high_pts": null,
+          "n_treated_pre": 1361,
+          "n_treated_post": 1141,
+          "n_control_pre": null,
+          "n_control_post": null,
+          "placebo_did_min_pts": null,
+          "placebo_did_max_pts": null,
+          "outside_placebo_range": null,
+          "post_months_observed": 6,
+          "k_treated_pre": 82.0,
+          "k_treated_post": 66.0
+        },
+        "12": {
+          "treated_issuer": "American Express",
+          "treated_pre_pct": 6.23,
+          "treated_post_pct": 5.52,
+          "control_pre_pct": null,
+          "control_post_pct": null,
+          "treated_change_pts": -0.72,
+          "control_change_pts": null,
+          "did_pts": null,
+          "did_ci_low_pts": null,
+          "did_ci_high_pts": null,
+          "n_treated_pre": 2454,
+          "n_treated_post": 2103,
+          "n_control_pre": null,
+          "n_control_post": null,
+          "placebo_did_min_pts": null,
+          "placebo_did_max_pts": null,
+          "outside_placebo_range": null,
+          "post_months_observed": 11,
+          "k_treated_pre": 153.0,
+          "k_treated_post": 116.0
+        }
+      }
+    }
+  },
+  "themes": {
+    "label_source": "keyword_fallback",
+    "label_source_description": "FALLBACK: keyword-seeded TF-IDF + logistic regression. Not LLM classification and not validated against human labels",
+    "sample_rows": 4436,
+    "sample_rows_by_issuer": {
+      "American Express": 1200,
+      "Chase": 900,
+      "Capital One": 480,
+      "Bank of America": 480,
+      "Synchrony": 480,
+      "Citi": 480,
+      "Discover": 416
+    },
+    "narratives_represented": 68835,
+    "amex_vs_peers": [
+      {
+        "theme": "rewards_points",
+        "theme_label": "Rewards and points",
+        "membership_value_theme": true,
+        "amex_share_pct": 11.47,
+        "amex_ci_low_pct": 9.77,
+        "amex_ci_high_pct": 13.52,
+        "peers_share_pct": 6.22,
+        "diff_pts": 5.25,
+        "index_vs_peers": 1.84,
+        "amex_sample_rows": 135,
+        "peers_sample_rows": 212
+      },
+      {
+        "theme": "annual_fee",
+        "theme_label": "Annual fee",
+        "membership_value_theme": true,
+        "amex_share_pct": 5.11,
+        "amex_ci_low_pct": 3.98,
+        "amex_ci_high_pct": 6.58,
+        "peers_share_pct": 0.96,
+        "diff_pts": 4.15,
+        "index_vs_peers": 5.32,
+        "amex_sample_rows": 65,
+        "peers_sample_rows": 33
+      },
+      {
+        "theme": "other",
+        "theme_label": "Other",
+        "membership_value_theme": false,
+        "amex_share_pct": 8.43,
+        "amex_ci_low_pct": 6.96,
+        "amex_ci_high_pct": 10.23,
+        "peers_share_pct": 6.78,
+        "diff_pts": 1.65,
+        "index_vs_peers": 1.24,
+        "amex_sample_rows": 98,
+        "peers_sample_rows": 225
+      },
+      {
+        "theme": "statement_credit_benefit",
+        "theme_label": "Statement credit or benefit redemption",
+        "membership_value_theme": true,
+        "amex_share_pct": 1.35,
+        "amex_ci_low_pct": 0.82,
+        "amex_ci_high_pct": 2.21,
+        "peers_share_pct": 0.47,
+        "diff_pts": 0.88,
+        "index_vs_peers": 2.87,
+        "amex_sample_rows": 20,
+        "peers_sample_rows": 15
+      },
+      {
+        "theme": "insurance_protection_claim",
+        "theme_label": "Insurance or protection claim",
+        "membership_value_theme": true,
+        "amex_share_pct": 0.95,
+        "amex_ci_low_pct": 0.55,
+        "amex_ci_high_pct": 1.76,
+        "peers_share_pct": 0.34,
+        "diff_pts": 0.61,
+        "index_vs_peers": 2.81,
+        "amex_sample_rows": 10,
+        "peers_sample_rows": 18
+      },
+      {
+        "theme": "dispute_fraud",
+        "theme_label": "Dispute or fraud",
+        "membership_value_theme": false,
+        "amex_share_pct": 32.96,
+        "amex_ci_low_pct": 30.21,
+        "amex_ci_high_pct": 35.73,
+        "peers_share_pct": 32.6,
+        "diff_pts": 0.36,
+        "index_vs_peers": 1.01,
+        "amex_sample_rows": 394,
+        "peers_sample_rows": 1115
+      },
+      {
+        "theme": "lounge_travel_benefit",
+        "theme_label": "Lounge or travel benefit",
+        "membership_value_theme": true,
+        "amex_share_pct": 0.17,
+        "amex_ci_low_pct": 0.05,
+        "amex_ci_high_pct": 0.65,
+        "peers_share_pct": 0.05,
+        "diff_pts": 0.12,
+        "index_vs_peers": 3.37,
+        "amex_sample_rows": 2,
+        "peers_sample_rows": 3
+      },
+      {
+        "theme": "customer_service",
+        "theme_label": "Customer service",
+        "membership_value_theme": false,
+        "amex_share_pct": 14.97,
+        "amex_ci_low_pct": 12.95,
+        "amex_ci_high_pct": 17.14,
+        "peers_share_pct": 16.19,
+        "diff_pts": -1.22,
+        "index_vs_peers": 0.92,
+        "amex_sample_rows": 182,
+        "peers_sample_rows": 494
+      },
+      {
+        "theme": "credit_limit_account_closure",
+        "theme_label": "Credit limit or account closure",
+        "membership_value_theme": false,
+        "amex_share_pct": 6.09,
+        "amex_ci_low_pct": 4.85,
+        "amex_ci_high_pct": 7.68,
+        "peers_share_pct": 9.03,
+        "diff_pts": -2.94,
+        "index_vs_peers": 0.67,
+        "amex_sample_rows": 74,
+        "peers_sample_rows": 287
+      },
+      {
+        "theme": "billing",
+        "theme_label": "Billing",
+        "membership_value_theme": false,
+        "amex_share_pct": 18.49,
+        "amex_ci_low_pct": 16.35,
+        "amex_ci_high_pct": 20.92,
+        "peers_share_pct": 27.36,
+        "diff_pts": -8.87,
+        "index_vs_peers": 0.68,
+        "amex_sample_rows": 220,
+        "peers_sample_rows": 834
+      }
+    ]
+  },
+  "llm": {
+    "labels_available": false,
+    "model": null,
+    "rows_labeled": 0,
+    "rows_by_status": {},
+    "api_spend_usd": 0.0,
+    "budget_usd": 10.0,
+    "cost_estimate": {
+      "sample_rows": 4436,
+      "complaints_per_request": 8,
+      "requests": 555,
+      "prompt_version": "v1",
+      "token_method": "heuristic of 3.3 characters per token (no API key, so tokens were not counted)",
+      "system_prompt_tokens": 2207,
+      "avg_user_tokens_per_request": 3505.1,
+      "narratives_cut_for_length": 58,
+      "budget_usd": 10.0,
+      "scenarios": {
+        "low": "95% cache hits, short outputs, no thinking",
+        "expected": "70% cache hits, typical outputs, some thinking",
+        "high": "no cache hits, long outputs, heavy thinking"
+      },
+      "models": {
+        "claude-opus-5-5": {
+          "rows_not_in_cache": 4436,
+          "system_prompt_long_enough_to_cache": true,
+          "batch_cost_usd": {
+            "low": 6.92,
+            "expected": 10.44,
+            "high": 19.89
+          },
+          "within_budget_in_every_scenario": false
+        },
+        "claude-sonnet-5-5": {
+          "rows_not_in_cache": 4436,
+          "system_prompt_long_enough_to_cache": true,
+          "batch_cost_usd": {
+            "low": 3.52,
+            "expected": 5.26,
+            "high": 9.95
+          },
+          "within_budget_in_every_scenario": true
+        },
+        "claude-haiku-4-5": {
+          "rows_not_in_cache": 4436,
+          "system_prompt_long_enough_to_cache": false,
+          "batch_cost_usd": {
+            "low": 2.25,
+            "expected": 2.42,
+            "high": 2.7
+          },
+          "within_budget_in_every_scenario": true
+        }
+      },
+      "spent_so_far_usd": 0.0
+    },
+    "validation_file_written": false,
+    "validation": null,
+    "distill_report": {
+      "narratives_labeled": 68835,
+      "training_rows": 18832,
+      "seed_rows_by_theme": {
+        "dispute_fraud": 6000,
+        "billing": 6000,
+        "customer_service": 2809,
+        "credit_limit_account_closure": 2044,
+        "rewards_points": 1413,
+        "annual_fee": 239,
+        "insurance_protection_claim": 160,
+        "statement_credit_benefit": 121,
+        "lounge_travel_benefit": 46
+      },
+      "narratives_matching_no_rule": 8789,
+      "note": "Keyword-seeded fallback. Not LLM classification. Not validated against human labels.",
+      "mode": "keyword_fallback",
+      "theme_share_pct": {
+        "dispute_fraud": 33.2,
+        "billing": 25.6,
+        "customer_service": 15.9,
+        "credit_limit_account_closure": 9.3,
+        "other": 6.8,
+        "rewards_points": 6.2,
+        "annual_fee": 1.6,
+        "statement_credit_benefit": 0.6,
+        "insurance_protection_claim": 0.5,
+        "lounge_travel_benefit": 0.1
+      }
+    }
+  },
+  "label_source": "keyword_fallback",
+  "label_source_description": "FALLBACK: keyword-seeded TF-IDF + logistic regression. Not LLM classification and not validated against human labels",
+  "themes_are_fallback": true,
+  "themes_are_llm": false,
+  "fixes": [
+    {
+      "title": "Make welcome offer eligibility clear before the application is submitted.",
+      "short": "Promotional terms complaints are 7.0% of Amex complaints against 2.8% at peers. Monetary relief 9.0% against 20.5%.",
+      "evidence": "Promotional terms not received is 7.0% of Amex complaints against 2.8% at the other six issuers (2.5x). 40% of those Amex narratives mention a welcome or bonus offer (peers 19%) and 21% use eligibility wording (peers 8%). Amex closes 9.0% of them with monetary relief, peers 20.5%."
+    },
+    {
+      "title": "Post rewards reliably and warn before points are lost.",
+      "short": "Rewards complaints are 6.3% against 3.2% at peers. Monetary relief 11.5% against 20.6%.",
+      "evidence": "Rewards problems are 6.3% of Amex complaints against 3.2% at peers (2.0x). 27% of the Amex narratives are about a welcome or bonus offer and 11% about points being forfeited or taken back. Monetary relief: Amex 11.5%, peers 20.6%."
+    },
+    {
+      "title": "Set a clear annual fee refund and renewal notice policy ahead of Platinum renewals.",
+      "short": "35% of Amex fee narratives are about the annual fee against 9% at peers. Monetary relief on fee complaints 24.4% against 38.7%.",
+      "evidence": "35% of Amex fee narratives are about the annual fee (peers 9%) and 30% ask about a refund. Amex grants monetary relief on 24.4% of fee complaints, peers 38.7%. About 10% of all Amex narratives mention the annual fee against 2% at comparison issuers. The rate did not rise after the Platinum refresh, so this is a standing issue, and existing members only began renewing at the new fee in January 2026."
+    },
+    {
+      "title": "Make statement credits easy to track and fix posting-date edge cases.",
+      "short": "Statement credit mentions went from 3.0% to 4.5% of Amex narratives after the refresh. An early signal.",
+      "evidence": "Statement credit mentions in Amex narratives went from 3.0% in the 12 months before the Platinum refresh to 4.5% after, while comparison issuers went from 0.5% to 0.8% (difference in differences +1.1 pts, 95% interval 0.0 to 2.2). An early signal on small numbers, worth watching as the refreshed card adds more credits."
+    },
+    {
+      "title": "Explain credit limit reductions when they happen.",
+      "short": "Credit limit complaints are 2.4% against 1.4% at peers. The smallest of the five.",
+      "evidence": "Credit limit decisions are 2.4% of Amex complaints against 1.4% at peers (1.7x), on 388 complaints. Smaller than the items above, so it ranks last."
+    }
+  ]
+}

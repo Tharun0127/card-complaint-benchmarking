@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Card Members Complain About</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --s1: #2a78d6; --s2: #eb6834; --neutral: #b4b3ac; --warn-bg: #fff4dc; --warn-ink: #6b4a00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink-2: #c3c2b7; --muted: #898781;
+      --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --s1: #3987e5; --s2: #d95926; --neutral: #5f5e59; --warn-bg: #3a2c05; --warn-ink: #ffd98a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px; }
+  h2 { font-size: 20px; margin: 40px 0 4px; }
+  section[data-sec]:first-of-type h2, section[data-sec][style] h2 { margin-top: 0; }
+  h3 { font-size: 15px; margin: 0 0 2px; }
+  p { margin: 0 0 12px; }
+  .sub { color: var(--ink-2); max-width: 78ch; }
+  .note { color: var(--ink-2); font-size: 13px; margin: 6px 0 0; }
+  .banner { background: var(--warn-bg); color: var(--warn-ink); border-radius: 8px; padding: 10px 14px;
+            margin: 16px 0; font-size: 14px; }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-top: 12px; }
+  .tiles { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin: 20px 0 0; }
+  .card, .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .wide { grid-column: 1 / -1; }
+  .tile .v { font-size: 26px; font-weight: 600; line-height: 1.15; }
+  .tile .l { color: var(--ink-2); font-size: 13px; }
+  .chart { width: 100%; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--ink-2); margin: 4px 0 0; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 12px 0 0; font-size: 14px; }
+  select { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--axis);
+           border-radius: 6px; padding: 5px 8px; max-width: 100%; }
+  details { margin-top: 8px; font-size: 13px; }
+  summary { cursor: pointer; color: var(--ink-2); }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; margin-top: 6px; }
+  th, td { text-align: right; padding: 4px 8px; border-bottom: 1px solid var(--grid);
+           font-variant-numeric: tabular-nums; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; white-space: normal; }
+  th { color: var(--ink-2); font-weight: 600; }
+  .quotes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 12px; }
+  blockquote { margin: 8px 0 0; padding: 0 0 0 10px; border-left: 2px solid var(--axis); font-size: 14px; }
+  blockquote span { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+  ol.fixes { padding-left: 20px; margin: 8px 0 0; }
+  ol.fixes li { margin-bottom: 8px; }
+  a { color: var(--s1); }
+  footer { color: var(--ink-2); font-size: 13px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<main>
+  <section data-sec="head">
+  <h1>What Card Members Complain About</h1>
+  <p class="sub" id="lede"></p>
+  <div class="banner" id="banner" hidden></div>
+  <div class="tiles" id="tiles"></div>
+
+  </section>
+  <section data-sec="benchmark">
+  <h2>1. Issuer benchmark</h2>
+  <p class="sub">Structured CFPB fields for every complaint. Issuers are compared on the mix of what people
+    complain about, not on raw counts, because the issuers differ in size and their reported purchase
+    volumes are not defined the same way.</p>
+  <div class="grid">
+    <div class="card wide">
+      <h3>Where American Express differs from the other six issuers</h3>
+      <p class="note">Share of Amex complaints minus share of peer complaints, in percentage points, by CFPB sub-issue. Application denied leads the list but is left out of the fixes: those narratives are mostly identity disputes and template letters citing credit law, not membership problems.</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>More common at Amex</span>
+        <span><i style="background:var(--s2)"></i>Less common at Amex</span></div>
+      <div id="c-subissue" class="chart"></div>
+      <details><summary>Table view</summary><div class="scroll" id="t-subissue"></div></details>
+    </div>
+    <div class="card wide">
+      <h3>Issue mix by issuer</h3>
+      <p class="note">Share of each issuer's complaints (%), for the most common CFPB issues.</p>
+      <div id="c-issueheat" class="chart"></div>
+    </div>
+    <div class="card">
+      <h3>Complaints closed with monetary relief</h3>
+      <p class="note">Share of closed complaints (%). Complaints still in progress are excluded.</p>
+      <div id="c-relief" class="chart"></div>
+    </div>
+    <div class="card">
+      <h3>Amex relief rate against peers, by sub-issue</h3>
+      <p class="note">Share closed with monetary relief (%), for sub-issues where Amex over-indexes.</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>American Express</span>
+        <span><i style="background:var(--neutral)"></i>Other six issuers</span></div>
+      <div id="c-reliefsub" class="chart"></div>
+    </div>
+    <div class="card wide">
+      <h3>Complaint volume over time</h3>
+      <p class="note">Three-month average, indexed to each issuer's own 2023 average (100). Discover is shown
+        through March 2026, when its company label stops.</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>American Express</span>
+        <span><i style="background:var(--s2)"></i>Chase</span>
+        <span><i style="background:var(--neutral)"></i>Other issuers (hover for names)</span></div>
+      <div id="c-trend" class="chart"></div>
+    </div>
+    <div class="card wide">
+      <h3>Scale check: complaints per USD 1 billion of card purchase volume</h3>
+      <p class="note" id="n-volume"></p>
+      <div id="c-volume" class="chart"></div>
+      <details><summary>Table view</summary><div class="scroll" id="t-volume"></div></details>
+    </div>
+  </div>
+
+  </section>
+  <section data-sec="themes">
+  <h2>2. Theme mix from the narratives</h2>
+  <p class="sub" id="theme-sub"></p>
+  <div class="grid">
+    <div class="card wide">
+      <h3>American Express against the other six issuers, by theme</h3>
+      <p class="note">Share of narratives (%), weighted back to all narratives. Lines on the Amex bars are 95% intervals.</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>American Express</span>
+        <span><i style="background:var(--neutral)"></i>Other six issuers</span></div>
+      <div id="c-theme" class="chart"></div>
+      <details><summary>Table view</summary><div class="scroll" id="t-theme"></div></details>
+    </div>
+    <div class="card wide">
+      <h3>Theme mix by issuer</h3>
+      <p class="note">Share of each issuer's narratives (%).</p>
+      <div id="c-themeheat" class="chart"></div>
+    </div>
+    <div class="card" id="card-benefits" hidden>
+      <h3>Benefits named most often in Amex narratives</h3>
+      <p class="note">Count of sampled narratives that name the benefit.</p>
+      <div id="c-benefits" class="chart"></div>
+    </div>
+    <div class="card" id="card-sentiment" hidden>
+      <h3>How angry is each theme (Amex)</h3>
+      <p class="note">Share of narratives in the theme rated very negative (%).</p>
+      <div id="c-sentiment" class="chart"></div>
+    </div>
+  </div>
+
+  </section>
+  <section data-sec="events">
+  <h2>3. Refresh event study</h2>
+  <p class="sub">Did complaints about fees, credits and benefits change after each premium card refresh?
+    The refreshed issuer is compared with five issuers that had no refresh. This is suggestive, not causal:
+    complaints are self-selected, the CFPB does not record the card product, the fee increases reached
+    existing cardholders months after launch, and other things changed in the same months.</p>
+  <div class="filters"><label for="metric">Measure</label><select id="metric"></select></div>
+  <p class="note" id="metric-desc"></p>
+  <div class="grid" id="events"></div>
+
+  </section>
+  <section data-sec="quotes">
+  <h2>4. In their words</h2>
+  <p class="sub" id="quotes-sub"></p>
+  <div class="quotes" id="quotes"></div>
+
+  </section>
+  <section data-sec="fixes">
+  <h2>5. What this suggests Amex should fix first</h2>
+  <ol class="fixes" id="fixes"></ol>
+
+  </section>
+  <footer id="footer"></footer>
+</main>
+
+<script>/*__PLOTLY__*/</script>
+<script>
+const D = /*__DATA__*/;
+
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const fmt = (v, d = 1) => v === null || v === undefined || Number.isNaN(v) ? "" : Number(v).toFixed(d);
+const num = v => Number(v).toLocaleString("en-US");
+const wrap = (s, n = 34) => s.replace(new RegExp(`(.{1,${n}})(\\s|$)`, "g"), "$1<br>").replace(/<br>$/, "");
+const SEQ_LIGHT = ["#fcfcfb", "#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf"];
+const SEQ_DARK = ["#1a1a19", "#0d366b", "#184f95", "#256abf", "#3987e5", "#6da7ec"];
+
+function theme() {
+  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+  return { dark, surface: css("--surface"), ink: css("--ink"), ink2: css("--ink-2"), muted: css("--muted"),
+           grid: css("--grid"), axis: css("--axis"), s1: css("--s1"), s2: css("--s2"), neutral: css("--neutral"),
+           seq: (dark ? SEQ_DARK : SEQ_LIGHT).map((c, i, a) => [i / (a.length - 1), c]) };
+}
+
+function layout(t, extra = {}) {
+  const axis = { gridcolor: t.grid, linecolor: t.axis, zerolinecolor: t.axis, tickfont: { color: t.ink2, size: 12 },
+                 automargin: true, title: { font: { color: t.ink2, size: 12 } } };
+  const base = { paper_bgcolor: t.surface, plot_bgcolor: t.surface, showlegend: false,
+                 font: { family: 'system-ui, -apple-system, "Segoe UI", sans-serif', color: t.ink, size: 13 },
+                 margin: { l: 8, r: 16, t: 8, b: 36 }, hoverlabel: { font: { size: 13 } }, bargap: 0.38,
+                 xaxis: { ...axis }, yaxis: { ...axis } };
+  const out = { ...base, ...extra };
+  out.xaxis = { ...axis, ...(extra.xaxis || {}) };
+  out.yaxis = { ...axis, ...(extra.yaxis || {}) };
+  return out;
+}
+const CONFIG = { displayModeBar: false, responsive: true };
+const plot = (id, traces, lay) => Plotly.react(id, traces, lay, CONFIG);
+
+function table(id, columns, rows) {
+  const head = "<tr>" + columns.map(c => `<th>${c}</th>`).join("") + "</tr>";
+  const body = rows.map(r => "<tr>" + r.map(c => `<td>${c}</td>`).join("") + "</tr>").join("");
+  document.getElementById(id).innerHTML = `<table>${head}${body}</table>`;
+}
+
+function heatmap(id, t, h, height) {
+  plot(id, [{ type: "heatmap", x: h.columns.map(c => wrap(c, 14)), y: h.rows, z: h.z, colorscale: t.seq,
+              showscale: false, xgap: 2, ygap: 2, zmin: 0,
+              text: h.z.map(r => r.map(v => fmt(v))), texttemplate: "%{text}",
+              textfont: { size: 12 }, customdata: h.rows.map(() => h.columns),
+              hovertemplate: "%{y}<br>%{customdata}: %{z:.1f}%<extra></extra>" }],
+       layout(t, { height, margin: { l: 8, r: 8, t: 8, b: 8 }, xaxis: { side: "top", showgrid: false, tickangle: 0 },
+                   yaxis: { autorange: "reversed", showgrid: false } }));
+}
+
+function renderBenchmark(t) {
+  const s = D.subissue_diff;
+  plot("c-subissue", [{ type: "bar", orientation: "h", x: s.map(r => r.diff), y: s.map(r => wrap(r.label, 46)),
+      marker: { color: s.map(r => r.diff >= 0 ? t.s1 : t.s2), cornerradius: 4 },
+      customdata: s.map(r => [r.amex, r.peers, r.n]),
+      hovertemplate: "Amex %{customdata[0]:.1f}% of complaints<br>Peers %{customdata[1]:.1f}%<br>" +
+                     "Difference %{x:+.1f} pts<br>%{customdata[2]} Amex complaints<extra></extra>" }],
+    layout(t, { height: 30 * s.length + 60, yaxis: { autorange: "reversed", showgrid: false },
+                xaxis: { title: { text: "Percentage points" }, ticksuffix: "" } }));
+  table("t-subissue", ["Sub-issue", "Amex %", "Peers %", "Difference (pts)", "Amex complaints"],
+        s.map(r => [r.label, fmt(r.amex), fmt(r.peers), (r.diff >= 0 ? "+" : "") + fmt(r.diff), num(r.n)]));
+
+  heatmap("c-issueheat", t, D.issue_heat, 330);
+
+  const hi = i => i === "American Express" ? t.s1 : t.neutral;
+  const r = D.relief;
+  plot("c-relief", [{ type: "bar", orientation: "h", x: r.map(d => d.pct), y: r.map(d => d.issuer),
+      marker: { color: r.map(d => hi(d.issuer)), cornerradius: 4 }, text: r.map(d => fmt(d.pct) + "%"),
+      textposition: "outside", cliponaxis: false, textfont: { color: t.ink2 },
+      hovertemplate: "%{y}: %{x:.1f}% of %{customdata} closed complaints<extra></extra>",
+      customdata: r.map(d => num(d.n)) }],
+    layout(t, { height: 300, margin: { l: 8, r: 48, t: 8, b: 24 }, yaxis: { autorange: "reversed", showgrid: false },
+                xaxis: { showticklabels: false, showgrid: false } }));
+
+  const rs = D.relief_sub;
+  const bar = (key, color, name) => ({ type: "bar", orientation: "h", name, x: rs.map(d => d[key]),
+      y: rs.map(d => wrap(d.label, 26)), marker: { color, cornerradius: 4 },
+      hovertemplate: name + ": %{x:.1f}%<extra></extra>" });
+  plot("c-reliefsub", [bar("amex", t.s1, "American Express"), bar("peers", t.neutral, "Other six issuers")],
+    layout(t, { height: 300, barmode: "group", bargap: 0.3, bargroupgap: 0.12,
+                yaxis: { autorange: "reversed", showgrid: false }, xaxis: { ticksuffix: "%" } }));
+
+  const order = D.trend.map(d => d.issuer).sort((a, b) =>
+      (a === "American Express") - (b === "American Express") || (a === "Chase") - (b === "Chase"));
+  plot("c-trend", order.map(name => {
+      const d = D.trend.find(x => x.issuer === name);
+      const main = name === "American Express" || name === "Chase";
+      return { type: "scatter", mode: "lines", name, x: d.month, y: d.index,
+               line: { width: main ? 2 : 1.2, color: name === "American Express" ? t.s1 : name === "Chase" ? t.s2 : t.neutral },
+               hovertemplate: name + " %{x|%b %Y}: %{y:.0f}<extra></extra>" }; }),
+    layout(t, { height: 320, hovermode: "closest", yaxis: { title: { text: "Index, 2023 average = 100" } },
+                xaxis: { showgrid: false } }));
+
+  const v = D.per_volume;
+  document.getElementById("n-volume").textContent = D.per_volume_note;
+  plot("c-volume", [{ type: "bar", x: v.map(d => d.issuer), y: v.map(d => d.rate),
+      marker: { color: v.map(d => hi(d.issuer)), cornerradius: 4 }, text: v.map(d => fmt(d.rate)),
+      textposition: "outside", cliponaxis: false, textfont: { color: t.ink2 },
+      customdata: v.map(d => [num(d.complaints), fmt(d.volume, 0)]),
+      hovertemplate: "%{x}<br>%{customdata[0]} complaints, USD %{customdata[1]} bn<extra></extra>" }],
+    layout(t, { height: 280, margin: { l: 8, r: 8, t: 24, b: 24 }, yaxis: { showticklabels: false, showgrid: false },
+                xaxis: { showgrid: false } }));
+  table("t-volume", ["Issuer", "Year", "Complaints", "Purchase volume (USD bn)", "Complaints per USD bn"],
+        D.per_volume_all.map(d => [d.issuer, d.year, num(d.complaints), fmt(d.volume, 1), fmt(d.rate, 2)]));
+}
+
+function renderThemes(t) {
+  const th = D.theme_vs_peers;
+  const y = th.map(d => wrap(d.label, 26));
+  plot("c-theme", [
+    { type: "bar", orientation: "h", name: "American Express", x: th.map(d => d.amex), y,
+      marker: { color: t.s1, cornerradius: 4 },
+      error_x: { type: "data", symmetric: false, array: th.map(d => d.hi - d.amex),
+                 arrayminus: th.map(d => d.amex - d.lo), color: t.ink2, thickness: 1, width: 3 },
+      customdata: th.map(d => [d.lo, d.hi, d.n]),
+      hovertemplate: "Amex %{x:.1f}% (95% interval %{customdata[0]:.1f} to %{customdata[1]:.1f})<br>" +
+                     "%{customdata[2]} sampled narratives<extra></extra>" },
+    { type: "bar", orientation: "h", name: "Other six issuers", x: th.map(d => d.peers), y,
+      marker: { color: t.neutral, cornerradius: 4 }, hovertemplate: "Peers %{x:.1f}%<extra></extra>" }],
+    layout(t, { height: 44 * th.length + 50, barmode: "group", bargap: 0.3, bargroupgap: 0.12,
+                yaxis: { autorange: "reversed", showgrid: false }, xaxis: { ticksuffix: "%" } }));
+  table("t-theme", ["Theme", "Amex %", "95% interval", "Peers %", "Difference (pts)", "Amex sample rows"],
+        th.map(d => [d.label, fmt(d.amex), fmt(d.lo) + " to " + fmt(d.hi), fmt(d.peers),
+                     (d.diff >= 0 ? "+" : "") + fmt(d.diff), d.n]));
+  heatmap("c-themeheat", t, D.theme_heat, 330);
+
+  if (D.benefits) {
+    document.getElementById("card-benefits").hidden = false;
+    plot("c-benefits", [{ type: "bar", orientation: "h", x: D.benefits.map(d => d.mentions),
+        y: D.benefits.map(d => d.name), marker: { color: t.s1, cornerradius: 4 },
+        hovertemplate: "%{y}: %{x} narratives<extra></extra>" }],
+      layout(t, { height: 26 * D.benefits.length + 50, yaxis: { autorange: "reversed", showgrid: false } }));
+  }
+  if (D.sentiment) {
+    document.getElementById("card-sentiment").hidden = false;
+    plot("c-sentiment", [{ type: "bar", orientation: "h", x: D.sentiment.map(d => d.pct),
+        y: D.sentiment.map(d => wrap(d.label, 26)), marker: { color: t.s1, cornerradius: 4 },
+        hovertemplate: "%{x:.0f}% very negative<extra></extra>" }],
+      layout(t, { height: 34 * D.sentiment.length + 50, yaxis: { autorange: "reversed", showgrid: false },
+                  xaxis: { ticksuffix: "%" } }));
+  }
+}
+
+function renderEvents(t) {
+  const key = document.getElementById("metric").value;
+  const meta = D.metrics.find(m => m.key === key);
+  document.getElementById("metric-desc").textContent = meta.description;
+  D.events.forEach(ev => {
+    const m = ev.metrics[key];
+    const traces = [{ type: "scatter", mode: "lines", name: ev.issuer, x: m.treated.month, y: m.treated.share,
+        line: { color: t.s1, width: 2 }, hovertemplate: ev.issuer + " %{x|%b %Y}: %{y:.1f}%<extra></extra>" }];
+    if (m.comparison) traces.push({ type: "scatter", mode: "lines", name: "Comparison issuers",
+        x: m.comparison.month, y: m.comparison.share, line: { color: t.neutral, width: 2 },
+        hovertemplate: "Comparison %{x|%b %Y}: %{y:.1f}%<extra></extra>" });
+    plot("c-" + ev.key, traces, layout(t, { height: 300, hovermode: "x unified",
+        margin: { l: 8, r: 16, t: 24, b: 30 }, yaxis: { ticksuffix: "%", rangemode: "tozero" },
+        xaxis: { showgrid: false },
+        shapes: [{ type: "line", x0: ev.event_month, x1: ev.event_month, yref: "paper", y0: 0, y1: 1,
+                   line: { color: t.ink2, width: 1 } }],
+        annotations: [{ x: ev.event_month, yref: "paper", y: 1.08, text: ev.short_label, showarrow: false,
+                        font: { color: t.ink2, size: 12 }, xanchor: "center" }] }));
+    const cols = ["Window", ev.issuer + " before", "after", "Comparison before", "after",
+                  "Difference in differences (pts)", "95% interval", "Placebo range (pts)"];
+    const rows = m.summary.map(s => [s.window + " months", fmt(s.t_pre) + "%", fmt(s.t_post) + "%",
+        s.c_pre === null ? "n/a" : fmt(s.c_pre) + "%", s.c_post === null ? "n/a" : fmt(s.c_post) + "%",
+        s.did === null ? "n/a" : (s.did >= 0 ? "+" : "") + fmt(s.did),
+        s.did === null ? "n/a" : fmt(s.lo) + " to " + fmt(s.hi),
+        s.p_min === null ? "n/a" : fmt(s.p_min) + " to " + fmt(s.p_max)]);
+    table("t-" + ev.key, cols, rows);
+  });
+}
+
+function renderStatic() {
+  document.getElementById("lede").textContent = D.lede;
+  if (D.banner) { const b = document.getElementById("banner"); b.hidden = false; b.textContent = D.banner; }
+  document.getElementById("tiles").innerHTML = D.tiles.map(x =>
+      `<div class="tile"><div class="v">${x.value}</div><div class="l">${x.label}</div></div>`).join("");
+  document.getElementById("theme-sub").textContent = D.theme_sub;
+  document.getElementById("metric").innerHTML = D.metrics.map(m => `<option value="${m.key}">${m.label}</option>`).join("");
+  document.getElementById("events").innerHTML = D.events.map(ev => `
+    <div class="card wide"><h3>${ev.label}</h3><p class="note">${ev.detail}</p>
+      <div class="legend"><span><i style="background:var(--s1)"></i>${ev.issuer}</span>
+        <span><i style="background:var(--neutral)"></i>Comparison issuers</span></div>
+      <div id="c-${ev.key}" class="chart"></div>
+      <div class="scroll" id="t-${ev.key}"></div></div>`).join("");
+  document.getElementById("quotes-sub").textContent = D.quotes_sub;
+  document.getElementById("quotes").innerHTML = D.quotes.map(q => `
+    <div class="card"><h3>${q.label}</h3>${q.items.map(i =>
+      `<blockquote>${i.text}<span>${i.issuer}, ${i.quarter}</span></blockquote>`).join("")}</div>`).join("");
+  document.getElementById("fixes").innerHTML = D.fixes.map(f => `<li><strong>${f.title}</strong> ${f.evidence}</li>`).join("");
+  document.getElementById("footer").innerHTML = D.footer;
+}
+
+// docs/index.html#only=events shows a single section. Used for the README screenshots.
+const only = location.hash.startsWith("#only=") ? location.hash.slice(6).split(",") : null;
+if (only) document.querySelectorAll("section[data-sec], footer").forEach(el => {
+  if (!only.includes(el.dataset.sec)) el.style.display = "none"; });
+
+function renderAll() { const t = theme(); renderBenchmark(t); renderThemes(t); renderEvents(t); }
+renderStatic();
+renderAll();
+document.getElementById("metric").addEventListener("change", () => renderEvents(theme()));
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", renderAll);
+</script>
+</body>
+</html>
