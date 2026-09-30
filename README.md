@@ -8,7 +8,7 @@ Issuer benchmarking of 142,540 CFPB credit card complaints with SQL, an event st
 
 **Recommendation.** Fix welcome offer eligibility clarity first, then rewards posting and forfeiture warnings, then annual fee refund and renewal rules before existing Platinum members finish renewing at the new fee.
 
-[Interactive dashboard](docs/index.html) · [One-page memo](docs/memo.md) · [Data profile](docs/data_profile.md)
+[Live dashboard](https://tharun0127.github.io/card-complaint-benchmarking/) · [One-page memo](docs/memo.md) · [Data profile](docs/data_profile.md)
 
 ![Issuer benchmark: where American Express differs from the other six issuers](docs/img/dashboard_benchmark.png)
 
