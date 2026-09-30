@@ -1,0 +1,125 @@
+{
+  "api_url": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/",
+  "api_available": true,
+  "fields_served": [
+    "company",
+    "company_public_response",
+    "company_response",
+    "complaint_id",
+    "date_received",
+    "date_sent_to_company",
+    "issue",
+    "product",
+    "state",
+    "sub_issue",
+    "sub_product",
+    "submitted_via",
+    "tags",
+    "timely",
+    "zip_code"
+  ],
+  "latest_credit_card_complaint_received": "2026-09-29",
+  "narrative_field_present": false,
+  "complaints_flagged_has_narrative": 18091520,
+  "credit_card_complaints_received_after_2026_08_14": 9617,
+  "counts_by_issuer_year": [
+    {
+      "issuer": "American Express",
+      "year": 2024,
+      "archive": 3950,
+      "live_api": 3963,
+      "archive_as_pct_of_api": 99.7
+    },
+    {
+      "issuer": "American Express",
+      "year": 2025,
+      "archive": 4714,
+      "live_api": 4723,
+      "archive_as_pct_of_api": 99.8
+    },
+    {
+      "issuer": "Chase",
+      "year": 2024,
+      "archive": 5276,
+      "live_api": 5287,
+      "archive_as_pct_of_api": 99.8
+    },
+    {
+      "issuer": "Chase",
+      "year": 2025,
+      "archive": 5951,
+      "live_api": 5965,
+      "archive_as_pct_of_api": 99.8
+    },
+    {
+      "issuer": "Capital One",
+      "year": 2024,
+      "archive": 7058,
+      "live_api": 7067,
+      "archive_as_pct_of_api": 99.9
+    },
+    {
+      "issuer": "Capital One",
+      "year": 2025,
+      "archive": 9923,
+      "live_api": 9946,
+      "archive_as_pct_of_api": 99.8
+    },
+    {
+      "issuer": "Citi",
+      "year": 2024,
+      "archive": 6685,
+      "live_api": 6695,
+      "archive_as_pct_of_api": 99.9
+    },
+    {
+      "issuer": "Citi",
+      "year": 2025,
+      "archive": 8620,
+      "live_api": 8640,
+      "archive_as_pct_of_api": 99.8
+    },
+    {
+      "issuer": "Bank of America",
+      "year": 2024,
+      "archive": 3381,
+      "live_api": 3386,
+      "archive_as_pct_of_api": 99.9
+    },
+    {
+      "issuer": "Bank of America",
+      "year": 2025,
+      "archive": 4142,
+      "live_api": 4150,
+      "archive_as_pct_of_api": 99.8
+    },
+    {
+      "issuer": "Discover",
+      "year": 2024,
+      "archive": 2302,
+      "live_api": 2306,
+      "archive_as_pct_of_api": 99.8
+    },
+    {
+      "issuer": "Discover",
+      "year": 2025,
+      "archive": 2830,
+      "live_api": 2842,
+      "archive_as_pct_of_api": 99.6
+    },
+    {
+      "issuer": "Synchrony",
+      "year": 2024,
+      "archive": 5301,
+      "live_api": 5308,
+      "archive_as_pct_of_api": 99.9
+    },
+    {
+      "issuer": "Synchrony",
+      "year": 2025,
+      "archive": 6570,
+      "live_api": 6580,
+      "archive_as_pct_of_api": 99.8
+    }
+  ]
+}

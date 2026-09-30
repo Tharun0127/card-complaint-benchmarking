@@ -14,6 +14,12 @@ DOCS_DIR = ROOT / "docs"
 VALIDATION_DIR = ROOT / "validation"
 
 COMPLAINTS_PARQUET = PROCESSED_DIR / "complaints.parquet"
+CARDS_ALL_PARQUET = PROCESSED_DIR / "cards_all.parquet"
+SAMPLE_PARQUET = PROCESSED_DIR / "sample.parquet"
+SAMPLE_IDS_CSV = OUTPUT_DIR / "sample_ids.csv"
+# LLM results cache. Committed to git (labels and token usage only, no narrative text)
+# so that a fresh clone can rebuild every output without calling the API.
+LABELS_JSONL = OUTPUT_DIR / "llm_labels.jsonl"
 
 # --- CFPB sources -----------------------------------------------------------------------
 ARCHIVE_PAGE = (
