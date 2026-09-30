@@ -1,0 +1,24 @@
+# secrets
+.env
+.env.*
+*.key
+
+# raw and processed data (large, and re-creatable with run_all.py)
+data/raw/
+data/processed/
+
+# LLM batch request payloads contain full narratives; results cache is kept out of git too
+data/llm_cache/
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# os / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/
