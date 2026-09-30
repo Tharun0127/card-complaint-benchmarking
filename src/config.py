@@ -17,6 +17,7 @@ COMPLAINTS_PARQUET = PROCESSED_DIR / "complaints.parquet"
 CARDS_ALL_PARQUET = PROCESSED_DIR / "cards_all.parquet"
 SAMPLE_PARQUET = PROCESSED_DIR / "sample.parquet"
 SAMPLE_IDS_CSV = OUTPUT_DIR / "sample_ids.csv"
+MODEL_LABELS_PARQUET = PROCESSED_DIR / "model_labels.parquet"
 # LLM results cache. Committed to git (labels and token usage only, no narrative text)
 # so that a fresh clone can rebuild every output without calling the API.
 LABELS_JSONL = OUTPUT_DIR / "llm_labels.jsonl"
@@ -53,4 +54,36 @@ ARCHIVE_FILES = [
 ]
 
 START_DATE = "2023-01-01"
-ARCHIVE_END_DATE = "2026-08-14"
+
+# --- Event study ------------------------------------------------------------------------
+# Dates are from the issuers' press releases (see data/reference/denominator_research.md).
+# Both refreshes raised the annual fee for new applicants at launch and for existing
+# cardholders later, at each account's renewal, so the effect is expected to be gradual.
+EVENTS = [
+    {
+        "key": "chase_sapphire_reserve",
+        "label": "Chase Sapphire Reserve refresh",
+        "issuer": "Chase",
+        "event_date": "2025-06-23",
+        "event_month": "2025-06-01",
+        "product_mention_col": "mentions_sapphire_reserve",
+        "product_name": "Sapphire Reserve",
+        "detail": "Annual fee USD 550 to USD 795. New applicants from 23 Jun 2025, existing "
+                  "cardholders at renewal on or after 26 Oct 2025.",
+    },
+    {
+        "key": "amex_platinum",
+        "label": "Amex Platinum refresh",
+        "issuer": "American Express",
+        "event_date": "2025-09-18",
+        "event_month": "2025-09-01",
+        "product_mention_col": "mentions_platinum",
+        "product_name": "Platinum",
+        "detail": "Annual fee USD 695 to USD 895. New applicants from 18 Sep 2025, existing "
+                  "consumer members at renewal on or after 2 Jan 2026.",
+    },
+]
+# Issuers with no premium card refresh in the window. Chase and Amex are left out of the
+# comparison group for both events because each is treated in one of them.
+CONTROL_ISSUERS = ["Capital One", "Citi", "Bank of America", "Discover", "Synchrony"]
+EVENT_WINDOWS_MONTHS = [6, 12]

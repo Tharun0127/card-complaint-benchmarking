@@ -1,0 +1,30 @@
+{
+  "narratives_labeled": 68835,
+  "training_rows": 18832,
+  "seed_rows_by_theme": {
+    "dispute_fraud": 6000,
+    "billing": 6000,
+    "customer_service": 2809,
+    "credit_limit_account_closure": 2044,
+    "rewards_points": 1413,
+    "annual_fee": 239,
+    "insurance_protection_claim": 160,
+    "statement_credit_benefit": 121,
+    "lounge_travel_benefit": 46
+  },
+  "narratives_matching_no_rule": 8789,
+  "note": "Keyword-seeded fallback. Not LLM classification. Not validated against human labels.",
+  "mode": "keyword_fallback",
+  "theme_share_pct": {
+    "dispute_fraud": 33.2,
+    "billing": 25.6,
+    "customer_service": 15.9,
+    "credit_limit_account_closure": 9.3,
+    "other": 6.8,
+    "rewards_points": 6.2,
+    "annual_fee": 1.6,
+    "statement_credit_benefit": 0.6,
+    "insurance_protection_claim": 0.5,
+    "lounge_travel_benefit": 0.1
+  }
+}
