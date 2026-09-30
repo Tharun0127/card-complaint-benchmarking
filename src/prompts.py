@@ -23,9 +23,11 @@ def _sentiment_block() -> str:
     return "\n".join(f"- {key}: {definition}" for key, definition in SENTIMENTS.items())
 
 
-SYSTEM_PROMPT = f"""You label consumer complaints about US credit cards for a card membership analytics team. Each complaint was submitted to the Consumer Financial Protection Bureau. Personal details are redacted as XXXX. The team uses your labels to measure which parts of card membership cause the most friction, so accuracy on the membership themes (annual fee, credits, rewards, travel benefits, protections) matters most.
+SYSTEM_PROMPT = f"""You label consumer complaints about US credit cards for a card membership analytics team. Each request contains several unrelated complaints, each inside a <complaint id="..."> tag. Label every complaint on its own: the others in the same request are from different customers and tell you nothing about it. Each complaint was submitted to the Consumer Financial Protection Bureau. Personal details are redacted as XXXX. The team uses your labels to measure which parts of card membership cause the most friction, so accuracy on the membership themes (annual fee, credits, rewards, travel benefits, protections) matters most.
 
-Read the complaint and return one JSON object with these fields.
+Return one JSON object of the form {{"results": [...]}} with exactly one item per complaint, in the order given. Each item has these fields.
+
+id: the id attribute of the complaint, copied exactly.
 
 primary_theme: the one theme that best describes the underlying problem the customer wants fixed.
 {_theme_block()}
@@ -47,7 +49,7 @@ named_benefits: a list of specific card benefits, credits or programs the custom
 
 card_product: the card product the customer names, for example "Platinum Card", "Gold Card", "Sapphire Reserve", "Venture X", "Costco Anywhere Visa". Use null when no product is named. Do not infer a product from the issuer or from the benefits.
 
-Examples
+Examples of single items (the id field is left out here for brevity)
 
 Complaint: "My annual fee went from $550 to $795 with no notice I could find. I called to cancel within 30 days and they refused to refund the fee."
 {{"primary_theme": "annual_fee", "secondary_theme": null, "sentiment": "negative", "named_benefits": [], "card_product": null}}
@@ -67,13 +69,26 @@ Complaint: "They closed my account without warning after 12 years of on time pay
 Complaint: "My flight was delayed 9 hours. I filed under the trip delay coverage on my card and the benefits administrator has asked for the same documents four times over two months."
 {{"primary_theme": "insurance_protection_claim", "secondary_theme": null, "sentiment": "negative", "named_benefits": ["trip delay insurance"], "card_product": null}}
 
-Return only the JSON object."""
+Return only the JSON object, with one item for every complaint id you were given."""
 
 
-def build_user_message(narrative: str) -> tuple[str, bool]:
-    """Return the user message and whether the narrative was cut for length."""
+def prepare_narrative(narrative: str) -> tuple[str, bool]:
+    """Return the narrative as sent to the model and whether it was cut for length."""
     text = narrative.strip()
     truncated = len(text) > MAX_NARRATIVE_CHARS
     if truncated:
         text = text[:MAX_NARRATIVE_CHARS] + TRUNCATION_MARKER
-    return f"<complaint>\n{text}\n</complaint>", truncated
+    return text, truncated
+
+
+def build_user_message(items: list[tuple[int | str, str]]) -> tuple[str, dict[str, bool]]:
+    """Build one user message from (complaint id, narrative) pairs.
+
+    Returns the message and a map of id -> whether that narrative was cut for length.
+    """
+    blocks, truncated = [], {}
+    for cid, narrative in items:
+        text, cut = prepare_narrative(narrative)
+        truncated[str(cid)] = cut
+        blocks.append(f'<complaint id="{cid}">\n{text}\n</complaint>')
+    return "\n\n".join(blocks), truncated

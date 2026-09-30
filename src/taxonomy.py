@@ -95,18 +95,27 @@ SENTIMENT_KEYS: list[str] = list(SENTIMENTS)
 
 MAX_NAMED_BENEFITS = 5
 
-# JSON schema for structured output. additionalProperties is false and every field is
+# JSON schema for one complaint. additionalProperties is false and every field is
 # required, which the structured output feature needs.
-OUTPUT_SCHEMA: dict = {
+ITEM_SCHEMA: dict = {
     "type": "object",
     "properties": {
+        "id": {"type": "string"},
         "primary_theme": {"type": "string", "enum": THEME_KEYS},
         "secondary_theme": {"anyOf": [{"type": "string", "enum": THEME_KEYS}, {"type": "null"}]},
         "sentiment": {"type": "string", "enum": SENTIMENT_KEYS},
         "named_benefits": {"type": "array", "items": {"type": "string"}},
         "card_product": {"anyOf": [{"type": "string"}, {"type": "null"}]},
     },
-    "required": ["primary_theme", "secondary_theme", "sentiment", "named_benefits", "card_product"],
+    "required": ["id", "primary_theme", "secondary_theme", "sentiment", "named_benefits", "card_product"],
+    "additionalProperties": False,
+}
+
+# Several complaints are sent in one request, so the response is a list of items.
+OUTPUT_SCHEMA: dict = {
+    "type": "object",
+    "properties": {"results": {"type": "array", "items": ITEM_SCHEMA}},
+    "required": ["results"],
     "additionalProperties": False,
 }
 
@@ -221,3 +230,45 @@ def parse_classification(raw: str | dict) -> Classification:
         named_benefits=_clean_benefits(data.get("named_benefits")),
         card_product=_clean_optional_text(data.get("card_product")),
     )
+
+
+def parse_pack(raw: str | dict, expected_ids: list[str]) -> dict[str, Classification | TaxonomyError]:
+    """Parse a response that covers several complaints.
+
+    Returns one entry per expected id: a Classification, or the TaxonomyError that
+    explains why that complaint has no valid label. Labels are matched to complaints by
+    the id the model echoes back, never by position, and ids that were not sent are
+    ignored. A complaint whose id is missing or appears twice gets an error, so a
+    misaligned response cannot attach a label to the wrong complaint.
+    """
+    if isinstance(raw, str):
+        match = _JSON_BLOCK.search(raw)
+        if not match:
+            raise TaxonomyError("no JSON object found in classifier output")
+        try:
+            data = json.loads(match.group(0))
+        except json.JSONDecodeError as exc:
+            raise TaxonomyError(f"invalid JSON: {exc}") from exc
+    else:
+        data = raw
+    if not isinstance(data, dict) or not isinstance(data.get("results"), list):
+        raise TaxonomyError("response has no results list")
+
+    seen: dict[str, list[dict]] = {}
+    for item in data["results"]:
+        if isinstance(item, dict) and "id" in item:
+            seen.setdefault(str(item["id"]).strip(), []).append(item)
+
+    out: dict[str, Classification | TaxonomyError] = {}
+    for cid in expected_ids:
+        items = seen.get(str(cid), [])
+        if not items:
+            out[str(cid)] = TaxonomyError("id missing from response")
+        elif len(items) > 1:
+            out[str(cid)] = TaxonomyError("id appears more than once in response")
+        else:
+            try:
+                out[str(cid)] = parse_classification(items[0])
+            except TaxonomyError as exc:
+                out[str(cid)] = exc
+    return out

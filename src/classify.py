@@ -2,22 +2,27 @@
 
 Commands
   estimate   Project token use and cost for the sample. Makes no billable calls.
-  pilot      Classify a few rows with ordinary requests to measure real output tokens.
-  run        Submit everything not yet in the cache as a Message Batch, wait, collect.
+  pilot      Classify a few packs with ordinary requests to measure real token use.
+  run        Send everything not yet in the cache as Message Batches, wait, collect.
   collect    Fetch results for a batch that was submitted earlier.
   status     Show cache coverage and spend so far.
 
 Cost controls
   - Results are cached in outputs/llm_labels.jsonl keyed by complaint id, model and
     prompt version. A rerun only sends rows that are not in the cache.
-  - `run` refuses to submit if spend so far plus the projection exceeds the budget
-    (USD 10 unless --budget is raised on purpose).
-  - Batch requests are half price. The shared system prompt is cached.
+  - Three levers keep the unit cost down: the Message Batches API (half price), prompt
+    caching on the shared system prompt, and packing PACK_SIZE complaints into each
+    request so the system prompt and any thinking are paid once per pack.
+  - `run` sends the sample in chunks. Before each chunk it checks two things against the
+    budget (USD 10 unless --budget is raised on purpose): the worst case for that chunk,
+    and the projection for everything left using token use measured so far. If either
+    fails, nothing more is sent and the command exits with code 2.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import sys
 import time
@@ -28,20 +33,31 @@ from dotenv import load_dotenv
 
 from config import LABELS_JSONL, LLM_CACHE_DIR, OUTPUT_DIR, ROOT, SAMPLE_PARQUET
 from costing import DEFAULT_BUDGET_USD, PRICES, project_cost, usage_cost, within_budget
-from prompts import PROMPT_VERSION, SYSTEM_PROMPT, build_user_message
-from taxonomy import OUTPUT_SCHEMA, TaxonomyError, parse_classification
+from prompts import MAX_NARRATIVE_CHARS, PROMPT_VERSION, SYSTEM_PROMPT, build_user_message
+from taxonomy import OUTPUT_SCHEMA, TaxonomyError, parse_pack
 
 DEFAULT_MODEL = "claude-opus-5-5"
-MAX_TOKENS = 2000  # includes thinking tokens on models that think
+PACK_SIZE = 8
+MAX_TOKENS = 4000  # per pack, and includes thinking tokens on models that think
+PACK_SEED = 17
 BATCH_STATE = LLM_CACHE_DIR / "batch_state.json"
 COST_ESTIMATE_JSON = OUTPUT_DIR / "cost_estimate.json"
+FIRST_CHUNK_ROWS = 320
+CHUNK_ROWS = 2000
+USAGE_COLS = ["input_tokens", "output_tokens", "cache_read_tokens", "cache_write_tokens"]
+RETRYABLE = {"api_error", "missing_in_response"}
 
-# Planning assumptions used until a pilot has measured the real numbers.
+# Planning assumptions, used only until a pilot or a first chunk has measured real numbers.
 CHARS_PER_TOKEN = 3.3
-REQUEST_OVERHEAD_TOKENS = 60
-ASSUMED_OUTPUT_TOKENS = {"low": 90, "expected": 250, "high": 500}
-ASSUMED_OUTPUT_TOKENS_NO_THINKING = {"low": 70, "expected": 90, "high": 130}
-ASSUMED_CACHE_HIT = {"low": 0.95, "expected": 0.7, "high": 0.0}
+PACK_OVERHEAD_TOKENS = 40
+ITEM_OUTPUT_TOKENS = {"low": 60, "expected": 75, "high": 100}
+THINKING_TOKENS_PER_PACK = {"low": 0, "expected": 300, "high": 1200}
+CACHE_HIT = {"low": 0.95, "expected": 0.7, "high": 0.0}
+SCENARIOS = {
+    "low": "95% cache hits, short outputs, no thinking",
+    "expected": "70% cache hits, typical outputs, some thinking",
+    "high": "no cache hits, long outputs, heavy thinking",
+}
 
 EXIT_NO_KEY = 3
 EXIT_OVER_BUDGET = 2
@@ -68,12 +84,18 @@ def require_client():
     return anthropic.Anthropic()
 
 
-def request_params(model: str, narrative: str) -> tuple[dict, bool]:
-    user_text, truncated = build_user_message(narrative)
+def make_packs(rows: pd.DataFrame, pack_size: int = PACK_SIZE, seed: int = PACK_SEED) -> list[pd.DataFrame]:
+    """Shuffle rows and cut them into packs, so a pack mixes issuers and quarters."""
+    shuffled = rows.sample(frac=1.0, random_state=seed)
+    return [shuffled.iloc[i:i + pack_size] for i in range(0, len(shuffled), pack_size)]
+
+
+def request_params(model: str, pack: pd.DataFrame) -> tuple[dict, dict[str, bool]]:
+    user_text, truncated = build_user_message(list(zip(pack["complaint_id"], pack["narrative"])))
     output_config: dict = {"format": {"type": "json_schema", "schema": OUTPUT_SCHEMA}}
     if PRICES[model].thinks:
         # Thinking cannot be turned off on these models. Low effort keeps it short,
-        # which is enough for a single-label classification.
+        # which is enough for single-label classification.
         output_config["effort"] = "low"
     params = {
         "model": model,
@@ -93,20 +115,19 @@ def request_params(model: str, narrative: str) -> tuple[dict, bool]:
 
 # --- cache ------------------------------------------------------------------------------
 def load_cache(path: Path = LABELS_JSONL) -> pd.DataFrame:
-    if not path.exists():
-        return pd.DataFrame(
-            columns=["complaint_id", "model", "prompt_version", "status", "mode"]
-        )
+    if not path.exists() or path.stat().st_size == 0:
+        return pd.DataFrame(columns=["complaint_id", "model", "prompt_version", "status", "mode", *USAGE_COLS])
     return pd.read_json(path, lines=True, dtype={"complaint_id": "int64"})
 
 
+def current(cache: pd.DataFrame, model: str) -> pd.DataFrame:
+    return cache[(cache["model"] == model) & (cache["prompt_version"] == PROMPT_VERSION)]
+
+
 def cached_ids(model: str, path: Path = LABELS_JSONL) -> set[int]:
-    cache = load_cache(path)
-    if cache.empty:
-        return set()
-    hit = cache[(cache["model"] == model) & (cache["prompt_version"] == PROMPT_VERSION)]
-    # Rows that errored for a transient reason are retried. Everything else is final.
-    return set(hit.loc[hit["status"] != "api_error", "complaint_id"].astype(int))
+    hit = current(load_cache(path), model)
+    # Rows that failed for a transient reason are retried. Everything else is final.
+    return set(hit.loc[~hit["status"].isin(RETRYABLE), "complaint_id"].astype(int))
 
 
 def append_cache(records: list[dict], path: Path = LABELS_JSONL) -> None:
@@ -116,46 +137,59 @@ def append_cache(records: list[dict], path: Path = LABELS_JSONL) -> None:
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
-def message_to_record(complaint_id: int, model: str, truncated: bool, message, mode: str) -> dict:
+def pack_to_records(ids: list[str], truncated: dict[str, bool], model: str, message, mode: str,
+                    pack_id: str) -> list[dict]:
+    """One cache record per complaint. The pack's token usage is split evenly across them."""
     usage = message.usage
-    rec = {
-        "complaint_id": int(complaint_id),
-        "model": model,
-        "prompt_version": PROMPT_VERSION,
-        "mode": mode,
-        "narrative_truncated": bool(truncated),
-        "input_tokens": usage.input_tokens,
-        "output_tokens": usage.output_tokens,
-        "cache_read_tokens": getattr(usage, "cache_read_input_tokens", 0) or 0,
-        "cache_write_tokens": getattr(usage, "cache_creation_input_tokens", 0) or 0,
+    n = len(ids)
+    shared = {
+        "model": model, "prompt_version": PROMPT_VERSION, "mode": mode, "pack_id": pack_id,
+        "input_tokens": usage.input_tokens / n,
+        "output_tokens": usage.output_tokens / n,
+        "cache_read_tokens": (getattr(usage, "cache_read_input_tokens", 0) or 0) / n,
+        "cache_write_tokens": (getattr(usage, "cache_creation_input_tokens", 0) or 0) / n,
     }
+
+    def base(cid: str) -> dict:
+        return {"complaint_id": int(cid), **shared, "narrative_truncated": bool(truncated.get(cid, False))}
+
     if message.stop_reason == "refusal":
-        return {**rec, "status": "refusal"}
-    if message.stop_reason == "max_tokens":
-        return {**rec, "status": "output_cut_off"}
+        return [{**base(c), "status": "refusal"} for c in ids]
     text = next((b.text for b in message.content if b.type == "text"), "")
     try:
-        parsed = parse_classification(text)
+        parsed = parse_pack(text, ids)
     except TaxonomyError as exc:
-        return {**rec, "status": "parse_error", "error": str(exc)}
-    return {**rec, "status": "ok", **parsed.to_dict()}
+        status = "output_cut_off" if message.stop_reason == "max_tokens" else "parse_error"
+        return [{**base(c), "status": status, "error": str(exc)} for c in ids]
+
+    records = []
+    for cid in ids:
+        result = parsed[cid]
+        if isinstance(result, TaxonomyError):
+            missing = "missing" in str(result)
+            records.append({**base(cid), "status": "missing_in_response" if missing else "parse_error",
+                            "error": str(result)})
+        else:
+            records.append({**base(cid), "status": "ok", **result.to_dict()})
+    return records
 
 
-def spend_so_far(path: Path = LABELS_JSONL) -> float:
-    cache = load_cache(path)
-    if cache.empty or "input_tokens" not in cache:
-        return 0.0
+def spend_so_far(cache: pd.DataFrame | None = None) -> float:
+    cache = load_cache() if cache is None else cache
     total = 0.0
     for (model, mode), grp in cache.groupby(["model", "mode"]):
-        total += usage_cost(
-            model,
-            int(grp["input_tokens"].sum()),
-            int(grp["output_tokens"].sum()),
-            int(grp["cache_read_tokens"].sum()),
-            int(grp["cache_write_tokens"].sum()),
-            batch=(mode == "batch"),
-        )
+        total += usage_cost(model, *(grp[c].sum() for c in USAGE_COLS), batch=(mode == "batch"))
     return total
+
+
+def measured_cost_per_row(model: str, cache: pd.DataFrame | None = None) -> float | None:
+    """Average batch-price cost per complaint from real usage, once 40 or more rows exist."""
+    cache = load_cache() if cache is None else cache
+    billed = current(cache, model)
+    billed = billed[billed["status"] != "api_error"]
+    if len(billed) < 40:
+        return None
+    return usage_cost(model, *(billed[c].sum() for c in USAGE_COLS), batch=True) / len(billed)
 
 
 # --- estimate ---------------------------------------------------------------------------
@@ -166,69 +200,67 @@ def load_sample() -> pd.DataFrame:
     return pd.read_parquet(SAMPLE_PARQUET)
 
 
-def measured_output_tokens(model: str) -> float | None:
-    cache = load_cache()
-    if cache.empty or "output_tokens" not in cache:
-        return None
-    hit = cache[(cache["model"] == model) & (cache["prompt_version"] == PROMPT_VERSION)]
-    return float(hit["output_tokens"].mean()) if len(hit) >= 20 else None
-
-
 def token_inputs(sample: pd.DataFrame, client=None, model: str | None = None) -> dict:
-    """System prompt tokens and average user tokens, counted by the API when possible."""
-    user_texts = [build_user_message(t)[0] for t in sample["narrative"]]
+    """System prompt tokens and average user tokens per pack, counted by the API when possible."""
+    packs = make_packs(sample)
+    texts = [build_user_message(list(zip(p["complaint_id"], p["narrative"])))[0] for p in packs]
+    avg_chars = sum(len(t) for t in texts) / len(texts)
     if client is not None and model is not None:
         system_tokens = client.messages.count_tokens(
             model=model, system=SYSTEM_PROMPT, messages=[{"role": "user", "content": "x"}]
         ).input_tokens
-        probe = pd.Series(user_texts).sample(min(60, len(user_texts)), random_state=7)
-        counted = [
-            client.messages.count_tokens(
-                model=model, messages=[{"role": "user", "content": t}]
-            ).input_tokens
+        probe = texts[:20]
+        counted = sum(
+            client.messages.count_tokens(model=model, messages=[{"role": "user", "content": t}]).input_tokens
             for t in probe
-        ]
-        ratio = sum(len(t) for t in probe) / max(sum(counted), 1)
-        avg_user = sum(len(t) for t in user_texts) / len(user_texts) / ratio
-        return {"system_tokens": system_tokens, "avg_user_tokens": avg_user,
-                "method": f"count_tokens API on {len(probe)} sampled rows, {ratio:.2f} chars per token"}
-    avg_user = sum(len(t) for t in user_texts) / len(user_texts) / CHARS_PER_TOKEN
+        )
+        ratio = sum(len(t) for t in probe) / max(counted, 1)
+        return {"system_tokens": system_tokens, "avg_user_tokens": avg_chars / ratio,
+                "method": f"count_tokens API on {len(probe)} packs ({ratio:.2f} characters per token)"}
     return {
         "system_tokens": int(len(SYSTEM_PROMPT) / CHARS_PER_TOKEN),
-        "avg_user_tokens": avg_user + REQUEST_OVERHEAD_TOKENS,
-        "method": f"heuristic, {CHARS_PER_TOKEN} characters per token (no API key available)",
+        "avg_user_tokens": avg_chars / CHARS_PER_TOKEN + PACK_OVERHEAD_TOKENS,
+        "method": f"heuristic of {CHARS_PER_TOKEN} characters per token (no API key, so tokens were not counted)",
     }
+
+
+def scenario_cost(model: str, n_rows: int, tokens: dict, scenario: str) -> float:
+    n_packs = math.ceil(n_rows / PACK_SIZE)
+    thinking = THINKING_TOKENS_PER_PACK[scenario] if PRICES[model].thinks else 0
+    out_per_pack = PACK_SIZE * ITEM_OUTPUT_TOKENS[scenario] + thinking
+    return project_cost(model, n_packs, tokens["system_tokens"], tokens["avg_user_tokens"],
+                        out_per_pack, CACHE_HIT[scenario])
 
 
 def build_estimate(sample: pd.DataFrame, n_remaining: dict[str, int], tokens: dict) -> dict:
     out: dict = {
         "sample_rows": len(sample),
+        "complaints_per_request": PACK_SIZE,
+        "requests": math.ceil(len(sample) / PACK_SIZE),
         "prompt_version": PROMPT_VERSION,
         "token_method": tokens["method"],
         "system_prompt_tokens": int(tokens["system_tokens"]),
         "avg_user_tokens_per_request": round(tokens["avg_user_tokens"], 1),
-        "narratives_cut_for_length": int((sample["narrative"].str.len() > 6000).sum()),
+        "narratives_cut_for_length": int((sample["narrative"].str.len() > MAX_NARRATIVE_CHARS).sum()),
         "budget_usd": DEFAULT_BUDGET_USD,
+        "scenarios": SCENARIOS,
         "models": {},
     }
+    cache = load_cache()
     for model, price in PRICES.items():
-        measured = measured_output_tokens(model)
-        assumed = ASSUMED_OUTPUT_TOKENS if price.thinks else ASSUMED_OUTPUT_TOKENS_NO_THINKING
-        scenarios = {}
-        for name in ("low", "expected", "high"):
-            out_tokens = measured if measured is not None else assumed[name]
-            scenarios[name] = round(
-                project_cost(model, n_remaining[model], tokens["system_tokens"],
-                             tokens["avg_user_tokens"], out_tokens, ASSUMED_CACHE_HIT[name]), 2)
-        out["models"][model] = {
-            "requests_not_in_cache": n_remaining[model],
-            "output_tokens_per_request": (
-                {"measured_in_pilot": round(measured, 1)} if measured is not None else assumed
-            ),
-            "system_prompt_cacheable": tokens["system_tokens"] >= price.min_cacheable_tokens,
+        n = n_remaining[model]
+        scenarios = {name: round(scenario_cost(model, n, tokens, name), 2) for name in SCENARIOS}
+        entry = {
+            "rows_not_in_cache": n,
+            "system_prompt_long_enough_to_cache": tokens["system_tokens"] >= price.min_cacheable_tokens,
             "batch_cost_usd": scenarios,
-            "within_budget_at_high": scenarios["high"] <= DEFAULT_BUDGET_USD,
+            "within_budget_in_every_scenario": scenarios["high"] <= DEFAULT_BUDGET_USD,
         }
+        measured = measured_cost_per_row(model, cache)
+        if measured is not None:
+            entry["measured_cost_per_row_usd"] = round(measured, 5)
+            entry["projection_from_measured_usd"] = round(measured * n, 2)
+        out["models"][model] = entry
     return out
 
 
@@ -249,50 +281,57 @@ def cmd_estimate(args) -> int:
 
 
 # --- pilot ------------------------------------------------------------------------------
+def classify_now(client, model: str, packs: list[pd.DataFrame], mode: str) -> None:
+    for pack in packs:
+        params, truncated = request_params(model, pack)
+        message = client.messages.create(**params)
+        ids = [str(c) for c in pack["complaint_id"]]
+        append_cache(pack_to_records(ids, truncated, model, message, mode, f"{mode}-{ids[0]}"))
+
+
 def cmd_pilot(args) -> int:
     client = require_client()
     model = model_name()
     sample = load_sample()
     todo = sample[~sample["complaint_id"].isin(cached_ids(model))]
-    todo = todo.sample(min(args.n, len(todo)), random_state=11)
-    # A pilot is tiny, but the same budget rule applies.
+    packs = make_packs(todo)[: args.packs]
+    if not packs:
+        print("Nothing left to classify.")
+        return 0
+    n_rows = sum(len(p) for p in packs)
     tokens = token_inputs(todo, client, model)
-    projected = project_cost(model, len(todo), tokens["system_tokens"], tokens["avg_user_tokens"],
-                             ASSUMED_OUTPUT_TOKENS["high"], 0.0, batch=False)
-    if not within_budget(spend_so_far(), projected, args.budget):
-        print(f"Pilot would exceed the budget (projected {projected:.2f} USD). Not sent.")
+    # Ordinary requests are full price, so the batch worst case is doubled.
+    if not within_budget(spend_so_far(), 2 * scenario_cost(model, n_rows, tokens, "high"), args.budget):
+        print("The pilot could exceed the budget. Nothing was sent.")
         return EXIT_OVER_BUDGET
-    for row in todo.itertuples():
-        params, truncated = request_params(model, row.narrative)
-        message = client.messages.create(**params)
-        append_cache([message_to_record(row.complaint_id, model, truncated, message, "pilot")])
-    cache = load_cache()
-    pilot = cache[(cache["model"] == model) & (cache["mode"] == "pilot")]
+    classify_now(client, model, packs, "pilot")
+    pilot = current(load_cache(), model)
+    pilot = pilot[pilot["mode"] == "pilot"]
     print(f"pilot rows: {len(pilot)} | status: {pilot['status'].value_counts().to_dict()}")
-    print(f"avg output tokens: {pilot['output_tokens'].mean():.0f} | "
-          f"cache reads on {int((pilot['cache_read_tokens'] > 0).sum())} of {len(pilot)} requests")
+    print(f"average output tokens per complaint: {pilot['output_tokens'].mean():.0f} | "
+          f"rows served with a cache read: {int((pilot['cache_read_tokens'] > 0).sum())} of {len(pilot)}")
     print(f"spend so far: {spend_so_far():.4f} USD")
     return 0
 
 
 # --- batch run --------------------------------------------------------------------------
-def submit_batch(client, model: str, todo: pd.DataFrame) -> dict:
+def submit_batch(client, model: str, packs: list[pd.DataFrame]) -> dict:
     from anthropic.types.message_create_params import MessageCreateParamsNonStreaming
     from anthropic.types.messages.batch_create_params import Request
 
-    requests, truncated_flags = [], {}
-    for row in todo.itertuples():
-        params, truncated = request_params(model, row.narrative)
-        truncated_flags[str(row.complaint_id)] = truncated
-        requests.append(
-            Request(custom_id=str(row.complaint_id), params=MessageCreateParamsNonStreaming(**params))
-        )
+    requests, members, truncated_all = [], {}, {}
+    for i, pack in enumerate(packs):
+        params, truncated = request_params(model, pack)
+        pack_id = f"pack-{i:04d}-{int(pack['complaint_id'].iloc[0])}"
+        members[pack_id] = [str(c) for c in pack["complaint_id"]]
+        truncated_all.update(truncated)
+        requests.append(Request(custom_id=pack_id, params=MessageCreateParamsNonStreaming(**params)))
     batch = client.messages.batches.create(requests=requests)
     state = {"batch_id": batch.id, "model": model, "prompt_version": PROMPT_VERSION,
-             "n_requests": len(requests), "truncated": truncated_flags, "collected": False}
+             "members": members, "truncated": truncated_all, "collected": False}
     LLM_CACHE_DIR.mkdir(parents=True, exist_ok=True)
     BATCH_STATE.write_text(json.dumps(state), encoding="utf-8")
-    print(f"submitted batch {batch.id} with {len(requests)} requests")
+    print(f"submitted batch {batch.id}: {len(requests)} requests, {sum(map(len, members.values()))} complaints")
     return state
 
 
@@ -307,18 +346,16 @@ def wait_and_collect(client, state: dict, poll_seconds: int = 60) -> None:
 
     records = []
     for result in client.messages.batches.results(state["batch_id"]):
-        cid = int(result.custom_id)
+        ids = state["members"][result.custom_id]
         if result.result.type == "succeeded":
-            records.append(message_to_record(
-                cid, state["model"], state["truncated"].get(result.custom_id, False),
-                result.result.message, "batch"))
+            records += pack_to_records(ids, state["truncated"], state["model"],
+                                       result.result.message, "batch", result.custom_id)
         else:
-            # errored, canceled or expired: nothing was billed, and the row is retried next run
-            records.append({"complaint_id": cid, "model": state["model"],
-                            "prompt_version": state["prompt_version"], "mode": "batch",
-                            "status": "api_error", "error": result.result.type,
-                            "input_tokens": 0, "output_tokens": 0,
-                            "cache_read_tokens": 0, "cache_write_tokens": 0})
+            # errored, canceled or expired: nothing was billed, and the rows are retried next run
+            records += [{"complaint_id": int(c), "model": state["model"],
+                         "prompt_version": state["prompt_version"], "mode": "batch",
+                         "pack_id": result.custom_id, "status": "api_error",
+                         "error": result.result.type, **{u: 0 for u in USAGE_COLS}} for c in ids]
     append_cache(records)
     state["collected"] = True
     BATCH_STATE.write_text(json.dumps(state), encoding="utf-8")
@@ -336,33 +373,51 @@ def pending_batch() -> dict | None:
 def cmd_run(args) -> int:
     client = require_client()
     model = model_name()
-    # Never submit twice: if an earlier batch has not been collected, finish that one.
+    # Never submit twice: if an earlier batch has not been collected, finish that one first.
     state = pending_batch()
     if state:
         print(f"resuming uncollected batch {state['batch_id']}")
         wait_and_collect(client, state)
 
     sample = load_sample()
-    todo = sample[~sample["complaint_id"].isin(cached_ids(model))]
-    if todo.empty:
-        print("Every sampled row is already in the cache. No API calls needed.")
-        return 0
+    first, previous_left = True, None
+    while True:
+        todo = sample[~sample["complaint_id"].isin(cached_ids(model))]
+        if todo.empty:
+            print("Every sampled row is in the cache. No further API calls needed.")
+            return 0
+        if previous_left is not None and len(todo) >= previous_left:
+            print(f"{len(todo)} rows still have no label after a retry. Stopping so they are not "
+                  "paid for again. Check `status` for the reasons.")
+            return 1
+        previous_left = len(todo)
 
-    tokens = token_inputs(todo, client, model)
-    measured = measured_output_tokens(model)
-    out_tokens = measured if measured is not None else ASSUMED_OUTPUT_TOKENS["high"]
-    # Budget check uses the pessimistic case: no cache hits at all.
-    projected = project_cost(model, len(todo), tokens["system_tokens"],
-                             tokens["avg_user_tokens"], out_tokens, cache_hit_rate=0.0)
-    spent = spend_so_far()
-    print(f"model {model} | rows to send {len(todo)} | spent {spent:.2f} USD | "
-          f"projected (no cache hits) {projected:.2f} USD | budget {args.budget:.2f} USD")
-    if not within_budget(spent, projected, args.budget):
-        print("Projected total exceeds the budget. Nothing was sent. Raise --budget only "
-              "with explicit approval, reduce the sample, or choose a cheaper CLASSIFY_MODEL.")
-        return EXIT_OVER_BUDGET
-    wait_and_collect(client, submit_batch(client, model, todo))
-    return 0
+        per_row = measured_cost_per_row(model)
+        chunk = todo.head(FIRST_CHUNK_ROWS if per_row is None else CHUNK_ROWS)
+        tokens = token_inputs(todo, client, model)
+        spent = spend_so_far()
+        chunk_worst = scenario_cost(model, len(chunk), tokens, "high")
+        projected_all = per_row * len(todo) if per_row is not None else None
+        print(f"model {model} | rows left {len(todo)} | next chunk {len(chunk)} | spent {spent:.2f} USD | "
+              f"chunk worst case {chunk_worst:.2f} USD | projection for all remaining "
+              f"{'not measured yet' if projected_all is None else f'{projected_all:.2f} USD'} | "
+              f"budget {args.budget:.2f} USD")
+        over = not within_budget(spent, chunk_worst, args.budget) or (
+            projected_all is not None and not within_budget(spent, projected_all, args.budget))
+        if over:
+            print("Continuing could exceed the budget, so nothing more was sent. Options: raise "
+                  "--budget with explicit approval, reduce the sample, or set CLASSIFY_MODEL to "
+                  "a cheaper model.")
+            return EXIT_OVER_BUDGET
+
+        packs = make_packs(chunk)
+        if first:
+            # One ordinary request writes the system prompt to the cache before the batch starts.
+            classify_now(client, model, packs[:1], "warmup")
+            packs = packs[1:]
+            first = False
+        if packs:
+            wait_and_collect(client, submit_batch(client, model, packs))
 
 
 def cmd_collect(args) -> int:
@@ -377,7 +432,7 @@ def cmd_collect(args) -> int:
 
 def cmd_status(args) -> int:
     cache = load_cache()
-    print(f"cache rows: {len(cache)} | spend so far: {spend_so_far():.4f} USD")
+    print(f"cache rows: {len(cache)} | spend so far: {spend_so_far(cache):.4f} USD")
     if not cache.empty:
         print(cache.groupby(["model", "prompt_version", "mode", "status"]).size().to_string())
     return 0
@@ -388,7 +443,7 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("estimate").set_defaults(func=cmd_estimate)
     p = sub.add_parser("pilot")
-    p.add_argument("--n", type=int, default=40)
+    p.add_argument("--packs", type=int, default=5)
     p.add_argument("--budget", type=float, default=DEFAULT_BUDGET_USD)
     p.set_defaults(func=cmd_pilot)
     p = sub.add_parser("run")

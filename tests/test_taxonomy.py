@@ -3,8 +3,9 @@ import json
 
 import pytest
 
-from prompts import MAX_NARRATIVE_CHARS, SYSTEM_PROMPT, build_user_message
+from prompts import MAX_NARRATIVE_CHARS, SYSTEM_PROMPT, build_user_message, prepare_narrative
 from taxonomy import (
+    ITEM_SCHEMA,
     MEMBERSHIP_VALUE_THEMES,
     OUTPUT_SCHEMA,
     THEME_KEYS,
@@ -12,6 +13,7 @@ from taxonomy import (
     TaxonomyError,
     normalize_theme,
     parse_classification,
+    parse_pack,
 )
 
 VALID = {
@@ -90,9 +92,11 @@ def test_membership_value_flag():
 
 
 def test_schema_is_strict_and_matches_taxonomy():
+    assert ITEM_SCHEMA["additionalProperties"] is False
+    assert set(ITEM_SCHEMA["required"]) == set(ITEM_SCHEMA["properties"])
+    assert ITEM_SCHEMA["properties"]["primary_theme"]["enum"] == THEME_KEYS
+    assert OUTPUT_SCHEMA["properties"]["results"]["items"] is ITEM_SCHEMA
     assert OUTPUT_SCHEMA["additionalProperties"] is False
-    assert set(OUTPUT_SCHEMA["required"]) == set(OUTPUT_SCHEMA["properties"])
-    assert OUTPUT_SCHEMA["properties"]["primary_theme"]["enum"] == THEME_KEYS
 
 
 def test_prompt_examples_parse_and_every_theme_is_defined():
@@ -105,8 +109,44 @@ def test_prompt_examples_parse_and_every_theme_is_defined():
 
 
 def test_long_narratives_are_cut_and_flagged():
-    short, cut_short = build_user_message("My card was charged twice.")
-    assert not cut_short and "charged twice" in short
-    long_text, cut_long = build_user_message("x" * (MAX_NARRATIVE_CHARS + 500))
-    assert cut_long and "cut here for length" in long_text
-    assert len(long_text) < MAX_NARRATIVE_CHARS + 200
+    short, cut_short = prepare_narrative("  My card was charged twice. ")
+    assert not cut_short and short == "My card was charged twice."
+    long_text, cut_long = prepare_narrative("x" * (MAX_NARRATIVE_CHARS + 500))
+    assert cut_long and long_text.endswith("[narrative cut here for length]")
+    assert len(long_text) < MAX_NARRATIVE_CHARS + 100
+
+
+def test_user_message_tags_each_complaint_with_its_id():
+    message, truncated = build_user_message([(101, "first"), (202, "y" * (MAX_NARRATIVE_CHARS + 1))])
+    assert '<complaint id="101">\nfirst\n</complaint>' in message
+    assert message.index('id="101"') < message.index('id="202"')
+    assert truncated == {"101": False, "202": True}
+
+
+# --- responses that cover several complaints ------------------------------------------------
+def _item(cid, theme="billing", **extra):
+    return {"id": str(cid), **VALID, "primary_theme": theme, **extra}
+
+
+def test_parse_pack_matches_by_id_not_position():
+    raw = {"results": [_item(2, "annual_fee"), _item(1, "dispute_fraud")]}
+    out = parse_pack(raw, ["1", "2"])
+    assert out["1"].primary_theme == "dispute_fraud"
+    assert out["2"].primary_theme == "annual_fee"
+    assert parse_pack(json.dumps(raw), ["1", "2"])["2"].primary_theme == "annual_fee"
+
+
+def test_parse_pack_flags_missing_duplicate_and_invalid_items_individually():
+    raw = {"results": [_item(1), _item(2), _item(2), _item(3, "nonsense"), _item(999)]}
+    out = parse_pack(raw, ["1", "2", "3", "4"])
+    assert out["1"].primary_theme == "billing"
+    assert isinstance(out["2"], TaxonomyError) and "more than once" in str(out["2"])
+    assert isinstance(out["3"], TaxonomyError) and "unknown theme" in str(out["3"])
+    assert isinstance(out["4"], TaxonomyError) and "missing" in str(out["4"])
+    assert "999" not in out  # an id that was never sent is ignored
+
+
+@pytest.mark.parametrize("bad", ["no json here", {"items": []}, {"results": "x"}, '{"results": ['])
+def test_parse_pack_rejects_malformed_responses(bad):
+    with pytest.raises(TaxonomyError):
+        parse_pack(bad, ["1"])

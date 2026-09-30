@@ -1,0 +1,49 @@
+{
+  "sample_rows": 4436,
+  "complaints_per_request": 8,
+  "requests": 555,
+  "prompt_version": "v1",
+  "token_method": "heuristic of 3.3 characters per token (no API key, so tokens were not counted)",
+  "system_prompt_tokens": 2207,
+  "avg_user_tokens_per_request": 3505.1,
+  "narratives_cut_for_length": 58,
+  "budget_usd": 10.0,
+  "scenarios": {
+    "low": "95% cache hits, short outputs, no thinking",
+    "expected": "70% cache hits, typical outputs, some thinking",
+    "high": "no cache hits, long outputs, heavy thinking"
+  },
+  "models": {
+    "claude-opus-5-5": {
+      "rows_not_in_cache": 4436,
+      "system_prompt_long_enough_to_cache": true,
+      "batch_cost_usd": {
+        "low": 6.92,
+        "expected": 10.44,
+        "high": 19.89
+      },
+      "within_budget_in_every_scenario": false
+    },
+    "claude-sonnet-5-5": {
+      "rows_not_in_cache": 4436,
+      "system_prompt_long_enough_to_cache": true,
+      "batch_cost_usd": {
+        "low": 3.52,
+        "expected": 5.26,
+        "high": 9.95
+      },
+      "within_budget_in_every_scenario": true
+    },
+    "claude-haiku-4-5": {
+      "rows_not_in_cache": 4436,
+      "system_prompt_long_enough_to_cache": false,
+      "batch_cost_usd": {
+        "low": 2.25,
+        "expected": 2.42,
+        "high": 2.7
+      },
+      "within_budget_in_every_scenario": true
+    }
+  },
+  "spent_so_far_usd": 0.0
+}
