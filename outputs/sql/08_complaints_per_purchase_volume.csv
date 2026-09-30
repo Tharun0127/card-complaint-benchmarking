@@ -1,0 +1,20 @@
+issuer,year,complaints,purchase_volume_usd_bn,complaints_per_usd_bn
+Chase,2023,4431,1163.6,3.81
+American Express,2023,3192,610.8,5.23
+Citi,2023,4661,592.3,7.87
+Bank of America,2023,3165,363.117,8.72
+Discover,2023,2179,217.914,10.0
+Capital One,2023,6174,605.664,10.19
+Synchrony,2023,3753,185.178,20.27
+Chase,2024,5276,1259.3,4.19
+American Express,2024,3950,654.8,6.03
+Bank of America,2024,3381,368.861,9.17
+Discover,2024,2302,212.251,10.85
+Citi,2024,6685,606.7,11.02
+Capital One,2024,7058,639.341,11.04
+Synchrony,2024,5301,182.173,29.1
+Chase,2025,5951,1354.7,4.39
+American Express,2025,4714,707.5,6.66
+Bank of America,2025,4142,377.76,10.96
+Citi,2025,8620,626.0,13.77
+Synchrony,2025,6570,182.285,36.04
